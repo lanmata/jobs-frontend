@@ -1,0 +1,14 @@
+{
+  "jobBackendProxyConfig": [
+    {
+      "applicationName": "jobs-backend",
+      "matchOn": {
+        "startWith": "/jobs/v1"
+      },
+      "urlRewrite": {
+        "from": "/jobs/v1",
+        "to": "/api/jobs-backend/v1"
+      }
+    }
+  ]
+}
