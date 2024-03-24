@@ -1,0 +1,732 @@
+{
+  "_comment_001":"Formulario registro de usuario",
+  "menu_header": {
+    "title": "PRX CRM",
+    "home": "Inicio",
+    "management": {
+      "title": "Administración",
+      "items": {
+        "feature": "Caracteristicas",
+        "role": "Roles",
+        "person": "Personas",
+        "user": "Usuarios",
+        "contactType": "Tipo de Contacto"
+      }
+    },
+    "jobs": {
+      "title": "Trabajos",
+      "items": {
+        "offer": "Grilla de trabajos",
+        "company": "Grilla de compañias"
+      }
+    }
+  },
+  "frm_register":{
+    "firstName":{
+      "title": "Nombre" ,
+      "placeholder":"Ingresar nombre",
+      "validation_messages": {
+        "required": "Nombre es requerido",
+        "minLength":"Longitud mínima",
+        "maxLength":"Longitud máxima"
+      }
+    },
+    "middleName":{
+      "title": "Primer apellido" ,
+      "placeholder":"Ingresar primer apellido",
+      "validation_messages": {
+        "required": "Primer apellido es requerido",
+        "minLength": "Longitud mínima",
+        "maxLength": "Longitud máxima"
+      }
+    },
+    "lastName":{
+      "title": "Segundo apellido",
+      "placeholder":"Ingresar segundo apellido",
+      "validation_messages": {
+        "required": "Segundo apellido es requerido",
+        "minLength": "Longitud mínima",
+        "maxLength": "Longitud máxima"
+      }
+    },
+    "gender":{
+      "title": "Genero",
+      "defaultLabel":"Seleccionar",
+      "femaleLabel":"Femenino",
+      "menLabel":"Masculino",
+      "validation_messages": {
+        "required": "Genero requerido",
+        "minLength": "Longitud mínima",
+        "maxLength": "Longitud máxima"
+      }
+
+    },
+    "calendar_birth": {
+      "title": "Fecha de Nacimiento",
+      "placeholder": "Elija una fecha",
+      "validation_messages": {
+        "required": "Fecha de nacimiento es requerida"
+      }
+    },
+    "email":{
+      "title": "Correo electrónico",
+      "placeholder":"ej. usuario@dominio.com",
+      "validation_messages": {
+        "required": "Correo electronico es requerido",
+        "email": "Formato de correo no valido",
+        "minLength": "Longitud mínima",
+        "maxLength": "Longitud máxima"
+      }
+    },
+    "address":{
+      "title":"Dirección",
+      "placeholder":"Avenida/Calle",
+      "validation_messages": {
+        "required": "Dirección es requerido",
+        "minLength": "Longitud mínima",
+        "maxLength": "Longitud máxima"
+      }
+    },
+    "button_accept":{
+      "title":"Registrar"
+    },
+    "button_cancel":{
+      "title": "Cancelar"
+    },
+    "username": {
+      "title": "Usuario",
+      "placeholder": "Usuario",
+      "validation_messages": {
+        "required": "Alias de usuario es requerido",
+        "minLength": "Longitud mínima",
+        "maxLength": "Longitud máxima"
+      }
+    },
+    "password":{
+      "title": "Clave",
+      "placeholder": "Clave",
+      "validation_messages": {
+        "required": "La clave es requerido",
+        "minLength": "Longitud mínima",
+        "maxLength": "Longitud máxima"
+      }
+    },
+    "confirmPassword":{
+      "title": "Confirmación de Clave",
+      "placeholder": "Confirmación de Clave",
+      "validation_messages": {
+        "required": "La clave es requerido",
+        "minLength": "Longitud mínima",
+        "maxLength": "Longitud máxima",
+        "mustMatch": "La clave debe coincidir"
+      }
+    }
+  },
+  "frm_login": {
+    "_comment_002":"Formulario para la autenticacion de usuario",
+    "user": {
+      "placeholder": "Usuario",
+      "validation_messages": {
+        "required": "El usuario es requerido",
+        "minLength": "Longitud mínima",
+        "maxLength": "Longitud máxima"
+      },
+      "tooltip": "Debe ingresar nombre de usuario"
+    },
+    "password":{
+      "placeholder": "Clave",
+      "validation_messages": {
+        "required": "La clave es requerido",
+        "min_length": "Longitud mínima",
+        "max_length": "Longitud máxima"
+      },
+      "tooltip": "Debe ingresar clave de usuario"
+    },
+    "remember": {
+      "title":"Recuerdame"
+    },
+    "button_accept":{
+      "title": "Ingresar"
+    },
+    "button_registry":{
+      "title":"Registrar"
+    }
+  },
+  "role_main": {
+    "title": "Roles",
+    "filter": {
+      "title": "Filtro",
+      "tooltip": "Busqueda por nombre de rol"
+    },
+    "download_file": {
+      "title": "Exportar a excel",
+      "columns": {
+        "id": "Id",
+        "name": "Nombre",
+        "description": "Description,",
+        "active": "Estado"
+      }
+    },
+    "inactive_option": {
+      "title": "Mostrar roles inactivos"
+    },
+    "data_grid": {
+      "id": {
+        "title":"Id",
+        "tooltip": ""
+      },
+      "name": {
+        "title":"Nombre",
+        "tooltip": ""
+      },
+      "description": {
+        "title":"Descripcion",
+        "tooltip": ""
+      },
+      "active": {
+        "title":"Estado",
+        "tooltip": ""
+      },
+      "edit": {
+        "title":"Editar",
+        "tooltip": "Editar"
+      },
+      "enable": {
+        "title":"Habilitado",
+        "tooltip": "Habilitado"
+      },
+      "disable": {
+        "title":"Deshabilitado",
+        "tooltip": "Deshabilitado"
+      }
+    },
+    "add_button": {
+      "title": "Agregar",
+      "tooltip": "Crear un rol"
+    },
+    "remove_button": {
+      "title": "Eliminar",
+      "tooltip": "Eliminar los roles seleccionados"
+    }
+  },
+  "role_edit": {
+    "title": "Crear role",
+    "name": {
+      "title": "Nombre",
+      "placeholder": "Nombre del rol"
+    },
+    "description": {
+      "title": "Descripcion",
+      "placeholder": "Descripcion del rol"
+    },
+    "active": {
+      "title": "Activo",
+      "tooltip": "Estado del rol"
+    },
+    "create_button":{
+      "title": "Crear"
+    },
+    "update_button":{
+      "title": "Actualizar"
+    },
+    "cancel_button":{
+      "title": "Cancelar"
+    },
+    "features": {
+      "available": {
+        "title": "Disponible(s)"
+      },
+      "applied": {
+        "title": "Asignado(s)"
+      },
+      "add": {
+        "title": "Agregar"
+      },
+      "remove": {
+        "title": "Quitar"
+      }
+    }
+  },
+  "feature_main": {
+    "title": "Caracteristicas",
+    "filter": {
+      "title": "Filtro",
+      "tooltip": "Busqueda por nombre de caracteristica"
+    },
+    "download_file": {
+      "title": "Exportar a excel",
+      "columns": {
+        "id": "Id",
+        "name": "Nombre",
+        "description": "Description,",
+        "active": "Estado"
+      }
+    },
+    "inactive_option": {
+      "title": "Mostrar caracteristicas inactivos"
+    },
+    "data_grid": {
+      "id": {
+        "title":"Id",
+        "tooltip": ""
+      },
+      "name": {
+        "title":"Nombre",
+        "tooltip": ""
+      },
+      "description": {
+        "title":"Descripcion",
+        "tooltip": ""
+      },
+      "active": {
+        "title":"Estado",
+        "tooltip": ""
+      },
+      "edit": {
+        "title":"Editar",
+        "tooltip": "Editar"
+      },
+      "enable": {
+        "title":"Habilitado",
+        "tooltip": "Habilitado"
+      },
+      "disable": {
+        "title":"Deshabilitado",
+        "tooltip": "Deshabilitado"
+      }
+    },
+    "add_button": {
+      "title": "Agregar",
+      "tooltip": "Crear una caracteristica"
+    },
+    "remove_button": {
+      "title": "Eliminar",
+      "tooltip": "Eliminar las caracteristicas seleccionados"
+    }
+  },
+  "feature_edit": {
+    "title": "Crear caracteristica",
+    "name": {
+      "title": "Nombre",
+      "placeholder": "Nombre de caracteristica"
+    },
+    "description": {
+      "title": "Descripcion",
+      "placeholder": "Descripcion de caracteristica"
+    },
+    "active": {
+      "title": "Activo",
+      "tooltip": "Estado de caracteristica"
+    },
+    "create_button":{
+      "title": "Crear"
+    },
+    "update_button":{
+      "title": "Actualizar"
+    },
+    "cancel_button":{
+      "title": "Cancelar"
+    },
+    "features": {
+      "available": {
+        "title": "Disponible(s)"
+      },
+      "applied": {
+        "title": "Asignado(s)"
+      },
+      "add": {
+        "title": "Agregar"
+      },
+      "remove": {
+        "title": "Quitar"
+      }
+    }
+  },
+  "contact-type_main": {
+    "title": "Tipo de Contacto",
+    "filter": {
+      "title": "Filtro",
+      "tooltip": "Busqueda por nombre para tipo de contacto"
+    },
+    "download_file": {
+      "title": "Exportar a excel",
+      "columns": {
+        "id": "Id",
+        "name": "Nombre",
+        "description": "Description",
+        "status": "Estado"
+      }
+    },
+    "inactive_option": {
+      "title": "Mostrar tipos de contacto inactivos"
+    },
+    "data_grid": {
+      "id": {
+        "title":"Id",
+        "tooltip": ""
+      },
+      "name": {
+        "title":"Nombre",
+        "tooltip": ""
+      },
+      "description": {
+        "title":"Descripcion",
+        "tooltip": ""
+      },
+      "active": {
+        "title":"Estado",
+        "tooltip": ""
+      },
+      "edit": {
+        "title":"Editar",
+        "tooltip": "Editar"
+      },
+      "enable": {
+        "title":"Habilitado",
+        "tooltip": "Habilitado"
+      },
+      "disable": {
+        "title":"Deshabilitado",
+        "tooltip": "Deshabilitado"
+      }
+    },
+    "add_button": {
+      "title": "Agregar",
+      "tooltip": "Crear una tipo de contacto"
+    },
+    "remove_button": {
+      "title": "Eliminar",
+      "tooltip": "Eliminar los tipos de seleccionados"
+    }
+  },
+  "contact-type-edit": {
+    "title": {
+      "create": "Crear Tipo de Contacto",
+      "update": "Actualizar Tipo de Contacto"
+    },
+    "name": {
+      "title": "Nombre",
+      "placeholder": "Nombre para tipo de contacto"
+    },
+    "description": {
+      "title": "Descripcion",
+      "placeholder": "Descripcion para tipo de contacto"
+    },
+    "active": {
+      "title": "Activo",
+      "tooltip": "Estado para tipo de contacto"
+    },
+    "create_button":{
+      "title": "Crear"
+    },
+    "update_button":{
+      "title": "Actualizar"
+    },
+    "cancel_button":{
+      "title": "Cancelar"
+    },
+    "features": {
+      "available": {
+        "title": "Disponible(s)"
+      },
+      "applied": {
+        "title": "Asignado(s)"
+      },
+      "add": {
+        "title": "Agregar"
+      },
+      "remove": {
+        "title": "Quitar"
+      }
+    }
+  },
+  "person_main": {
+    "title": "Personas",
+    "filter": {
+      "title": "Filtro",
+      "tooltip": "Busqueda por nombre de persona"
+    },
+    "data_grid": {
+      "id": {
+        "title":"Id",
+        "tooltip": ""
+      },
+      "name": {
+        "title":"Nombre",
+        "tooltip": ""
+      },
+      "middle_name": {
+        "title":"Segundo nombre",
+        "tooltip": ""
+      },
+      "lastname": {
+        "title":"Apellido",
+        "tooltip": ""
+      },
+      "gender": {
+        "title":"Genero",
+        "tooltip": ""
+      },
+      "birthdate": {
+        "title":"Fecha de nacimiento",
+        "tooltip": ""
+      },
+      "edit": {
+        "title":"Editar",
+        "tooltip": "Editar"
+      },
+      "enable": {
+        "title":"Habilitado",
+        "tooltip": "Habilitado"
+      },
+      "disable": {
+        "title":"Deshabilitado",
+        "tooltip": "Deshabilitado"
+      }
+    },
+    "add_button": {
+      "title": "Agregar",
+      "tooltip": "Crear una Persona"
+    }
+  },
+  "person_edit": {
+    "create_label": "Crear persona",
+    "edit_label": "Actualizar persona",
+    "firstname": {
+      "title": "Primer nombre",
+      "placeholder": "Primer nombre"
+    },
+    "middle_name": {
+      "title": "Segundo nombre",
+      "placeholder": "Segundo nombre"
+    },
+    "lastname": {
+      "title": "Apellido",
+      "placeholder": "Apellido"
+    },
+    "gender": {
+      "title": "Genero",
+      "placeholder": "Genero",
+      "default": {
+        "key": "D",
+        "value": "Seleccionar"
+      },
+      "female": {
+        "key": "F",
+        "value": "Femenino"
+      },
+      "men": {
+        "key": "M",
+        "value": "Masculino"
+      }
+    },
+    "birthdate": {
+      "title": "Fecha de nacimiento",
+      "placeholder": "DD/MM/AAAA"
+    },
+    "create_button":{
+      "title": "Crear"
+    },
+    "update_button":{
+      "title": "Actualizar"
+    },
+    "close_button":{
+      "title": "Cerrar"
+    }
+  },
+  "contact_main": {
+    "title": "Contactos",
+    "max_capacity": {
+      "message": "No puede agregar nuevos contactos debido que ha alcanzado Nro. maximo de permitido."
+    },
+    "filter": {
+      "title": "Filtro",
+      "tooltip": "Busqueda por tipo de contacto"
+    },
+    "edit_button": {
+      "title": "Editar",
+      "tooltip": "Editar contacto"
+    },
+    "remove_button": {
+      "title": "Eliminar",
+      "tooltip": "Eliminar contact"
+    },
+    "data_grid": {
+      "id": {
+        "title":"Id",
+        "tooltip": ""
+      },
+      "content": {
+        "title":"Titulo",
+        "tooltip": ""
+      },
+      "contact-type": {
+        "title":"Tipo",
+        "tooltip": ""
+      },
+      "remove": {
+        "title":"Eliminar",
+        "tooltip": ""
+      },
+      "field3": {
+        "title":"Campo 3",
+        "tooltip": ""
+      },
+      "field4": {
+        "title":"Campo 4",
+        "tooltip": ""
+      },
+      "edit": {
+        "title":"Editar",
+        "tooltip": "Editar"
+      },
+      "delete": {
+        "title":"Eliminar",
+        "tooltip": "Eliminar"
+      }
+    },
+    "add_button": {
+      "title": "Agregar",
+      "tooltip": "Agregar un Contacto"
+    }
+  },
+  "contact_edit": {
+    "title": {
+      "create": "Crear contacto",
+      "update": "Actualizar contacto"
+    },
+    "content": {
+      "title": "Contenido",
+      "tooltip": "Dato de contacto"
+    },
+    "contact-type": {
+      "title": "Tipo de contacto",
+      "tooltip": "Tipo de contacto"
+    },
+    "cancel_button": {
+      "title": "Cancelar"
+    },
+    "create_button": {
+      "title": "Crear"
+    },
+    "update_button": {
+      "title": "Actualizar"
+    }
+  },
+  "user_main": {
+    "title": "Usuario",
+    "filter": {
+      "title": "Filtro",
+      "tooltip": "Busqueda por nombre de caracteristica"
+    },
+    "download_file": {
+      "title": "Exportar a excel",
+      "columns": {
+        "id": "Id",
+        "alias": "Nombre",
+        "password": "Clave",
+        "active": "Estado"
+      }
+    },
+    "inactive_option": {
+      "title": "Mostrar usuarios inactivos"
+    },
+    "data_grid": {
+      "id": {
+        "title": "Id",
+        "tooltip": ""
+      },
+      "alias": {
+        "title": "Alias",
+        "tooltip": ""
+      },
+      "password": {
+        "title": "Clave",
+        "tooltip": ""
+      },
+      "name": {
+        "title": "Nombre",
+        "tooltip": ""
+      },
+      "middle_name": {
+        "title": "Apellido Materno",
+        "tooltip": ""
+      },
+      "lastname": {
+        "title": "Apellido Paterno",
+        "tooltip": ""
+      },
+      "active": {
+        "title": "Estado",
+        "tooltip": ""
+      },
+      "edit": {
+        "title": "Editar",
+        "tooltip": ""
+      }
+    },
+    "add_button": {
+      "tooltip": "Agregar usuario"
+    },
+    "remove_button": {
+      "tooltip": "Remover usuario"
+    }
+  },
+  "user_edit": {
+    "title": "Crear Usuario",
+    "alias": {
+      "title": "Usuario",
+      "placeholder": "Nombre de usuario"
+    },
+    "password": {
+      "title": "Clave",
+      "placeholder": "Clave de usuario"
+    },
+    "active": {
+      "title": "Activo",
+      "placeholder": "Estado de usuario"
+    },
+    "person": {
+      "firstname": {
+        "title": "Nombre",
+        "placeholder": ""
+      },
+      "middle_name": {
+        "title": "Segundo nombre",
+        "placeholder": ""
+      },
+      "lastname": {
+        "title": "Apellido",
+        "placeholder": ""
+      },
+      "gender": {
+        "title": "Genero",
+        "default": {
+          "title": "Seleccioar"
+        },
+        "female": {
+          "title": "Femenino"
+        },
+        "men": {
+          "title": "Masculino"
+        }
+      },
+      "birthdate": {
+        "title": "Fecha de nacimiento",
+        "placeholder": "dd/MM/aaaa"
+      }
+    },
+    "role": {
+      "title": "Role"
+    },
+    "cancel_button": {
+      "title": "Cancelar"
+    },
+    "create_button": {
+      "title": "Crear"
+    },
+    "update_button": {
+      "title": "Actualizar"
+    }
+  }
+}

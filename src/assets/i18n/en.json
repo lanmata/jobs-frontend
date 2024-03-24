@@ -1,0 +1,145 @@
+{
+  "_comment_001":"Formulario registro de usuario",
+  "menuHeader": {
+    "home": "Home",
+    "management": {
+      "title": "Management",
+      "items": {
+        "feature": "Features",
+        "role": "Roles",
+        "person": "People",
+        "user": "Users"
+      }
+    }
+  },
+  "frmRegistro":{
+    "firstName":{
+      "title": "Name" ,
+      "placeholder":"Ingresar nombre",
+      "validationMessages": {
+        "required": "Name required",
+        "minLength":"Minimun lenght",
+        "maxLength":"Maximun lenght"
+      }
+    },
+    "middleName":{
+      "title": "Primer apellido" ,
+      "placeholder":"Ingresar primer apellido",
+      "validationMessages": {
+        "required": "Primer apellido es requerido",
+        "minLength": "Longitud mínima",
+        "maxLength": "Longitud máxima"
+      }
+    },
+    "lastName":{
+      "title": "Segundo apellido",
+      "placeholder":"Ingresar segundo apellido",
+      "validationMessages": {
+        "required": "Segundo apellido es requerido",
+        "minLength": "Longitud mínima",
+        "maxLength": "Longitud máxima"
+      }
+    },
+    "gender":{
+      "title": "Genero",
+      "labelFemale":"Femenino",
+      "labelMen":"Masculino",
+      "validationMessages": {
+        "required": "Genero requerido",
+        "minLength": "Longitud mínima",
+        "maxLength": "Longitud máxima"
+      }
+
+    },
+    "calendar_birth": {
+      "title": "Fecha de Nacimiento",
+      "placeholder": "Elija una fecha",
+      "validationMessages": {
+        "required": "Fecha de nacimiento es requerida"
+      }
+    },
+    "email":{
+      "title": "Correo electrónico",
+      "placeholder":"ej. usuario@dominio.com",
+      "validationMessages": {
+        "required": "Correo electronico es requerido",
+        "email": "Formato de correo no valido",
+        "minLength": "Longitud mínima",
+        "maxLength": "Longitud máxima"
+      }
+    },
+    "address":{
+      "title":"Dirección",
+      "placeholder":"Avenida/Calle",
+      "validationMessages": {
+        "required": "Dirección es requerido",
+        "minLength": "Longitud mínima",
+        "maxLength": "Longitud máxima"
+      }
+    },
+    "buttonAccept":{
+      "title":"Registrar"
+    },
+    "buttonCancel":{
+      "title": "Cancelar"
+    },
+    "username": {
+      "title": "Usuario",
+      "placeholder": "Usuario",
+      "validationMessages": {
+        "required": "Alias de usuario es requerido",
+        "minLength": "Longitud mínima",
+        "maxLength": "Longitud máxima"
+      }
+    },
+    "password":{
+      "title": "Clave",
+      "placeholder": "Clave",
+      "validationMessages": {
+        "required": "La clave es requerido",
+        "minLength": "Longitud mínima",
+        "maxLength": "Longitud máxima"
+      }
+    },
+    "confirmPassword":{
+      "title": "Confirmación de Clave",
+      "placeholder": "Confirmación de Clave",
+      "validationMessages": {
+        "required": "La clave es requerido",
+        "minLength": "Longitud mínima",
+        "maxLength": "Longitud máxima",
+        "mustMatch": "La clave debe coincidir"
+      }
+    }
+  },
+  "frmLogin": {
+    "_comment_002":"Formulario para la autenticacion de usuario",
+    "user": {
+      "placeholder": "Usuario",
+      "validationMessages": {
+        "required": "El usuario es requerido",
+        "minLength": "Longitud mínima",
+        "maxLength": "Longitud máxima"
+      },
+      "tooltip": "Debe ingresar nombre de usuario"
+    },
+    "password":{
+      "placeholder": "Clave",
+      "validationMessages": {
+        "required": "La clave es requerido",
+        "minLength": "Longitud mínima",
+        "maxLength": "Longitud máxima"
+      },
+      "tooltip": "Debe ingresar clave de usuario"
+    },
+    "remember": {
+      "title":"Recuerdame"
+    },
+    "buttonAccept":{
+      "title": "Ingresar"
+    },
+    "buttonRegistry":{
+      "title":"Registrar"
+    }
+  }
+}
