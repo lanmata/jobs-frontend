@@ -26,7 +26,8 @@ export class AppConst {
     JOB_APPLICATION_STATUSES_PATH : 'job-application-statuses',
     JOB_APPLICATION_STATUS_PATH : 'job-application-status',
     JOB_APPLICATION_STATUSES_EDITOR_PATH : 'job-application-statuses-editor',
-    JOB_APPLICATION_STATUS_EDITOR_PATH : 'job-application-status-editor'
+    JOB_APPLICATION_STATUS_EDITOR_PATH : 'job-application-status-editor',
+    MODE_PATH : 'mode',
   }
 
   public static readonly HTTP_OPTIONS = {

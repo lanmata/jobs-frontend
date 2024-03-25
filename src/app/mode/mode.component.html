@@ -1,0 +1,6 @@
+<p>mode works!</p>
+@for (mode of allData; track mode.id) {
+  <p>{{mode.id}} | {{mode.name}} | {{mode.description}} | {{mode.active}} </p>
+} @empty {
+  <p>no mode</p>
+}

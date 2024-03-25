@@ -3,5 +3,6 @@
   <button mat-button [matMenuTriggerFor]="menuHeader" >Menu</button>
   <mat-menu #menuHeader="matMenu">
       <button mat-menu-item routerLink="{{appConst.JOBS_NAVIGATOR.COMPANY_PATH}}">{{'menu_header.jobs.items.company' | translate}}</button>
+      <button mat-menu-item routerLink="{{appConst.JOBS_NAVIGATOR.MODE_PATH}}">{{'menu_header.jobs.items.mode' | translate}}</button>
   </mat-menu>
 </mat-toolbar>
