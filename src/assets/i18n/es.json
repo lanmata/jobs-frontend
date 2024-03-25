@@ -1,16 +1,17 @@
 {
+  "title": "PRX Jobs-Offer Board",
   "_comment_001":"Formulario registro de usuario",
   "menu_header": {
-    "title": "PRX CRM",
+    "title": "PRX Jobs-Offer Board",
     "home": "Inicio",
     "management": {
       "title": "Administración",
       "items": {
-        "feature": "Caracteristicas",
-        "role": "Roles",
-        "person": "Personas",
-        "user": "Usuarios",
-        "contactType": "Tipo de Contacto"
+        "company": "Roles",
+        "mode": "Tipo de Contacto",
+        "offer": "Caracteristicas",
+        "status": "Personas",
+        "term": "Usuarios"
       }
     },
     "jobs": {

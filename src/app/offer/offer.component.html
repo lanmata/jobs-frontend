@@ -1,0 +1,8 @@
+<p>Job offer works!</p>
+@for (offer of allData; track offer.id) {
+  <p>{{ offer.id }} | {{ offer.mount }} | {{ offer.createdDate }} | {{ offer.lastModifiedDate }}
+    | {{ offer.lastModifiedDate }} | {{offer.status}} | {{offer.company}} | {{offer.position}}
+    | {{offer.term}} | {{offer.mode}} | {{offer.souorce}}  </p>
+} @empty {
+  <p>no offer</p>
+}

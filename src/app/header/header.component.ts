@@ -1,20 +1,19 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
-import {MatButtonModule} from "@angular/material/button";
-import {MatMenuModule} from "@angular/material/menu";
+import {TranslateModule} from '@ngx-translate/core';
 import {RouterLink} from "@angular/router";
 import {AppConst} from "@shared/util/app-const";
 import {CommonModule} from "@angular/common";
+import {MaterialModule} from "@shared/material/material.module";
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, MatMenuModule, RouterLink, ReactiveFormsModule, FormsModule, TranslateModule],
+  imports: [CommonModule, MaterialModule, RouterLink, ReactiveFormsModule, FormsModule, TranslateModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-  protected readonly appConst = AppConst;
+  readonly appConst = AppConst;
 
 }
