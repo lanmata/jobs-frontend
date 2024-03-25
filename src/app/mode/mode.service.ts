@@ -20,7 +20,7 @@ export class ModeService extends ServiceTemplate {
   private httpClient: HttpClient = inject(HttpClient);
 
   // Base URL for the backend service.
-  private CONTEXT_PATH: string = `${JOB_BACKEND_SERVICE_BASE_URL}/modes`;
+  private readonly CONTEXT_PATH: string = `${JOB_BACKEND_SERVICE_BASE_URL}/modes`;
 
   constructor() {
     super();

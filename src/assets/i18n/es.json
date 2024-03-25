@@ -9,7 +9,8 @@
       "items": {
         "company": "Compañias",
         "mode": "Modo",
-        "offer": "Ofertas Aplicadas"
+        "offer": "Ofertas Aplicadas",
+        "position": "Posiciones"
       }
     }
   },

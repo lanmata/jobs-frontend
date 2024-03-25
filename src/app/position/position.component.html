@@ -1,0 +1,7 @@
+<p>position works!</p>
+@for (position of allData; track position.id) {
+  <p>{{position.id}} | {{position.name}} | {{position.description}} | {{position.active}} </p>
+} @empty {
+  <p>no position</p>
+}
+
