@@ -7,13 +7,11 @@ export class AppConst {
   }
 
   public static readonly JOBS_NAVIGATOR = {
-    OFFER_PATH : 'offer',
     JOB_EDITOR_PATH : 'job-editor',
     JOB_TYPES_PATH : 'job-types',
     JOB_TYPE_PATH : 'job-type',
     JOB_STATUSES_PATH : 'job-statuses',
     JOB_STATUS_PATH : 'job-status',
-    COMPANIES_PATH : 'companies',
     COMPANY_PATH : 'company',
     COMPANY_EDITOR_PATH : 'company-editor',
     COMPANY_TYPES_PATH : 'company-types',
@@ -27,7 +25,10 @@ export class AppConst {
     JOB_APPLICATION_STATUS_PATH : 'job-application-status',
     JOB_APPLICATION_STATUSES_EDITOR_PATH : 'job-application-statuses-editor',
     JOB_APPLICATION_STATUS_EDITOR_PATH : 'job-application-status-editor',
+    COMPANIES_PATH : 'companies',
     MODE_PATH : 'mode',
+    OFFER_PATH : 'offer',
+    POSITION_PATH : 'position',
   }
 
   public static readonly HTTP_OPTIONS = {
