@@ -1,0 +1,6 @@
+<p>company works!</p>
+@for (company of allData; track company.id) {
+    <p>{{company.id}} | {{company.name}} | {{company.description}} | {{company.active}} </p>
+} @empty {
+    <p>no company</p>
+}
