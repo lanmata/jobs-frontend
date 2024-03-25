@@ -75,7 +75,17 @@ export class CompanyComponent extends AbstractComponent {
     this.listCompanies();
   }
 
-  listCompanies(): void {
+  /**
+   * List the companies.
+   * It calls the company service to get the list of companies.
+   *
+   * @private
+   * @method
+   * @memberof CompanyComponent
+   * @since 1.0.0
+   * @version 1.0.0
+   */
+  private listCompanies(): void {
     this.loader.show();
     this.companyService.getCompanies(true).pipe(takeUntil(this.subject$))
       .subscribe({

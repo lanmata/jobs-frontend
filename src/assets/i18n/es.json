@@ -4,21 +4,12 @@
   "menu_header": {
     "title": "PRX Jobs-Offer Board",
     "home": "Inicio",
-    "management": {
-      "title": "Administración",
-      "items": {
-        "company": "Roles",
-        "mode": "Tipo de Contacto",
-        "offer": "Caracteristicas",
-        "status": "Personas",
-        "term": "Usuarios"
-      }
-    },
     "jobs": {
       "title": "Trabajos",
       "items": {
-        "offer": "Grilla de trabajos",
-        "company": "Grilla de compañias"
+        "company": "Compañias",
+        "mode": "Modo",
+        "offer": "Ofertas Aplicadas"
       }
     }
   },

@@ -4,6 +4,9 @@ import {CompanyComponent} from "./company/company.component";
 
 export const routes: Routes = [
   {
+    path: AppConst.JOBS_NAVIGATOR.MODE_PATH, loadComponent: () => import('./mode/mode.component').then(m => m.ModeComponent)
+  },
+  {
     path: AppConst.JOBS_NAVIGATOR.COMPANY_PATH, loadComponent: () => import('./company/company.component').then(m => m.CompanyComponent)
   },
   {

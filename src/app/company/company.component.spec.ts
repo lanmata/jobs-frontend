@@ -38,14 +38,14 @@ describe('CompanyComponent', () => {
   it('should handle error while getting companies', () => {
     const errorResponse = new Error('Error occurred while getting companies');
     spyOn(companyService, 'getCompanies').and.returnValue(throwError(errorResponse));
-    component.listCompanies();
+    component.ngOnInit();
     expect(component.isErrorFound).toBeTrue();
   });
 
   it('should update data source when companies are fetched', () => {
     const response = {companyTOCollection: [{id: 1, name: 'Company1'}, {id: 2, name: 'Company2'}]};
     spyOn(companyService, 'getCompanies').and.returnValue(of(response));
-    component.listCompanies();
+    component.ngOnInit();
     expect(component.dataSource).toEqual(response.companyTOCollection);
   });
 
@@ -53,7 +53,7 @@ describe('CompanyComponent', () => {
     const response = {companyTOCollection: [{id: 1, name: 'Company1'}, {id: 2, name: 'Company2'}]};
     spyOn(companyService, 'getCompanies').and.returnValue(of(response));
     const loaderSpy = spyOn(component.loader, 'hide').and.callThrough();
-    component.listCompanies();
+    component.ngOnInit();
     expect(loaderSpy).toHaveBeenCalled();
   });
 });
