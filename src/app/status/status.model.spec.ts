@@ -1,6 +1,6 @@
-import { Status } from './status';
+import { Status } from './status.model';
 
-describe('StatusModel', () => {
+describe('Status', () => {
   it('should create an instance', () => {
     expect(new Status()).toBeTruthy();
   });

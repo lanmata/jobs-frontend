@@ -12,7 +12,8 @@
         "offer": "Ofertas Aplicadas",
         "position": "Posiciones",
         "source": "Fuentes",
-        "status": "Status"
+        "status": "Status",
+        "term": "Termino"
       }
     }
   },

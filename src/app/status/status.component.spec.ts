@@ -34,14 +34,14 @@ describe('StatusComponent', () => {
       statusTOCollection: [
         {
           id: 'ee0d55ce-827c-4663-a99f-38324b9322a8',
-          name: 'Status 1',
-          description: 'Description Status 1',
+          name: 'StatusModel 1',
+          description: 'Description StatusModel 1',
           active: true
         },
         {
           id: '7a5ea908-e4e8-4d8d-a777-699158b4c94e',
-          name: 'Status 2',
-          description: 'Description Status 2',
+          name: 'StatusModel 2',
+          description: 'Description StatusModel 2',
           active: false
         }
       ]
