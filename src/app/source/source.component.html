@@ -1,0 +1,6 @@
+<p>source works!</p>
+@for (source of allData; track source.id) {
+  <p>{{source.id}} | {{source.name}} | {{source.description}} | {{source.active}} </p>
+} @empty {
+  <p>no source</p>
+}

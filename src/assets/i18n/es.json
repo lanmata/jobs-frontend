@@ -10,7 +10,8 @@
         "company": "Compañias",
         "mode": "Modo",
         "offer": "Ofertas Aplicadas",
-        "position": "Posiciones"
+        "position": "Posiciones",
+        "source": "Fuentes"
       }
     }
   },

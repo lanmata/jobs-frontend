@@ -26,7 +26,7 @@ describe('PositionService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should fetch companies including inactive ones when requested', () => {
+  it('should fetch positions including inactive ones when requested', () => {
     const mockPositions = [
       {id: 1, name: 'Positions 1', isActive: true},
       {id: 2, name: 'Positions 2', isActive: false}
@@ -44,7 +44,7 @@ describe('PositionService', () => {
 
   it('should fetch only active positions when requested', () => {
     const mockPositions = [
-      {id: 1, name: 'Modes 1', isActive: true}
+      {id: 1, name: 'Positions 1', isActive: true}
     ];
 
     service.getPositions(false).subscribe(positions => {

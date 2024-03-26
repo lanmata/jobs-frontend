@@ -18,5 +18,9 @@ export const routes: Routes = [
     path: AppConst.JOBS_NAVIGATOR.POSITION_PATH,
     loadComponent: () => import('./position/position.component').then(m => m.PositionComponent)
   },
+  {
+    path: AppConst.JOBS_NAVIGATOR.SOURCE_PATH,
+    loadComponent: () => import('./source/source.component').then(m => m.SourceComponent)
+  },
   {path: '**', redirectTo: '', pathMatch: 'full'}
 ];

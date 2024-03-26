@@ -1,21 +1,20 @@
 import {Component, inject} from '@angular/core';
 import {AbstractComponent} from "@shared/components/abstract-component";
-import {PositionService} from "./position.service";
 import {LoadingService} from "@shared/services/loading.service";
+import {SourceService} from "./source.service";
 import {takeUntil} from "rxjs";
-import {MaterialModule} from "@shared/material/material.module";
 
 @Component({
-  selector: 'app-position',
+  selector: 'app-source',
   standalone: true,
-  imports: [MaterialModule],
-  templateUrl: './position.component.html',
-  styleUrl: './position.component.css'
+  imports: [],
+  templateUrl: './source.component.html',
+  styleUrl: './source.component.css'
 })
-export class PositionComponent extends AbstractComponent {
+export class SourceComponent extends AbstractComponent {
   /**
    * @type {LoadingService}
-   * @memberof PositionComponent
+   * @memberof SourceComponent
    * @description Loading service
    * @private
    * @default inject(LoadingService)
@@ -26,21 +25,21 @@ export class PositionComponent extends AbstractComponent {
   public loader: LoadingService = inject(LoadingService);
 
   /**
-   * @type {PositionService}
-   * @memberof PositionComponent
-   * @description Position service
+   * @type {SourceService}
+   * @memberof SourceComponent
+   * @description Source service
    * @private
-   * @default inject(PositionService)
+   * @default inject(SourceService)
    * @since 1.0.0
    * @version 1.0.0
-   * @see PositionService
+   * @see SourceService
    */
-  private positionService: PositionService = inject(PositionService);
+  private sourceService: SourceService = inject(SourceService);
 
   /**
    * @constructor
-   * @memberof PositionComponent
-   * @description Constructor for the PositionComponent
+   * @memberof SourceComponent
+   * @description Constructor for the SourceComponent
    * @since 1.0.0
    * @version 1.0.0
    */
@@ -50,7 +49,7 @@ export class PositionComponent extends AbstractComponent {
 
   /**
    * @method
-   * @memberof PositionComponent
+   * @memberof SourceComponent
    * @description Lifecycle hook that is called after a component's view has been fully initialized.
    * It calls the detectChanges method of the changeDetectorRefs.
    * @override
@@ -63,7 +62,7 @@ export class PositionComponent extends AbstractComponent {
 
   /**
    * @method
-   * @memberof PositionComponent
+   * @memberof SourceComponent
    * @description Lifecycle hook that is called when the component is destroyed.
    * It calls the next and complete methods of the subject$.
    * @override
@@ -77,38 +76,38 @@ export class PositionComponent extends AbstractComponent {
 
   /**
    * @method
-   * @memberof PositionComponent
+   * @memberof SourceComponent
    * @description Lifecycle hook that is called after Angular has initialized all data-bound properties of a directive.
-   * It calls the getPositions method.
+   * It calls the getSources method.
    * @override
    * @since 1.0.0
    * @version 1.0.0
    */
   ngOnInit(): void {
-    this.getPositions(true);
+    this.getSources(true);
   }
 
   /**
-   * Get the list of positions.
-   * It calls the position service to get the list of positions.
+   * Get the list of sources.
+   * It calls the source service to get the list of sources.
    *
    * @method
-   * @memberof PositionComponent
-   * @description Get positions
-   * @param includeActive - A boolean value to determine whether to include active positions.
+   * @memberof SourceComponent
+   * @description Get sources
+   * @param includeActive - A boolean value to determine whether to include active sources.
    * @since 1.0.0
    * @version 1.0.0
    */
-  private getPositions(includeActive: boolean): void {
-    this.positionService.getPositions(includeActive).pipe(takeUntil(this.subject$))
+  private getSources(includeActive: boolean): void {
+    this.sourceService.getSources(includeActive).pipe(takeUntil(this.subject$))
       .subscribe({
         next: (response: any) => {
-          this.allData = response.positionTOCollection;
-          this.dataSource = response.positionTOCollection;
+          this.allData = response.sourceTOList;
+          this.dataSource = response.sourceTOList;
         },
         error: (error: any) => {
           this.isErrorFound = true;
-          this.logError(`Error occurred while getting positions ${error}`);
+          this.logError(`Error occurred while getting sources ${error}`);
         }, complete: () => {
           this.loader.hide();
         }
