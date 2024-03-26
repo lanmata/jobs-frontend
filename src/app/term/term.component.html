@@ -1,0 +1,6 @@
+<p>term works!</p>
+@for (term of allData; track term.id) {
+  <p>{{term.id}} | {{term.name}} | {{term.description}} | {{term.active}} </p>
+} @empty {
+  <p>no term</p>
+}

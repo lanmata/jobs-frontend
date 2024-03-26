@@ -4,7 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {HTTP_OPTIONS, JOB_BACKEND_SERVICE_BASE_URL} from "@shared/app.const";
 import {Observable} from "rxjs";
 import {catchError} from "rxjs/operators";
-import {StatusCollection} from "./status";
+import {StatusCollection} from "./status.model";
 
 @Injectable({
   providedIn: 'root'
