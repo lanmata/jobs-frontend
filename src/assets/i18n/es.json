@@ -11,7 +11,8 @@
         "mode": "Modo",
         "offer": "Ofertas Aplicadas",
         "position": "Posiciones",
-        "source": "Fuentes"
+        "source": "Fuentes",
+        "status": "Status"
       }
     }
   },

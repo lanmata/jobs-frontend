@@ -1,0 +1,6 @@
+<p>status works!</p>
+@for (status of allData; track status.id) {
+  <p>{{status.id}} | {{status.name}} | {{status.description}} | {{status.active}} </p>
+} @empty {
+  <p>no status</p>
+}
