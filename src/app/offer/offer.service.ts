@@ -4,6 +4,7 @@ import {HTTP_OPTIONS, JOB_BACKEND_SERVICE_BASE_URL} from "@shared/app.const";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {catchError} from "rxjs/operators";
+import {Offer} from "./offer.model";
 
 /**
  * OfferService is a service that extends the ServiceTemplate.
@@ -43,7 +44,7 @@ export class OfferService extends ServiceTemplate {
    * @returns An Observable that emits the response from the backend service.
    */
   getOffers(): Observable<any> {
-    return this.httpClient.get(`${this.CONTEXT_PATH}/collection`, HTTP_OPTIONS)
+    return this.httpClient.get<Offer>(`${this.CONTEXT_PATH}/collection`, HTTP_OPTIONS)
       .pipe(catchError(this.handlerError));
   }
 }

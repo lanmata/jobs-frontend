@@ -17,6 +17,66 @@
       }
     }
   },
+  "jobs_board": {
+    "title": "Ofertas de Trabajo",
+    "new_offer_button": {
+      "title": "Nueva Oferta",
+      "tooltip": "Crear una nueva oferta de trabajo"
+    },
+    "export_to_excel_button": {
+      "title": "Exportar a Excel",
+      "tooltip": "Exportar a Excel"
+    },
+    "search": {
+      "title": "Buscar",
+      "placeholder": "Buscar por nombre de oferta"
+    },
+    "show_closed": {
+      "title": "Mostrar ofertas cerradas"
+    },
+    "data_grid": {
+      "id": {
+        "title": "Id",
+        "tooltip": ""
+      },
+      "position": {
+        "title": "Posicion",
+        "tooltip": ""
+      },
+      "company": {
+        "title": "Compañia",
+        "tooltip": ""
+      },
+      "updated_date": {
+        "title": "Ultima Actualizacion",
+        "tooltip": ""
+      },
+      "source": {
+        "title": "Fuente",
+        "tooltip": ""
+      },
+      "term": {
+        "title": "Termino",
+        "tooltip": ""
+      },
+      "status": {
+        "title": "Status",
+        "tooltip": ""
+      },
+      "edit": {
+        "title": "Editar",
+        "tooltip": "Editar"
+      },
+      "add_status": {
+        "title": "Agregar Status",
+        "tooltip": "Agregar Status"
+      },
+      "delete": {
+        "title": "Eliminar",
+        "tooltip": "Eliminar position de trabajo aplicada"
+      }
+    }
+  },
   "frm_register":{
     "firstName":{
       "title": "Nombre" ,

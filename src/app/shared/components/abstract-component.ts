@@ -5,8 +5,11 @@ import {MatSort} from '@angular/material/sort';
 import {AfterViewInit, ChangeDetectorRef, inject, Injectable, OnDestroy, OnInit} from '@angular/core';
 import {merge, of, startWith, Subject, switchMap} from 'rxjs';
 
-// import {TranslateService} from "@ngx-translate/core";
-
+/**
+ * AbstractComponent is an abstract class that provides common functionality for components that use MatTableDataSource.
+ * It includes methods for selecting rows, toggling selection, searching, and linking data to a paginator.
+ * This class should be extended by any component that needs this common functionality.
+ */
 @Injectable()
 export abstract class AbstractComponent implements OnInit, OnDestroy, AfterViewInit {
   public matTableDataSource: MatTableDataSource<any> = new MatTableDataSource<any>([]);
@@ -22,24 +25,38 @@ export abstract class AbstractComponent implements OnInit, OnDestroy, AfterViewI
   protected logError: (...arg: any) => void;
   protected subject$: Subject<void> = new Subject<void>();
   protected allData: any[] = [];
-  // protected translateService: TranslateService = inject(TranslateService);
   protected changeDetectorRefs = inject(ChangeDetectorRef);
 
+  /**
+   * Constructor for the AbstractComponent class.
+   * Initializes logInfo and logError methods.
+   */
   protected constructor() {
     this.logInfo = (...arg: any) => console.info(arg);
     this.logError = (...arg: any) => console.error(arg);
   }
 
+  /**
+   * Checks if all rows are selected.
+   * @returns {boolean} - true if all rows are selected, false otherwise.
+   */
   isAllSelected(): boolean {
     const numSelected = this.selection.selected.length;
     const numRows = this.matTableDataSource.data.length;
     return numSelected === numRows;
   }
 
+  /**
+   * Toggles the selection of all rows.
+   * If all rows are selected, it clears the selection. Otherwise, it selects all rows.
+   */
   masterToggle(): void {
     this.isAllSelected() ? this.selection.clear() : this.matTableDataSource.data.forEach(row => this.selection.select(row));
   }
 
+  /**
+   * Selects all rows in the current page.
+   */
   selectRows(): void {
     let endIndex: number;
     if (this.matTableDataSource.paginator !== null) {
@@ -55,12 +72,20 @@ export abstract class AbstractComponent implements OnInit, OnDestroy, AfterViewI
     }
   }
 
+  /**
+   * Sets the page size options for the paginator.
+   * @param {string} setPageSizeOptionsInput - A string of comma-separated numbers representing the page size options.
+   */
   setPageSizeOptions(setPageSizeOptionsInput: string): void {
     if (setPageSizeOptionsInput) {
       this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
     }
   }
 
+  /**
+   * Filters the data based on the search input.
+   * @param {any} event - The event object containing the search input.
+   */
   search(event: any): void {
     this.matTableDataSource.data = this.allData.filter((val) => {
       let response: boolean = false;
@@ -85,22 +110,24 @@ export abstract class AbstractComponent implements OnInit, OnDestroy, AfterViewI
     });
   }
 
-  showInactive(): void {
-    if (this.isInactiveShow) {
-      this.matTableDataSource.data = this.allData;
-    } else {
-      this.matTableDataSource.data = this.allData.filter((val => val.active === !this.isInactiveShow));
-    }
-  }
-
+  /**
+   * Processes the data and links it to the paginator and sort.
+   * @param {any} response - The data to be processed.
+   * @param {MatSort | null} sort - The MatSort instance to be linked to the data.
+   * @param {MatPaginator | null} paginator - The MatPaginator instance to be linked to the data.
+   */
   dataProcess(response: any, sort: MatSort | null, paginator: MatPaginator | null): void {
     this.allData = response;
-    this.matTableDataSource.data = {...this.allData};
+    this.matTableDataSource = new MatTableDataSource<any>(this.allData);
     this.matTableDataSource.paginator = paginator;
     this.matTableDataSource.sort = sort;
-    this.showInactive();
   }
 
+  /**
+   * Links the data to the paginator.
+   * @param {any[]} response - The data to be linked.
+   * @param {MatPaginator} paginator - The MatPaginator instance to be linked to the data.
+   */
   linkListToPaginator(response: any[], paginator: MatPaginator) {
     this.allData = response;
     merge(paginator.page).pipe(
@@ -114,9 +141,18 @@ export abstract class AbstractComponent implements OnInit, OnDestroy, AfterViewI
       });
   }
 
+  /**
+   * Lifecycle hook that is called after a component's view has been fully initialized.
+   */
   abstract ngAfterViewInit(): void;
 
+  /**
+   * Lifecycle hook that is called when a directive, pipe, or service is destroyed.
+   */
   abstract ngOnDestroy(): void;
 
+  /**
+   * Lifecycle hook that is called after data-bound properties of a directive are initialized.
+   */
   abstract ngOnInit(): void;
 }
