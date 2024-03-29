@@ -6,5 +6,5 @@ export class Company {
 }
 
 export class CompanyCollection {
-  companyTOCollection!: Company[];
+  companies!: Company[];
 }

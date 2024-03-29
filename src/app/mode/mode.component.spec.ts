@@ -32,8 +32,8 @@ describe('ModeComponent', () => {
   it('should list modes including inactive ones when requested', () => {
     const mockModes = {
       modeTOCollection: [
-        {id: 'ee0d55ce-827c-4663-a99f-38324b9322a8', name: 'Mode 1', description: 'Description Mode 1', active: true},
-        {id: '7a5ea908-e4e8-4d8d-a777-699158b4c94e', name: 'Mode 2', description: 'Description Mode 2', active: false}
+        {id: 'ee0d55ce-827c-4663-a99f-38324b9322a8', name: 'ModeModel 1', description: 'Description ModeModel 1', active: true},
+        {id: '7a5ea908-e4e8-4d8d-a777-699158b4c94e', name: 'ModeModel 2', description: 'Description ModeModel 2', active: false}
       ]
     };
 

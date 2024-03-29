@@ -15,6 +15,10 @@ export const routes: Routes = [
     loadComponent: () => import('./offer/offer.component').then(m => m.OfferComponent)
   },
   {
+    path: AppConst.JOBS_NAVIGATOR.NEW_OFFER_PATH,
+    loadComponent: () => import('./offer/new-offer/new-offer.component').then(m => m.NewOfferComponent)
+  },
+  {
     path: AppConst.JOBS_NAVIGATOR.POSITION_PATH,
     loadComponent: () => import('./position/position.component').then(m => m.PositionComponent)
   },

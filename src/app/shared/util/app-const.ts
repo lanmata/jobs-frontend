@@ -31,7 +31,8 @@ export class AppConst {
     POSITION_PATH : 'position',
     SOURCE_PATH: "source",
     STATUS_PATH: "status",
-    TERM_PATH: "term"
+    TERM_PATH: "term",
+    NEW_OFFER_PATH: "offer/new-offer"
 
   }
 

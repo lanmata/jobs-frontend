@@ -6,5 +6,5 @@ export class Term {
 }
 
 export class TermCollection {
-  sources!: Term[];
+  terms!: Term[];
 }
