@@ -13,3 +13,18 @@ export class Offer {
   mode!: string;
   source!: string;
 }
+
+export class NewOfferRequest {
+  id!: string;
+  title!: string;
+  description!: string;
+  reference!: string;
+  dateTime!: string;
+  statusId!: string;
+  companyId!: string;
+  positionId!: string;
+  termId!: string;
+  modeId!: string;
+  sourceId!: string
+  mountRate!: number;
+}

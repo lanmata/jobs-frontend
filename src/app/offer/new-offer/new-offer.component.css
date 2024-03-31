@@ -1,8 +1,4 @@
-:host {
-  flex-direction: column;
-  align-items: flex-start;
-  backdrop-filter: blur(2px);
-}
+@import "../../app.component.scss";
 
 form {
   margin-left: 50px;
@@ -31,4 +27,5 @@ form {
 
 .button-style {
   margin-right: 15px;
+  width: 100px;
 }

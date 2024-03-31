@@ -79,6 +79,10 @@
   },
   "new_offer": {
     "title": "Nueva Oferta",
+    "salary": {
+      "title": "Salario",
+      "placeholder": "Ingrese salario"
+    },
     "position": {
       "title": "Posicion...",
       "placeholder": "Seleccione una posicion"
@@ -102,6 +106,10 @@
     "status": {
       "title": "Status...",
       "placeholder": "Seleccione un status"
+    },
+    "create_date": {
+      "title": "Fecha de Creacion",
+      "placeholder": "Seleccione una fecha"
     },
     "cancel_button": {
       "title": "Cancelar"

@@ -2,6 +2,7 @@ import {DatePipe, DecimalPipe} from '@angular/common';
 
 export class FormatUtil {
   readonly DATE_TIME_PATTERN = 'dd-MM-yyyy hh:mm:ss a';
+  readonly DATE_TIME_PATTERN_YYYY_MM_DD_HH_DD_SS = 'yyyy-MM-dd hh:mm:ss';
   readonly DATE_TIME_FILE_PATTERN = 'ddMMyyyy_hhmmss';
   readonly DATE_PATTERN = 'yyyy-MM-dd';
   readonly THOUSAND_PATTERN = '1.2';
@@ -13,6 +14,7 @@ export class FormatUtil {
   constructor(private datePipe: DatePipe){}
 
   public datetime = (value: string | null) => this.datePipe.transform(value, this.DATE_TIME_PATTERN);
+  public datetimeStandard = (value: string | null) => this.datePipe.transform(value, this.DATE_TIME_PATTERN_YYYY_MM_DD_HH_DD_SS);
   public dateFormatter = (value: string | null) => this.datePipe.transform(value, this.DATE_PATTERN);
   public dateTimeFileFormatter = (value: string | null) => this.datePipe.transform(value, this.DATE_TIME_FILE_PATTERN);
 

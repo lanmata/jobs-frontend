@@ -11,16 +11,26 @@ import {ModeCollection} from "../../mode/mode.model";
 import {PositionCollection} from "../../position/position.model";
 import {SourceCollection} from 'src/app/source/source.model';
 import {TermCollection} from "../../term/term.model";
-import {CommonModule} from "@angular/common";
+import {CommonModule, DatePipe} from "@angular/common";
 import {MaterialModule} from "@shared/material/material.module";
-import {FormsModule} from "@angular/forms";
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {FlexModule} from "@angular/flex-layout";
 import {TranslateModule} from "@ngx-translate/core";
+import {provideNativeDateAdapter} from '@angular/material/core';
+import {AppConst} from "@shared/util/app-const";
+import {Router, RouterLink, RouterLinkActive} from "@angular/router";
+import {NewOfferRequest} from "../offer.model";
+import {OfferService} from "../offer.service";
+import {FormatUtil} from "@shared/util/format.util";
+import {StatusCollection} from "../../status/status.model";
+import {StatusService} from "../../status/status.service";
+import {AlertService} from "@shared/services/alert.service";
 
 @Component({
   selector: 'app-new-offer',
   standalone: true,
-  imports: [CommonModule, MaterialModule, FormsModule, FlexModule, TranslateModule],
+  imports: [CommonModule, MaterialModule, FormsModule, FlexModule, TranslateModule, RouterLink, RouterLinkActive, ReactiveFormsModule],
+  providers: [provideNativeDateAdapter()],
   templateUrl: './new-offer.component.html',
   styleUrl: './new-offer.component.css'
 })
@@ -36,15 +46,31 @@ export class NewOfferComponent implements OnInit, OnDestroy, AfterViewInit {
 
   protected subject$: Subject<void> = new Subject<void>();
 
+  protected readonly appConst = AppConst;
+
   private companyService: CompanyService = inject(CompanyService);
 
   private modeService: ModeService = inject(ModeService);
 
   private positionService: PositionService = inject(PositionService);
 
+  private offerService: OfferService = inject(OfferService);
+
   private sourceService: SourceService = inject(SourceService);
 
+  private statusService: StatusService = inject(StatusService);
+
   private termService: TermService = inject(TermService);
+
+  private alertService: AlertService = inject(AlertService);
+
+  private formBuilder = inject(FormBuilder);
+
+  private datePipe = inject(DatePipe);
+
+  private formatUtil!: FormatUtil;
+
+  private router: Router = inject(Router);
 
   protected loader: LoadingService = inject(LoadingService);
 
@@ -58,16 +84,24 @@ export class NewOfferComponent implements OnInit, OnDestroy, AfterViewInit {
 
   readonly termCollection: TermCollection = new TermCollection();
 
-  protected companySelected: string = '';
-  protected modeSelected: string = '';
-  protected positionSelected: string = '';
-  protected sourceSelected: string = '';
-  protected termSelected: string = '';
+  readonly statusCollection: StatusCollection = new StatusCollection();
+
+  newOfferForm: FormGroup;
 
   constructor() {
     this.logInfo = (...arg: any) => console.info(arg);
     this.logError = (...arg: any) => console.error(arg);
     // Initialize the collections
+    this.newOfferForm = this.formBuilder.group({
+      company: ['', [Validators.required]],
+      mode: ['', [Validators.required]],
+      position: ['', [Validators.required]],
+      source: ['', [Validators.required]],
+      term: ['', [Validators.required]],
+      mountRate: ['', [Validators.required]],
+      status: ['', [Validators.required]],
+      createdDate: ['', [Validators.required]],
+    });
   }
 
   /**
@@ -98,12 +132,13 @@ export class NewOfferComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   ngOnInit(): void {
     this.loader.show();
+    this.formatUtil = new FormatUtil(this.datePipe);
     this.listCompanies();
     this.listModes(false);
     this.listPositions(false);
     this.listSources(false);
+    this.listStatus(false);
     this.listTerms(false);
-    this.loader.hide();
   }
 
   /**
@@ -117,7 +152,6 @@ export class NewOfferComponent implements OnInit, OnDestroy, AfterViewInit {
    * @version 1.0.0
    */
   private listCompanies(): void {
-    this.loader.show();
     this.companyService.getCompanies(true).pipe(takeUntil(this.subject$))
       .subscribe({
         next: (response: any) => this.companyCollection.companies = response.companyTOCollection,
@@ -138,10 +172,9 @@ export class NewOfferComponent implements OnInit, OnDestroy, AfterViewInit {
    * @version 1.0.0
    */
   private listModes(includeInactive: boolean): void {
-    this.loader.show();
     this.modeService.getModes(includeInactive).pipe(takeUntil(this.subject$))
       .subscribe({
-        next: (response: any) => this.modeCollection.modes =response.modeTOCollection,
+        next: (response: any) => this.modeCollection.modes = response.modeTOCollection,
         error: (errorResponse) => this.setErrorFound('modes', errorResponse),
         complete: () => this.logInfo('Get modes completed.')
       });
@@ -188,6 +221,26 @@ export class NewOfferComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   /**
+   * Get the list of statuses.
+   * It calls the status service to get the list of statuses.
+   *
+   * @method
+   * @memberof StatusComponent
+   * @description Get statuses
+   * @param includeActive - A boolean value to determine whether to include active statuses.
+   * @since 1.0.0
+   * @version 1.0.0
+   */
+  private listStatus(includeActive: boolean): void {
+    this.statusService.getStatus(includeActive).pipe(takeUntil(this.subject$))
+      .subscribe({
+        next: (response: any) => this.statusCollection.statuses = response.statusTOCollection,
+        error: (error: any) => this.setErrorFound('statuses', error),
+        complete: () => this.logInfo('Get statuses completed.')
+      });
+  }
+
+  /**
    * Get the list of terms.
    * It calls the term service to get the list of terms.
    *
@@ -203,16 +256,66 @@ export class NewOfferComponent implements OnInit, OnDestroy, AfterViewInit {
       .subscribe({
         next: (response: any) => this.termCollection.terms = response.termTOCollection,
         error: (error: any) => this.setErrorFound('terms', error),
-        complete: () => this.logInfo('Get terms completed.')
+        complete: () => {
+          this.logInfo('Get terms completed.');
+          this.loader.hide();
+        }
       });
   }
 
+  /**
+   * Set the error found.
+   * It sets the error found to true and logs the error.
+   *
+   * @method
+   * @memberof NewOfferComponent
+   * @param element - The element to set the error found.
+   * @param errorResponse - The error response to log.
+   * @since 1.0.0
+   * @version 1.0.0
+   */
   private setErrorFound(element: string, errorResponse: Error): void {
     this.isErrorFound = true;
     this.logError(`Error occurred while getting ${element} ${errorResponse}`);
   }
 
-  saveOffer() {
-    this.logInfo('Save offer');
+  /**
+   * Save the offer.
+   * It creates a new offer request and calls the offer service to post the offer.
+   *
+   * @method
+   * @memberof NewOfferComponent
+   * @since 1.0.0
+   * @version 1.0.0
+   */
+  protected saveOffer() {
+    const newOfferRequest: NewOfferRequest = new NewOfferRequest();
+    newOfferRequest.title = 'Pending to be included in the form';
+    newOfferRequest.description = 'Pending to be included in the form';
+    newOfferRequest.reference = 'Pending to be included in the form';
+    newOfferRequest.companyId = this.newOfferForm.controls['company'].value;
+    newOfferRequest.positionId = this.newOfferForm.controls['position'].value;
+    newOfferRequest.sourceId = this.newOfferForm.controls['source'].value;
+    newOfferRequest.termId = this.newOfferForm.controls['term'].value;
+    newOfferRequest.modeId = this.newOfferForm.controls['mode'].value;
+    newOfferRequest.statusId = this.newOfferForm.controls['status'].value;
+    newOfferRequest.mountRate = this.newOfferForm.controls['mountRate'].value;
+    const dateResult = this.formatUtil.datetimeStandard(this.newOfferForm.controls['createdDate'].value);
+    if (dateResult) {
+      newOfferRequest.dateTime = dateResult;
+    }
+
+    this.offerService.postOffer(newOfferRequest).pipe(takeUntil(this.subject$)).subscribe({
+      next: (response: any) => {
+        if (null !== response && response.id && response.id.length > 0) {
+          this.logInfo('Offer saved');
+          this.alertService.success(`Created  offer #${response.id} successfully`, true);
+          this.router.navigate([this.appConst.JOBS_NAVIGATOR.OFFER_PATH]);
+        }
+      }, error: (errorResponse) => {
+        this.isErrorFound = true;
+        this.logError(`Error occurred while saving offer ${errorResponse}`);
+      }
+    });
   }
 }
