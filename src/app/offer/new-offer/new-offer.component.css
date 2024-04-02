@@ -1,0 +1,31 @@
+@import "../../app.component.scss";
+
+form {
+  margin-left: 50px;
+}
+
+.mat-selection-list {
+  border: 1px solid currentColor;
+  height: 300px;
+  width: 350px;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  backdrop-filter: blur(2px);
+}
+
+.panel-buttons {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.button-style {
+  margin-right: 15px;
+  width: 100px;
+}

@@ -9,6 +9,8 @@ import {AsyncPipe} from "@angular/common";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort, MatSortModule} from "@angular/material/sort";
 import {FormsModule} from "@angular/forms";
+import {AppConst} from "@shared/util/app-const";
+import {RouterLink, RouterLinkActive} from "@angular/router";
 
 /**
  * OfferComponent is a component that handles the offers in the application.
@@ -23,7 +25,7 @@ import {FormsModule} from "@angular/forms";
 @Component({
   selector: 'app-offer',
   standalone: true,
-  imports: [MaterialModule, MatSortModule, TranslateModule, AsyncPipe, FormsModule],
+  imports: [MaterialModule, MatSortModule, TranslateModule, AsyncPipe, FormsModule, RouterLink, RouterLinkActive],
   templateUrl: './offer.component.html',
   styleUrl: './offer.component.css'
 })
@@ -42,6 +44,8 @@ export class OfferComponent extends AbstractComponent {
    * offerService is a private instance of the OfferService.
    */
   private offerService: OfferService = inject(OfferService);
+
+  protected readonly appConst = AppConst;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;

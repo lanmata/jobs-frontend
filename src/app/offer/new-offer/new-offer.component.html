@@ -1,0 +1,98 @@
+<form [formGroup]="newOfferForm">
+  <h1>{{ 'new_offer.title' | translate }}</h1>
+  @if (loader.loading$ | async) {
+    <div class="overlay"></div>
+    <mat-progress-spinner [mode]="'indeterminate'"></mat-progress-spinner>
+  }
+  <ng-container>
+    <div fxLayout="column" fxLayoutAlign="space-around start  ">
+      <!--    Position List-->
+      <mat-form-field>
+        <mat-label>{{ 'new_offer.position.title' | translate }}</mat-label>
+        <mat-select formControlName="position"
+                    placeholder="{{'new_offer.position.placeholder' | translate}}">
+          <mat-option>Ninguno</mat-option>
+          @for (position of positionCollection.positions; track position) {
+            <mat-option [value]="position.id">{{ position.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <!--    Company List -->
+      <mat-form-field>
+        <mat-label>{{ 'new_offer.company.title' | translate }}</mat-label>
+        <mat-select formControlName="company"
+                    placeholder="{{'new_offer.company.placeholder' | translate}}">
+          <mat-option>Ninguno</mat-option>
+          @for (company of companyCollection.companies; track company) {
+            <mat-option [value]="company.id">{{ company.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>{{ 'new_offer.salary.title' | translate }}</mat-label>
+        <input matInput formControlName="mountRate" placeholder="{{'new_offer.salary.placeholder' | translate}}">
+      </mat-form-field>
+      <!--  Mode List-->
+      <mat-form-field>
+        <mat-label>{{ 'new_offer.mode.title' | translate }}</mat-label>
+        <mat-select formControlName="mode"
+                    placeholder="{{'new_offer.mode.placeholder' | translate}}">
+          <mat-option>Ninguno</mat-option>
+          @for (mode of modeCollection.modes; track mode) {
+            <mat-option [value]="mode.id">{{ mode.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <!--  Term List-->
+      <mat-form-field>
+        <mat-label>{{ 'new_offer.term.title' | translate }}</mat-label>
+        <mat-select formControlName="term"
+                    placeholder="{{'new_offer.term.placeholder' | translate}}">
+          <mat-option>Ninguno</mat-option>
+          @for (term of termCollection.terms; track term) {
+            <mat-option [value]="term.id">{{ term.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <!--  Status List-->
+      <mat-form-field>
+        <mat-label>{{ 'new_offer.status.title' | translate }}</mat-label>
+        <mat-select formControlName="status"
+                    placeholder="{{'new_offer.status.placeholder' | translate}}">
+          <mat-option>Ninguno</mat-option>
+          @for (status of statusCollection.statuses; track status) {
+            <mat-option [value]="status.id">{{ status.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <!--  Source List-->
+      <mat-form-field>
+        <mat-label>{{ 'new_offer.source.title' | translate }}</mat-label>
+        <mat-select formControlName="source"
+                    placeholder="{{'new_offer.source.placeholder' | translate}}">
+          <mat-option>Ninguno</mat-option>
+          @for (source of sourceCollection.sources; track source) {
+            <mat-option [value]="source.id">{{ source.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>{{ 'new_offer.create_date.title' | translate }}</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="createdDate">
+        <mat-hint>YYYY/MM/DD</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+  </ng-container>
+  <ng-container class="panel-buttons">
+    <button mat-raised-button color="primary" class="button-style" [disabled]="!newOfferForm.valid"
+            (click)="saveOffer()">{{ 'new_offer.create_button.title' | translate }}
+    </button>
+    <!--     PENDING - I have to create a dialog to confirm the cancel action-->
+    <button mat-raised-button color="secondary"
+            [routerLink]="'/'+appConst.JOBS_NAVIGATOR.OFFER_PATH" [routerLinkActive]="'active'"
+            class="button-style">{{ 'new_offer.cancel_button.title' | translate }}
+    </button>
+  </ng-container>
+</form>

@@ -77,6 +77,47 @@
       }
     }
   },
+  "new_offer": {
+    "title": "Nueva Oferta",
+    "salary": {
+      "title": "Salario",
+      "placeholder": "Ingrese salario"
+    },
+    "position": {
+      "title": "Posicion...",
+      "placeholder": "Seleccione una posicion"
+    },
+    "company": {
+      "title": "Compañia...",
+      "placeholder": "Seleccione una compañia"
+    },
+    "mode": {
+      "title": "Modalidad...",
+      "placeholder": "Seleccione una modalidad"
+    },
+    "source": {
+      "title": "Fuente...",
+      "placeholder": "Seleccione una fuente"
+    },
+    "term": {
+      "title": "Termino...",
+      "placeholder": "Seleccione un termino"
+    },
+    "status": {
+      "title": "Status...",
+      "placeholder": "Seleccione un status"
+    },
+    "create_date": {
+      "title": "Fecha de Creacion",
+      "placeholder": "Seleccione una fecha"
+    },
+    "cancel_button": {
+      "title": "Cancelar"
+    },
+    "create_button": {
+      "title": "Crear"
+    }
+  },
   "frm_register":{
     "firstName":{
       "title": "Nombre" ,

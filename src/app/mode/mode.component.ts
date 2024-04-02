@@ -30,7 +30,7 @@ export class ModeComponent extends AbstractComponent {
   /**
    * @type {ModeService}
    * @memberof ModeComponent
-   * @description Mode service
+   * @description ModeModel service
    * @private
    * @default inject(ModeService)
    * @since 1.0.0

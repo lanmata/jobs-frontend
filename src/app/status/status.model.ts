@@ -6,5 +6,5 @@ export class Status {
 }
 
 export class StatusCollection {
-  sources!: Status[];
+  statuses!: Status[];
 }

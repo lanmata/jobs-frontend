@@ -1,4 +1,4 @@
-<h1 id="featureTitle" >{{'jobs_board.title' | translate }}</h1>
+<h1 id="featureTitle">{{ 'jobs_board.title' | translate }}</h1>
 @if (loader.loading$ | async) {
   <div class="overlay"></div>
   <mat-progress-spinner [mode]="'indeterminate'"></mat-progress-spinner>
@@ -6,100 +6,109 @@
 
 <ng-container>
   <div class="panel-buttons">
-    <button mat-icon-button color="primary" (click)="create()" [matTooltip]="'jobs_board.new_offer_button.title' | translate">
+    <button mat-icon-button color="primary" [routerLink]="'/'+appConst.JOBS_NAVIGATOR.NEW_OFFER_PATH" [routerLinkActive]="'active'"
+            [matTooltip]="'jobs_board.new_offer_button.title' | translate">
       <mat-icon>add</mat-icon>
     </button>
-    <button mat-icon-button color="primary" (click)="exportToExcel()" [matTooltip]="'jobs_board.export_to_excel_button.title' | translate">
+    <button mat-icon-button color="primary" (click)="exportToExcel()"
+            [matTooltip]="'jobs_board.export_to_excel_button.title' | translate">
       <mat-icon>description</mat-icon>
     </button>
     <mat-form-field class="panel-search">
-      <mat-label>{{'jobs_board.search.title' | translate}}</mat-label>
+      <mat-label>{{ 'jobs_board.search.title' | translate }}</mat-label>
       <input id="job-offer-filter" placeholder="{{'jobs_board.search.placeholder' | translate}}"
              (keyup)="search($event)" maxlength="150" matInput>
     </mat-form-field>
     <mat-slide-toggle id="job_offer_status_filter" class="inactive-option"
                       [(ngModel)]="isInactiveShow"
                       [ngModelOptions]="{standalone: true}"
-                      (change)="showInactive()" >{{'jobs_board.show_closed.title' | translate}}</mat-slide-toggle>
+                      (change)="showInactive()">{{ 'jobs_board.show_closed.title' | translate }}
+    </mat-slide-toggle>
   </div>
 </ng-container>
 
-  <div class="mat-elevation-z8">
-    <mat-table aria-describedby="jobTitle" [dataSource]="matTableDataSource" matSort>
-      <ng-container matColumnDef="select">
-        <mat-header-cell *matHeaderCellDef>
-          <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
-                        [indeterminate]="selection.hasValue() && !isAllSelected()">
-          </mat-checkbox>
-        </mat-header-cell>
-        <mat-cell *matCellDef="let row">
-          <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
-                        [checked]="selection.isSelected(row)">
-          </mat-checkbox>
-        </mat-cell>
-      </ng-container>
-      <!--ID-->
-      <ng-container matColumnDef="id">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'jobs_board.data_grid.id.title' | translate }}</mat-header-cell>
-        <mat-cell *matCellDef="let row">{{ row.id }}</mat-cell>
-      </ng-container>
-      <!-- Position-->
-      <ng-container matColumnDef="position">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'jobs_board.data_grid.position.title' | translate }}</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.position }}</mat-cell>
-      </ng-container>
-      <!-- Company-->
-      <ng-container matColumnDef="company">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'jobs_board.data_grid.company.title' | translate }}</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.company }}</mat-cell>
-      </ng-container>
-      <!-- Updated At-->
-      <ng-container matColumnDef="updated_at">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'jobs_board.data_grid.updated_date.title' | translate }}</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.lastModifiedDate }}</mat-cell>
-      </ng-container>
-      <!-- Source-->
-      <ng-container matColumnDef="source">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'jobs_board.data_grid.source.title' | translate }}</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.source }}</mat-cell>
-      </ng-container>
-      <!-- Status-->
-      <ng-container matColumnDef="status">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'jobs_board.data_grid.status.title' | translate }}</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.status }}</mat-cell>
-      </ng-container>
-      <!-- Edit-->
-      <ng-container matColumnDef="edit">
-        <mat-header-cell *matHeaderCellDef>{{ 'jobs_board.data_grid.edit.title' | translate }}</mat-header-cell>
-        <mat-cell *matCellDef="let element">
-          <button mat-icon-button (click)="editJobOffer(element)">
-            <mat-icon>edit</mat-icon>
-          </button>
-        </mat-cell>
-      </ng-container>
-      <!-- Add Status-->
-      <ng-container matColumnDef="add_status">
-        <mat-header-cell *matHeaderCellDef>{{ 'jobs_board.data_grid.add_status.title' | translate }}</mat-header-cell>
-        <mat-cell *matCellDef="let element">
-          <button mat-icon-button (click)="addStatus(element)">
-            <mat-icon>add</mat-icon>
-          </button>
-        </mat-cell>
-      </ng-container>
-      <!-- Delete-->
-      <ng-container matColumnDef="delete">
-        <mat-header-cell *matHeaderCellDef>{{ 'jobs_board.data_grid.delete.title' | translate }}</mat-header-cell>
-        <mat-cell *matCellDef="let element">
-          <button mat-icon-button (click)="deleteJobOffer(element)">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </mat-cell>
-      </ng-container>
-      <!-- Columns-->
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <!-- Rows-->
-      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-    </mat-table>
-    <!-- Paginator-->
-    <mat-paginator [pageSizeOptions]="pageSizeOptions" [pageSize]="pageSize" showFirstLastButtons></mat-paginator>
-  </div>
+<div class="mat-elevation-z8">
+  <mat-table aria-describedby="jobTitle" [dataSource]="matTableDataSource" matSort>
+    <ng-container matColumnDef="select">
+      <mat-header-cell *matHeaderCellDef>
+        <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+                      [indeterminate]="selection.hasValue() && !isAllSelected()">
+        </mat-checkbox>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+                      [checked]="selection.isSelected(row)">
+        </mat-checkbox>
+      </mat-cell>
+    </ng-container>
+    <!--ID-->
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'jobs_board.data_grid.id.title' | translate }}
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">{{ row.id }}</mat-cell>
+    </ng-container>
+    <!-- Position-->
+    <ng-container matColumnDef="position">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'jobs_board.data_grid.position.title' | translate }}
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.position }}</mat-cell>
+    </ng-container>
+    <!-- Company-->
+    <ng-container matColumnDef="company">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'jobs_board.data_grid.company.title' | translate }}
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.company }}</mat-cell>
+    </ng-container>
+    <!-- Updated At-->
+    <ng-container matColumnDef="updated_at">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'jobs_board.data_grid.updated_date.title' | translate }}
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.lastModifiedDate }}</mat-cell>
+    </ng-container>
+    <!-- Source-->
+    <ng-container matColumnDef="source">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'jobs_board.data_grid.source.title' | translate }}
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.source }}</mat-cell>
+    </ng-container>
+    <!-- Status-->
+    <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'jobs_board.data_grid.status.title' | translate }}
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.status }}</mat-cell>
+    </ng-container>
+    <!-- Edit-->
+    <ng-container matColumnDef="edit">
+      <mat-header-cell *matHeaderCellDef>{{ 'jobs_board.data_grid.edit.title' | translate }}</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <button mat-icon-button (click)="editJobOffer(element)">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+    <!-- Add Status-->
+    <ng-container matColumnDef="add_status">
+      <mat-header-cell *matHeaderCellDef>{{ 'jobs_board.data_grid.add_status.title' | translate }}</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <button mat-icon-button (click)="addStatus(element)">
+          <mat-icon>add</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+    <!-- Delete-->
+    <ng-container matColumnDef="delete">
+      <mat-header-cell *matHeaderCellDef>{{ 'jobs_board.data_grid.delete.title' | translate }}</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <button mat-icon-button (click)="deleteJobOffer(element)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+    <!-- Columns-->
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <!-- Rows-->
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+  <!-- Paginator-->
+  <mat-paginator [pageSizeOptions]="pageSizeOptions" [pageSize]="pageSize" showFirstLastButtons></mat-paginator>
+</div>
