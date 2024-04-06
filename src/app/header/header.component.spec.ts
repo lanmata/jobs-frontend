@@ -4,6 +4,7 @@ import {HeaderComponent} from './header.component';
 import {ActivatedRoute} from "@angular/router";
 import {of} from "rxjs";
 import {HttpClientTestingModule} from "@angular/common/http/testing"
+import {DatePipe} from "@angular/common";
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -13,6 +14,7 @@ describe('HeaderComponent', () => {
     await TestBed.configureTestingModule({
       imports: [HeaderComponent, HttpClientTestingModule, TranslateModule.forRoot()],
       providers: [
+        DatePipe,
         {
           provide: ActivatedRoute,
           useValue: {

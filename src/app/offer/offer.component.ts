@@ -10,7 +10,7 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatSort, MatSortModule} from "@angular/material/sort";
 import {FormsModule} from "@angular/forms";
 import {AppConst} from "@shared/util/app-const";
-import {RouterLink, RouterLinkActive} from "@angular/router";
+import {Router, RouterLink, RouterLinkActive} from "@angular/router";
 
 /**
  * OfferComponent is a component that handles the offers in the application.
@@ -44,6 +44,8 @@ export class OfferComponent extends AbstractComponent {
    * offerService is a private instance of the OfferService.
    */
   private offerService: OfferService = inject(OfferService);
+
+  private router: Router = inject(Router);
 
   protected readonly appConst = AppConst;
 
@@ -105,9 +107,8 @@ export class OfferComponent extends AbstractComponent {
       });
   }
 
-  // PENDING - Implement the following methods
   editJobOffer(element: any): void {
-    console.log('Editing job offer', element);
+    this.router.navigate([this.appConst.JOBS_NAVIGATOR.EDIT_OFFER_PATH, {offerId: element.id}]);
   }
 
   // PENDING - Implement the following methods

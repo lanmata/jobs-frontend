@@ -81,7 +81,7 @@
     <ng-container matColumnDef="edit">
       <mat-header-cell *matHeaderCellDef>{{ 'jobs_board.data_grid.edit.title' | translate }}</mat-header-cell>
       <mat-cell *matCellDef="let element">
-        <button mat-icon-button (click)="editJobOffer(element)">
+        <button mat-icon-button [routerLink]="'/'+appConst.JOBS_NAVIGATOR.EDIT_OFFER_PATH+'/'+element.id">
           <mat-icon>edit</mat-icon>
         </button>
       </mat-cell>

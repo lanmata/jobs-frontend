@@ -24,7 +24,7 @@ export abstract class AbstractComponent implements OnInit, OnDestroy, AfterViewI
   protected logInfo: (...arg: any) => void;
   protected logError: (...arg: any) => void;
   protected subject$: Subject<void> = new Subject<void>();
-  protected allData: any[] = [];
+  public allData: any[] = [];
   protected changeDetectorRefs = inject(ChangeDetectorRef);
 
   /**

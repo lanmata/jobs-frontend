@@ -21,7 +21,7 @@ import {AppConst} from "@shared/util/app-const";
 import {Router, RouterLink, RouterLinkActive} from "@angular/router";
 import {NewOfferRequest} from "../offer.model";
 import {OfferService} from "../offer.service";
-import {FormatUtil} from "@shared/util/format.util";
+import {FormatUtil} from "@shared/util/format-util";
 import {StatusCollection} from "../../status/status.model";
 import {StatusService} from "../../status/status.service";
 import {AlertService} from "@shared/services/alert.service";
@@ -274,7 +274,7 @@ export class NewOfferComponent implements OnInit, OnDestroy, AfterViewInit {
    * @since 1.0.0
    * @version 1.0.0
    */
-  private setErrorFound(element: string, errorResponse: Error): void {
+  setErrorFound(element: string, errorResponse: Error): void {
     this.isErrorFound = true;
     this.logError(`Error occurred while getting ${element} ${errorResponse}`);
   }
@@ -288,19 +288,19 @@ export class NewOfferComponent implements OnInit, OnDestroy, AfterViewInit {
    * @since 1.0.0
    * @version 1.0.0
    */
-  protected saveOffer() {
+  saveOffer() {
     const newOfferRequest: NewOfferRequest = new NewOfferRequest();
     newOfferRequest.title = 'Pending to be included in the form';
     newOfferRequest.description = 'Pending to be included in the form';
     newOfferRequest.reference = 'Pending to be included in the form';
-    newOfferRequest.companyId = this.newOfferForm.controls['company'].value;
-    newOfferRequest.positionId = this.newOfferForm.controls['position'].value;
-    newOfferRequest.sourceId = this.newOfferForm.controls['source'].value;
-    newOfferRequest.termId = this.newOfferForm.controls['term'].value;
-    newOfferRequest.modeId = this.newOfferForm.controls['mode'].value;
-    newOfferRequest.statusId = this.newOfferForm.controls['status'].value;
-    newOfferRequest.mountRate = this.newOfferForm.controls['mountRate'].value;
-    const dateResult = this.formatUtil.datetimeStandard(this.newOfferForm.controls['createdDate'].value);
+    newOfferRequest.companyId = this.newOfferForm.get('company')?.value;
+    newOfferRequest.positionId = this.newOfferForm.get('position')?.value;
+    newOfferRequest.sourceId = this.newOfferForm.get('source')?.value;
+    newOfferRequest.termId = this.newOfferForm.get('term')?.value;
+    newOfferRequest.modeId = this.newOfferForm.get('mode')?.value;
+    newOfferRequest.statusId = this.newOfferForm.get('status')?.value;
+    newOfferRequest.mountRate = this.newOfferForm.get('mountRate')?.value;
+    const dateResult = this.formatUtil.datetimeStandard(this.newOfferForm.get('createdDate')?.value);
     if (dateResult) {
       newOfferRequest.dateTime = dateResult;
     }

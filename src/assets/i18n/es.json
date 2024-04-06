@@ -1,6 +1,6 @@
 {
   "title": "PRX Jobs-Offer Board",
-  "_comment_001":"Formulario registro de usuario",
+  "_comment_001": "Formulario registro de usuario",
   "menu_header": {
     "title": "PRX Jobs-Offer Board",
     "home": "Inicio",
@@ -118,45 +118,99 @@
       "title": "Crear"
     }
   },
-  "frm_register":{
-    "firstName":{
-      "title": "Nombre" ,
-      "placeholder":"Ingresar nombre",
-      "validation_messages": {
-        "required": "Nombre es requerido",
-        "minLength":"Longitud mínima",
-        "maxLength":"Longitud máxima"
+  "edit_offer": {
+    "title": "Editar Oferta",
+    "id": {
+      "title": "Id",
+      "placeholder": "Id"
+    },
+    "mode": {
+      "title": "Modalidad",
+      "placeholder": "Seleccione una modalidad"
+    },
+    "term": {
+      "title": "Termino",
+      "placeholder": "Seleccione un termino"
+    },
+    "status": {
+      "title": "Status",
+      "placeholder": "Seleccione un status"
+    },
+    "create_date": {
+      "title": "Fecha de Creacion",
+      "placeholder": "Seleccione una fecha"
+    },
+    "update_date": {
+      "title": "Fecha de Actualizacion",
+      "placeholder": "Seleccione una fecha"
+    },
+    "comments": {
+      "title": "Comentarios",
+      "placeholder": "Ingresar comentarios"
+    },
+    "data_grid": {
+      "id": {
+        "title": "Id",
+        "tooltip": ""
+      },
+      "comments": {
+        "title": "Comentarios",
+        "tooltip": ""
+      },
+      "update_date": {
+        "title": "Fecha de Actualizacion",
+        "tooltip": ""
+      },
+      "status": {
+        "title": "Status",
+        "tooltip": ""
       }
     },
-    "middleName":{
-      "title": "Primer apellido" ,
-      "placeholder":"Ingresar primer apellido",
+    "cancel_button": {
+      "title": "Cancelar"
+    },
+    "update_button": {
+      "title": "Actualizar"
+    }
+  },
+  "frm_register": {
+    "firstName": {
+      "title": "Nombre",
+      "placeholder": "Ingresar nombre",
+      "validation_messages": {
+        "required": "Nombre es requerido",
+        "minLength": "Longitud mínima",
+        "maxLength": "Longitud máxima"
+      }
+    },
+    "middleName": {
+      "title": "Primer apellido",
+      "placeholder": "Ingresar primer apellido",
       "validation_messages": {
         "required": "Primer apellido es requerido",
         "minLength": "Longitud mínima",
         "maxLength": "Longitud máxima"
       }
     },
-    "lastName":{
+    "lastName": {
       "title": "Segundo apellido",
-      "placeholder":"Ingresar segundo apellido",
+      "placeholder": "Ingresar segundo apellido",
       "validation_messages": {
         "required": "Segundo apellido es requerido",
         "minLength": "Longitud mínima",
         "maxLength": "Longitud máxima"
       }
     },
-    "gender":{
+    "gender": {
       "title": "Genero",
-      "defaultLabel":"Seleccionar",
-      "femaleLabel":"Femenino",
-      "menLabel":"Masculino",
+      "defaultLabel": "Seleccionar",
+      "femaleLabel": "Femenino",
+      "menLabel": "Masculino",
       "validation_messages": {
         "required": "Genero requerido",
         "minLength": "Longitud mínima",
         "maxLength": "Longitud máxima"
       }
-
     },
     "calendar_birth": {
       "title": "Fecha de Nacimiento",
@@ -165,9 +219,9 @@
         "required": "Fecha de nacimiento es requerida"
       }
     },
-    "email":{
+    "email": {
       "title": "Correo electrónico",
-      "placeholder":"ej. usuario@dominio.com",
+      "placeholder": "ej. usuario@dominio.com",
       "validation_messages": {
         "required": "Correo electronico es requerido",
         "email": "Formato de correo no valido",
@@ -175,19 +229,19 @@
         "maxLength": "Longitud máxima"
       }
     },
-    "address":{
-      "title":"Dirección",
-      "placeholder":"Avenida/Calle",
+    "address": {
+      "title": "Dirección",
+      "placeholder": "Avenida/Calle",
       "validation_messages": {
         "required": "Dirección es requerido",
         "minLength": "Longitud mínima",
         "maxLength": "Longitud máxima"
       }
     },
-    "button_accept":{
-      "title":"Registrar"
+    "button_accept": {
+      "title": "Registrar"
     },
-    "button_cancel":{
+    "button_cancel": {
       "title": "Cancelar"
     },
     "username": {
@@ -199,7 +253,7 @@
         "maxLength": "Longitud máxima"
       }
     },
-    "password":{
+    "password": {
       "title": "Clave",
       "placeholder": "Clave",
       "validation_messages": {
@@ -208,7 +262,7 @@
         "maxLength": "Longitud máxima"
       }
     },
-    "confirmPassword":{
+    "confirmPassword": {
       "title": "Confirmación de Clave",
       "placeholder": "Confirmación de Clave",
       "validation_messages": {
@@ -220,7 +274,7 @@
     }
   },
   "frm_login": {
-    "_comment_002":"Formulario para la autenticacion de usuario",
+    "_comment_002": "Formulario para la autenticacion de usuario",
     "user": {
       "placeholder": "Usuario",
       "validation_messages": {
@@ -230,7 +284,7 @@
       },
       "tooltip": "Debe ingresar nombre de usuario"
     },
-    "password":{
+    "password": {
       "placeholder": "Clave",
       "validation_messages": {
         "required": "La clave es requerido",
@@ -240,13 +294,13 @@
       "tooltip": "Debe ingresar clave de usuario"
     },
     "remember": {
-      "title":"Recuerdame"
+      "title": "Recuerdame"
     },
-    "button_accept":{
+    "button_accept": {
       "title": "Ingresar"
     },
-    "button_registry":{
-      "title":"Registrar"
+    "button_registry": {
+      "title": "Registrar"
     }
   },
   "role_main": {
@@ -269,31 +323,31 @@
     },
     "data_grid": {
       "id": {
-        "title":"Id",
+        "title": "Id",
         "tooltip": ""
       },
       "name": {
-        "title":"Nombre",
+        "title": "Nombre",
         "tooltip": ""
       },
       "description": {
-        "title":"Descripcion",
+        "title": "Descripcion",
         "tooltip": ""
       },
       "active": {
-        "title":"Estado",
+        "title": "Estado",
         "tooltip": ""
       },
       "edit": {
-        "title":"Editar",
+        "title": "Editar",
         "tooltip": "Editar"
       },
       "enable": {
-        "title":"Habilitado",
+        "title": "Habilitado",
         "tooltip": "Habilitado"
       },
       "disable": {
-        "title":"Deshabilitado",
+        "title": "Deshabilitado",
         "tooltip": "Deshabilitado"
       }
     },
@@ -320,13 +374,13 @@
       "title": "Activo",
       "tooltip": "Estado del rol"
     },
-    "create_button":{
+    "create_button": {
       "title": "Crear"
     },
-    "update_button":{
+    "update_button": {
       "title": "Actualizar"
     },
-    "cancel_button":{
+    "cancel_button": {
       "title": "Cancelar"
     },
     "features": {
@@ -364,31 +418,31 @@
     },
     "data_grid": {
       "id": {
-        "title":"Id",
+        "title": "Id",
         "tooltip": ""
       },
       "name": {
-        "title":"Nombre",
+        "title": "Nombre",
         "tooltip": ""
       },
       "description": {
-        "title":"Descripcion",
+        "title": "Descripcion",
         "tooltip": ""
       },
       "active": {
-        "title":"Estado",
+        "title": "Estado",
         "tooltip": ""
       },
       "edit": {
-        "title":"Editar",
+        "title": "Editar",
         "tooltip": "Editar"
       },
       "enable": {
-        "title":"Habilitado",
+        "title": "Habilitado",
         "tooltip": "Habilitado"
       },
       "disable": {
-        "title":"Deshabilitado",
+        "title": "Deshabilitado",
         "tooltip": "Deshabilitado"
       }
     },
@@ -415,13 +469,13 @@
       "title": "Activo",
       "tooltip": "Estado de caracteristica"
     },
-    "create_button":{
+    "create_button": {
       "title": "Crear"
     },
-    "update_button":{
+    "update_button": {
       "title": "Actualizar"
     },
-    "cancel_button":{
+    "cancel_button": {
       "title": "Cancelar"
     },
     "features": {
@@ -459,31 +513,31 @@
     },
     "data_grid": {
       "id": {
-        "title":"Id",
+        "title": "Id",
         "tooltip": ""
       },
       "name": {
-        "title":"Nombre",
+        "title": "Nombre",
         "tooltip": ""
       },
       "description": {
-        "title":"Descripcion",
+        "title": "Descripcion",
         "tooltip": ""
       },
       "active": {
-        "title":"Estado",
+        "title": "Estado",
         "tooltip": ""
       },
       "edit": {
-        "title":"Editar",
+        "title": "Editar",
         "tooltip": "Editar"
       },
       "enable": {
-        "title":"Habilitado",
+        "title": "Habilitado",
         "tooltip": "Habilitado"
       },
       "disable": {
-        "title":"Deshabilitado",
+        "title": "Deshabilitado",
         "tooltip": "Deshabilitado"
       }
     },
@@ -513,13 +567,13 @@
       "title": "Activo",
       "tooltip": "Estado para tipo de contacto"
     },
-    "create_button":{
+    "create_button": {
       "title": "Crear"
     },
-    "update_button":{
+    "update_button": {
       "title": "Actualizar"
     },
-    "cancel_button":{
+    "cancel_button": {
       "title": "Cancelar"
     },
     "features": {
@@ -545,39 +599,39 @@
     },
     "data_grid": {
       "id": {
-        "title":"Id",
+        "title": "Id",
         "tooltip": ""
       },
       "name": {
-        "title":"Nombre",
+        "title": "Nombre",
         "tooltip": ""
       },
       "middle_name": {
-        "title":"Segundo nombre",
+        "title": "Segundo nombre",
         "tooltip": ""
       },
       "lastname": {
-        "title":"Apellido",
+        "title": "Apellido",
         "tooltip": ""
       },
       "gender": {
-        "title":"Genero",
+        "title": "Genero",
         "tooltip": ""
       },
       "birthdate": {
-        "title":"Fecha de nacimiento",
+        "title": "Fecha de nacimiento",
         "tooltip": ""
       },
       "edit": {
-        "title":"Editar",
+        "title": "Editar",
         "tooltip": "Editar"
       },
       "enable": {
-        "title":"Habilitado",
+        "title": "Habilitado",
         "tooltip": "Habilitado"
       },
       "disable": {
-        "title":"Deshabilitado",
+        "title": "Deshabilitado",
         "tooltip": "Deshabilitado"
       }
     },
@@ -621,13 +675,13 @@
       "title": "Fecha de nacimiento",
       "placeholder": "DD/MM/AAAA"
     },
-    "create_button":{
+    "create_button": {
       "title": "Crear"
     },
-    "update_button":{
+    "update_button": {
       "title": "Actualizar"
     },
-    "close_button":{
+    "close_button": {
       "title": "Cerrar"
     }
   },
@@ -650,35 +704,35 @@
     },
     "data_grid": {
       "id": {
-        "title":"Id",
+        "title": "Id",
         "tooltip": ""
       },
       "content": {
-        "title":"Titulo",
+        "title": "Titulo",
         "tooltip": ""
       },
       "contact-type": {
-        "title":"Tipo",
+        "title": "Tipo",
         "tooltip": ""
       },
       "remove": {
-        "title":"Eliminar",
+        "title": "Eliminar",
         "tooltip": ""
       },
       "field3": {
-        "title":"Campo 3",
+        "title": "Campo 3",
         "tooltip": ""
       },
       "field4": {
-        "title":"Campo 4",
+        "title": "Campo 4",
         "tooltip": ""
       },
       "edit": {
-        "title":"Editar",
+        "title": "Editar",
         "tooltip": "Editar"
       },
       "delete": {
-        "title":"Eliminar",
+        "title": "Eliminar",
         "tooltip": "Eliminar"
       }
     },

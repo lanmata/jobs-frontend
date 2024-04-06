@@ -21,7 +21,7 @@ export class NotifyComponent {
   message: string = '';
 
   constructor(@Inject(MAT_SNACK_BAR_DATA) private data: any) {
-    this.message = this.data.message;
+    this.message = this.data.message? this.data.message : '';
   }
 
 }

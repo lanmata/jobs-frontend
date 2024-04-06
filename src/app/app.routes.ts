@@ -8,6 +8,7 @@ import {StatusComponent} from "./status/status.component";
 import {NewOfferComponent} from "./offer/new-offer/new-offer.component";
 import {OfferComponent} from "./offer/offer.component";
 import {TermComponent} from "./term/term.component";
+import {EditOfferComponent} from "./offer/edit-offer/edit-offer.component";
 
 export const routes: Routes = [
   {
@@ -21,6 +22,9 @@ export const routes: Routes = [
   },
   {
     path: AppConst.JOBS_NAVIGATOR.NEW_OFFER_PATH, component: NewOfferComponent
+  },
+  {
+    path: `${AppConst.JOBS_NAVIGATOR.EDIT_OFFER_PATH}/:offerId`, component: EditOfferComponent
   },
   {
     path: AppConst.JOBS_NAVIGATOR.POSITION_PATH, component: PositionComponent
