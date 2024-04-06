@@ -1,0 +1,93 @@
+<form [formGroup]="editOfferForm">
+  <h1>{{ 'edit_offer.title' | translate }}</h1>
+  @if (loader.loading$ | async) {
+    <div class="overlay"></div>
+    <mat-progress-spinner [mode]="'indeterminate'"></mat-progress-spinner>
+  }
+  <mat-card class="job-card margin-bottom-component">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>{{ offer.position }}</mat-card-title>
+      <mat-card-subtitle>{{ offer.company }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p><b>{{ 'edit_offer.id.title' | translate }}:</b> {{ offer.id }}</p>
+      <p><b>{{ 'edit_offer.create_date.title' | translate }}:</b> {{ offer.postDetailList[0].datetime }}</p>
+      <p><b>{{ 'edit_offer.mode.title' | translate }}:</b> {{ offer.mode }}</p>
+      <p><b>{{ 'edit_offer.term.title' | translate }}:</b> {{ offer.term }}</p>
+    </mat-card-content>
+  </mat-card>
+  <!--  Status List-->
+  <div fxLayout="column">
+    <div>
+      <mat-form-field>
+        <mat-label>{{ 'edit_offer.status.title' | translate }}</mat-label>
+        <mat-select formControlName="status"
+                    placeholder="{{'edit_offer.status.placeholder' | translate}}">
+          <mat-option>Ninguno</mat-option>
+          @for (status of statusCollection.statuses; track status) {
+            <mat-option [value]="status.id">{{ status.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <!--  Update Date-->
+    <div>
+      <mat-form-field>
+        <mat-label>{{ 'edit_offer.update_date.title' | translate }}</mat-label>
+        <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" formControlName="updateDate">
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-hint>DD/MM/YYYY</mat-hint>
+      </mat-form-field>
+    </div>
+    <!--  Comments-->
+    <ng-container>
+      <mat-form-field>
+        <mat-label>{{ 'edit_offer.comments.title' | translate }}</mat-label>
+        <textarea matInput class="description-text" placeholder=" {{'edit_offer.comments.placeholder' | translate}}"
+                  name="description" formControlName="comments" required></textarea>
+      </mat-form-field>
+    </ng-container>
+  </div>
+  <!--  Buttons-->
+  <div class="panel-buttons margin-bottom-component">
+    <button mat-raised-button color="primary" class="button-style" [disabled]="!editOfferForm.valid"
+            (click)="updateOffer()">{{ 'edit_offer.update_button.title' | translate }}
+    </button>
+    <!--     PENDING - I have to create a dialog to confirm the cancel action-->
+    <button mat-raised-button color="secondary"
+            [routerLink]="'/'+appConst.JOBS_NAVIGATOR.OFFER_PATH" [routerLinkActive]="'active'"
+            class="button-style">{{ 'edit_offer.cancel_button.title' | translate }}
+    </button>
+  </div>
+  <!--  Data Grid-->
+  <div class="mat-elevation-z8">
+    <mat-table aria-describedby="jobTitle" [dataSource]="matTableDataSource" matSort>
+      <!-- Update date-->
+      <ng-container matColumnDef="datetime">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'edit_offer.data_grid.update_date.title' | translate }}
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.datetime }}</mat-cell>
+      </ng-container>
+      <!-- Comments-->
+      <ng-container matColumnDef="description">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'edit_offer.data_grid.comments.title' | translate }}
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.description }}</mat-cell>
+      </ng-container>
+      <!-- Status-->
+      <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'edit_offer.data_grid.status.title' | translate }}
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.status }}</mat-cell>
+      </ng-container>
+      <!-- Columns-->
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <!-- Rows-->
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <!-- Paginator-->
+    <mat-paginator [pageSizeOptions]="pageSizeOptions" [pageSize]="pageSize" showFirstLastButtons></mat-paginator>
+  </div>
+</form>

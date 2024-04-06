@@ -19,7 +19,7 @@ export class FormatUtil {
   public dateTimeFileFormatter = (value: string | null) => this.datePipe.transform(value, this.DATE_TIME_FILE_PATTERN);
 
   public decimal = (value: any) => {
-    value = new DecimalPipe('fr').transform(value, this.getPattern(Math.abs(value)));
+    value = new DecimalPipe('en-US').transform(value, this.getPattern(Math.abs(value)));
     if (value == null){
       value = this.DECIMAL_FORMAT_MAX_VALUE;
     }

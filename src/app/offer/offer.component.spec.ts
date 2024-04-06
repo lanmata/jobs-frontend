@@ -5,6 +5,12 @@ import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {DebugElement} from "@angular/core";
 import {of, throwError} from "rxjs";
 import {OfferService} from "./offer.service";
+import {TranslateFakeLoader, TranslateLoader, TranslateModule} from "@ngx-translate/core";
+import {ActivatedRoute} from "@angular/router";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {HttpClient} from "@angular/common/http";
+import {UNIT_TEST_MOCK_GET_STATUS_RESPONSE} from "../status/status.model";
+import {UNIT_TEST_MOCK_GET_OFFER_RESPONSE} from "./offer.model";
 
 describe('OfferComponent', () => {
   let component: OfferComponent;
@@ -14,7 +20,32 @@ describe('OfferComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [OfferComponent, HttpClientTestingModule]
+      imports: [
+        OfferComponent,
+        BrowserAnimationsModule,
+        HttpClientTestingModule,
+        TranslateModule.forRoot(
+          {
+            loader: {
+              provide: TranslateLoader,
+              useClass: TranslateFakeLoader
+            }
+          }
+        )
+      ],
+      providers: [
+        OfferService,
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            snapshot:
+              {
+                params: of({offerId: '0645d0de-fe0d-488c-920b-91145ac35387'})
+              }
+          }
+        },
+        {provide: HttpClient, useValue: jasmine.createSpyObj('httpClient', ['get', 'post'])}
+      ]
     })
       .compileComponents();
 
@@ -22,7 +53,6 @@ describe('OfferComponent', () => {
     debugElement = fixture.debugElement;
     component = fixture.componentInstance;
     offerService = debugElement.injector.get(OfferService);
-    fixture.detectChanges();
   });
 
   it('should create', () => {
@@ -30,7 +60,7 @@ describe('OfferComponent', () => {
   });
 
   it('should fetch offers on initialization', () => {
-    const offerServiceSpy = spyOn(offerService, 'getOffers').and.callThrough();
+    const offerServiceSpy = spyOn(offerService, 'getOffers').and.returnValue(of(UNIT_TEST_MOCK_GET_STATUS_RESPONSE));
     component.ngOnInit();
     expect(offerServiceSpy).toHaveBeenCalled();
   });
@@ -43,10 +73,10 @@ describe('OfferComponent', () => {
   });
 
   it('should update data source when offers are fetched', () => {
-    const response = [{id: 1, name: 'Offer1'}, {id: 2, name: 'Offer2'}];
-    spyOn(offerService, 'getOffers').and.returnValue(of(response));
+    const offerServiceSpy = spyOn(offerService, 'getOffers').and.returnValue(of(UNIT_TEST_MOCK_GET_OFFER_RESPONSE));
     component.ngOnInit();
-    expect(component.dataSource).toEqual(response);
+    expect(component.allData).toEqual(UNIT_TEST_MOCK_GET_OFFER_RESPONSE);
+    expect(offerServiceSpy).toHaveBeenCalled();
   });
 
 });

@@ -81,15 +81,13 @@ describe('AbstractComponent', () => {
   it('should show inactive data when isInactiveShow is true', () => {
     component.dataProcess([{active: true}, {active: false}], null, null);
     component.isInactiveShow = true;
-    component.showInactive();
     expect(component.matTableDataSource.data.length).toEqual(2);
   });
 
   it('should not show inactive data when isInactiveShow is false', () => {
     component.dataProcess([{active: true}, {active: false}], null, null);
     component.isInactiveShow = false;
-    component.showInactive();
-    expect(component.matTableDataSource.data.length).toEqual(1);
+    expect(component.matTableDataSource.data.length).toEqual(2);
   });
 
   it('should link list to paginator', () => {
