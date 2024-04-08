@@ -5,6 +5,10 @@
 }
 
 <ng-container>
+  <app-chart></app-chart>
+</ng-container>
+
+<ng-container>
   <div class="panel-buttons">
     <button mat-icon-button color="primary" [routerLink]="'/'+appConst.JOBS_NAVIGATOR.NEW_OFFER_PATH" [routerLinkActive]="'active'"
             [matTooltip]="'jobs_board.new_offer_button.title' | translate">
@@ -45,7 +49,7 @@
     <ng-container matColumnDef="id">
       <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'jobs_board.data_grid.id.title' | translate }}
       </mat-header-cell>
-      <mat-cell *matCellDef="let row">{{ row.id }}</mat-cell>
+      <mat-cell *matCellDef="let row" [matTooltip]="row.id" >{{ row.idSmall }}</mat-cell>
     </ng-container>
     <!-- Position-->
     <ng-container matColumnDef="position">
@@ -83,15 +87,6 @@
       <mat-cell *matCellDef="let element">
         <button mat-icon-button [routerLink]="'/'+appConst.JOBS_NAVIGATOR.EDIT_OFFER_PATH+'/'+element.id">
           <mat-icon>edit</mat-icon>
-        </button>
-      </mat-cell>
-    </ng-container>
-    <!-- Add Status-->
-    <ng-container matColumnDef="add_status">
-      <mat-header-cell *matHeaderCellDef>{{ 'jobs_board.data_grid.add_status.title' | translate }}</mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        <button mat-icon-button (click)="addStatus(element)">
-          <mat-icon>add</mat-icon>
         </button>
       </mat-cell>
     </ng-container>

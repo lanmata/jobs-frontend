@@ -11,6 +11,8 @@ import {MatSort, MatSortModule} from "@angular/material/sort";
 import {FormsModule} from "@angular/forms";
 import {AppConst} from "@shared/util/app-const";
 import {Router, RouterLink, RouterLinkActive} from "@angular/router";
+import {ChartComponent} from "../chart/chart.component";
+import {Offer, OfferItem} from "./offer.model";
 
 /**
  * OfferComponent is a component that handles the offers in the application.
@@ -25,7 +27,7 @@ import {Router, RouterLink, RouterLinkActive} from "@angular/router";
 @Component({
   selector: 'app-offer',
   standalone: true,
-  imports: [MaterialModule, MatSortModule, TranslateModule, AsyncPipe, FormsModule, RouterLink, RouterLinkActive],
+  imports: [MaterialModule, MatSortModule, TranslateModule, AsyncPipe, FormsModule, RouterLink, RouterLinkActive, ChartComponent],
   templateUrl: './offer.component.html',
   styleUrl: './offer.component.css'
 })
@@ -38,7 +40,7 @@ export class OfferComponent extends AbstractComponent {
   /**
    * dataSource is an array of offers.
    */
-  readonly displayedColumns: Iterable<string> = ['select', 'id', 'position', 'company', 'updated_at', 'source', 'status', 'edit', 'add_status', 'delete'];
+  readonly displayedColumns: Iterable<string> = ['select', 'id', 'position', 'company', 'updated_at', 'source', 'status', 'edit', 'delete'];
 
   /**
    * offerService is a private instance of the OfferService.
@@ -95,7 +97,7 @@ export class OfferComponent extends AbstractComponent {
   private getOffers(): void {
     this.offerService.getOffers().pipe(takeUntil(this.subject$))
       .subscribe({
-        next: (response: any) => this.dataProcess(response, this.sort, this.paginator),
+        next: (response: any) => this.dataProcess(this.dataFormatter(response), this.sort, this.paginator),
         error: (errorResponse) => {
           this.isErrorFound = true;
           this.logError('Error occurred while getting offers', errorResponse);
@@ -105,6 +107,23 @@ export class OfferComponent extends AbstractComponent {
           this.loader.hide();
         }
       });
+  }
+
+  private dataFormatter(data: any): OfferItem[] {
+    let offerList: OfferItem[] = [];
+    data.forEach((offer: Offer) => {
+      let offerItem = new OfferItem();
+      offerItem.id = offer.id;
+      offerItem.idSmall = `${offer.id.split('-')[0]}...`;
+      offerItem.position = offer.position;
+      offerItem.company = offer.company;
+      offerItem.lastModifiedDate = offer.lastModifiedDate;
+      offerItem.source = offer.source;
+      offerItem.status = offer.status;
+      this.logInfo(offerItem);
+      offerList.push(offerItem);
+    });
+    return offerList;
   }
 
   editJobOffer(element: any): void {

@@ -1,0 +1,6 @@
+.chart-legend .legend-labels {
+  text-align: center !important;
+  background: rgba(255,255,255,0) !important;
+  display: flex;
+  justify-content: space-around;
+}

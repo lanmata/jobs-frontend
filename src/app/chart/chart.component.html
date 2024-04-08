@@ -1,0 +1,6 @@
+<div fxLayout="row" fxLayoutAlign="start start">
+
+  <ngx-charts-bar-vertical [xAxis]="xAxisLabel" [view]="view" [yAxis]="yAxisLabel" [showDataLabel]="showDataLabel"
+                           [gradient]="true" [schema]="colorScheme"  results]="chartData"></ngx-charts-bar-vertical>
+  <ngx-charts-pie-chart [view]="[650,300]" [explodeSlices]="false" [legend]="false" [labels]="true" [results]="chartData"></ngx-charts-pie-chart>
+</div>

@@ -14,6 +14,21 @@ export class Offer {
   source!: string;
 }
 
+/**
+ * Model class for OfferItem
+ */
+export class OfferItem {
+  id!: string;
+  idSmall!: string;
+  status!: string;
+  company!: string;
+  position!: string;
+  term!: string;
+  mode!: string;
+  source!: string;
+  lastModifiedDate!: Date;
+}
+
 export class OfferEdit {
   id!: string;
   title!: string;
