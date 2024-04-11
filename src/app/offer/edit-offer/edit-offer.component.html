@@ -82,6 +82,15 @@
         </mat-header-cell>
         <mat-cell *matCellDef="let element">{{ element.status }}</mat-cell>
       </ng-container>
+      <!-- Delete-->
+      <ng-container matColumnDef="delete">
+        <mat-header-cell *matHeaderCellDef>{{ 'jobs_board.data_grid.delete.title' | translate }}</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button mat-icon-button (click)="openDialogConfirm(element.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
       <!-- Columns-->
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <!-- Rows-->
