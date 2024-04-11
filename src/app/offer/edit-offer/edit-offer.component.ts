@@ -4,7 +4,7 @@ import {AbstractComponent} from "@shared/components/abstract-component";
 import {takeUntil} from "rxjs";
 import {OfferEdit, OfferUpdateRequest} from "../offer.model";
 import {LoadingService} from "@shared/services/loading.service";
-import {ActivatedRoute, Router, RouterLink, RouterLinkActive} from "@angular/router";
+import {ActivatedRoute, RouterLink, RouterLinkActive} from "@angular/router";
 import {MaterialModule} from "@shared/material/material.module";
 import {CommonModule, DatePipe} from "@angular/common";
 import {AppConst} from "@shared/util/app-const";
@@ -17,6 +17,9 @@ import {StatusService} from "../../status/status.service";
 import {StatusCollection} from "../../status/status.model";
 import {AlertService} from "@shared/services/alert.service";
 import {FormatUtil} from "@shared/util/format-util";
+import {OfferDetailService} from "../../offer-detail/offer-detail.service";
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {OfferDetailConfirmDialogComponent} from "../offer-detail-confirm-dialog/offer-detail-confirm-dialog.component";
 
 @Component({
   selector: 'app-edit-offer',
@@ -28,15 +31,16 @@ import {FormatUtil} from "@shared/util/format-util";
 export class EditOfferComponent extends AbstractComponent {
 
   jobOfferId: string = '';
+  private dialog: MatDialog = inject(MatDialog);
   private activatedRoute = inject(ActivatedRoute);
-  private offerService: OfferService = inject(OfferService);
+  private offerDetailService: OfferDetailService = inject(OfferDetailService);
   private statusService: StatusService = inject(StatusService);
-  private alertService: AlertService = inject(AlertService);
-  private formBuilder = inject(FormBuilder);
-  private router: Router = inject(Router);
-  private formatUtil!: FormatUtil;
-  private datePipe = inject(DatePipe);
   protected loader: LoadingService = inject(LoadingService);
+  private offerService: OfferService = inject(OfferService);
+  private formBuilder = inject(FormBuilder);
+  private alertService: AlertService = inject(AlertService);
+  private datePipe = inject(DatePipe);
+  private formatUtil!: FormatUtil;
   offer!: OfferEdit;
   protected readonly statusCollection: StatusCollection = new StatusCollection();
   protected readonly appConst = AppConst;
@@ -46,10 +50,11 @@ export class EditOfferComponent extends AbstractComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   editOfferForm: FormGroup;
+  dialogConfirm: FormGroup;
   /**
    * dataSource is an array of offers.
    */
-  readonly displayedColumns: Iterable<string> = ['datetime', 'description', 'status'];
+  readonly displayedColumns: Iterable<string> = ['datetime', 'description', 'status', 'delete'];
 
   constructor() {
     super();
@@ -58,6 +63,7 @@ export class EditOfferComponent extends AbstractComponent {
       updateDate: ['', [Validators.required]],
       comments: ['', [Validators.required]]
     });
+    this.dialogConfirm = this.formBuilder.group({});
   }
 
   override ngAfterViewInit(): void {
@@ -87,6 +93,7 @@ export class EditOfferComponent extends AbstractComponent {
     this.loadOffer();
   }
 
+
   updateOffer() {
     this.loader.show();
     const offerUpdateRequest = new OfferUpdateRequest();
@@ -103,6 +110,40 @@ export class EditOfferComponent extends AbstractComponent {
         },
         error: (errorResponse: any) => {
           this.logError('Error updating offer:', errorResponse)
+          this.alertService.success('We have a error to process the request.', true);
+          this.loader.hide();
+        },
+        complete: () => {
+          this.loader.hide();
+        }
+      });
+  }
+
+  openDialogConfirm(offerDetailId: string) {
+    const offerDetailDeleteDialogConfig = new MatDialogConfig();
+    offerDetailDeleteDialogConfig.disableClose = true;
+    offerDetailDeleteDialogConfig.autoFocus = true;
+    offerDetailDeleteDialogConfig.panelClass = "offer-delete";
+    offerDetailDeleteDialogConfig.data = offerDetailId;
+    this.cleanValues();
+    const offerDetailDeleteDialog = this.dialog.open(OfferDetailConfirmDialogComponent, offerDetailDeleteDialogConfig);
+    offerDetailDeleteDialog.afterClosed().subscribe(value => {
+      if (value) {
+        this.deleteOfferDetail(offerDetailId);
+      }
+    });
+  }
+
+  private deleteOfferDetail(offerDetailId: string) {
+    this.loader.show();
+    this.offerDetailService.deleteOfferDetail(offerDetailId).pipe(takeUntil(this.subject$))
+      .subscribe({
+        next: (response: any) => {
+          this.loadOffer();
+          this.alertService.success(`Deleted offer detail #${response.id} successfully`, true);
+        },
+        error: (errorResponse: any) => {
+          this.logError('Error deleting offer detail:', errorResponse)
           this.alertService.success('We have a error to process the request.', true);
           this.loader.hide();
         },
@@ -192,5 +233,9 @@ export class EditOfferComponent extends AbstractComponent {
     this.editOfferForm.controls['updateDate'].markAsPending({onlySelf: true});
     this.editOfferForm.controls['comments'].reset();
     this.editOfferForm.controls['comments'].markAsPending({onlySelf: true});
+  }
+
+  onNoClick() {
+
   }
 }
