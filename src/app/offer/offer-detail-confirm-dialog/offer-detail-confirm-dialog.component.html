@@ -1,0 +1,11 @@
+<ng-container [formGroup]="offerDetailDialog">
+  <h2 mat-dialog-title>{{ 'dialog_confirm.title' | translate}}</h2>
+  <mat-dialog-content>
+    <p>{{ 'dialog_confirm.message' | translate}}</p>
+    <p>{{offerDetailId}}?</p>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-raised-button (click)="onClick(true)" color="primary" cdkFocusInitial><span>{{ 'dialog_confirm.button_ok.title' | translate }}</span></button>
+    <button mat-raised-button (click)="onClick(false)"><span>{{ 'dialog_confirm.button_cancel.title' | translate }} </span></button>
+  </mat-dialog-actions>
+</ng-container>

@@ -49,13 +49,13 @@ describe('EditOfferComponent', () => {
               }
           }
         },
-        { provide: HttpClient, useValue: jasmine.createSpyObj('httpClient', ['get', 'put']) }
+        {provide: HttpClient, useValue: jasmine.createSpyObj('httpClient', ['get', 'put'])}
       ]
     })
       .compileComponents();
 
     activatedRoute = TestBed.inject(ActivatedRoute);
-    activatedRoute.snapshot.params = { offerId: '0645d0de-fe0d-488c-920b-91145ac35387' };
+    activatedRoute.snapshot.params = {offerId: '0645d0de-fe0d-488c-920b-91145ac35387'};
     fixture = TestBed.createComponent(EditOfferComponent);
     component = fixture.componentInstance;
     debugElement = fixture.debugElement;

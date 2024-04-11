@@ -1,5 +1,5 @@
 import {HttpErrorResponse} from "@angular/common/http";
-import {throwError} from "rxjs";
+import {of, throwError} from "rxjs";
 
 export class ServiceTemplate {
   public handlerError(errorResponse: HttpErrorResponse | ErrorEvent): any {
@@ -10,4 +10,5 @@ export class ServiceTemplate {
     }
     return throwError(errorResponse);
   }
+
 }

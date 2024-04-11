@@ -1,145 +1,185 @@
 {
-  "_comment_001":"Formulario registro de usuario",
-  "menuHeader": {
-    "home": "Home",
-    "management": {
-      "title": "Management",
+  "title": "PRX Jobs-Offer Board",
+  "_comment_001": "Formulario registro de usuario",
+  "menu_header": {
+    "title": "PRX Jobs-Offer Board",
+    "home": "Inicio",
+    "jobs": {
+      "title": "Trabajos",
       "items": {
-        "feature": "Features",
-        "role": "Roles",
-        "person": "People",
-        "user": "Users"
+        "company": "Compañias",
+        "mode": "Modo",
+        "offer": "Ofertas Aplicadas",
+        "position": "Posiciones",
+        "source": "Fuentes",
+        "status": "Status",
+        "term": "Termino"
       }
     }
   },
-  "frmRegistro":{
-    "firstName":{
-      "title": "Name" ,
-      "placeholder":"Ingresar nombre",
-      "validationMessages": {
-        "required": "Name required",
-        "minLength":"Minimun lenght",
-        "maxLength":"Maximun lenght"
+  "jobs_board": {
+    "title": "Ofertas de Trabajo",
+    "new_offer_button": {
+      "title": "Nueva Oferta",
+      "tooltip": "Crear una nueva oferta de trabajo"
+    },
+    "export_to_excel_button": {
+      "title": "Exportar a Excel",
+      "tooltip": "Exportar a Excel"
+    },
+    "search": {
+      "title": "Buscar",
+      "placeholder": "Buscar por nombre de oferta"
+    },
+    "show_closed": {
+      "title": "Mostrar ofertas cerradas"
+    },
+    "data_grid": {
+      "id": {
+        "title": "Id",
+        "tooltip": ""
+      },
+      "position": {
+        "title": "Posicion",
+        "tooltip": ""
+      },
+      "company": {
+        "title": "Compañia",
+        "tooltip": ""
+      },
+      "updated_date": {
+        "title": "Ultima Actualizacion",
+        "tooltip": ""
+      },
+      "source": {
+        "title": "Fuente",
+        "tooltip": ""
+      },
+      "term": {
+        "title": "Termino",
+        "tooltip": ""
+      },
+      "status": {
+        "title": "Status",
+        "tooltip": ""
+      },
+      "edit": {
+        "title": "Editar",
+        "tooltip": "Editar"
+      },
+      "add_status": {
+        "title": "Agregar Status",
+        "tooltip": "Agregar Status"
+      },
+      "delete": {
+        "title": "Eliminar",
+        "tooltip": "Eliminar position de trabajo aplicada"
       }
+    }
+  },
+  "new_offer": {
+    "title": "Nueva Oferta",
+    "salary": {
+      "title": "Salario",
+      "placeholder": "Ingrese salario"
     },
-    "middleName":{
-      "title": "Primer apellido" ,
-      "placeholder":"Ingresar primer apellido",
-      "validationMessages": {
-        "required": "Primer apellido es requerido",
-        "minLength": "Longitud mínima",
-        "maxLength": "Longitud máxima"
-      }
+    "position": {
+      "title": "Posicion...",
+      "placeholder": "Seleccione una posicion"
     },
-    "lastName":{
-      "title": "Segundo apellido",
-      "placeholder":"Ingresar segundo apellido",
-      "validationMessages": {
-        "required": "Segundo apellido es requerido",
-        "minLength": "Longitud mínima",
-        "maxLength": "Longitud máxima"
-      }
+    "company": {
+      "title": "Compañia...",
+      "placeholder": "Seleccione una compañia"
     },
-    "gender":{
-      "title": "Genero",
-      "labelFemale":"Femenino",
-      "labelMen":"Masculino",
-      "validationMessages": {
-        "required": "Genero requerido",
-        "minLength": "Longitud mínima",
-        "maxLength": "Longitud máxima"
-      }
-
+    "mode": {
+      "title": "Modalidad...",
+      "placeholder": "Seleccione una modalidad"
     },
-    "calendar_birth": {
-      "title": "Fecha de Nacimiento",
-      "placeholder": "Elija una fecha",
-      "validationMessages": {
-        "required": "Fecha de nacimiento es requerida"
-      }
+    "source": {
+      "title": "Fuente...",
+      "placeholder": "Seleccione una fuente"
     },
-    "email":{
-      "title": "Correo electrónico",
-      "placeholder":"ej. usuario@dominio.com",
-      "validationMessages": {
-        "required": "Correo electronico es requerido",
-        "email": "Formato de correo no valido",
-        "minLength": "Longitud mínima",
-        "maxLength": "Longitud máxima"
-      }
+    "term": {
+      "title": "Termino...",
+      "placeholder": "Seleccione un termino"
     },
-    "address":{
-      "title":"Dirección",
-      "placeholder":"Avenida/Calle",
-      "validationMessages": {
-        "required": "Dirección es requerido",
-        "minLength": "Longitud mínima",
-        "maxLength": "Longitud máxima"
-      }
+    "status": {
+      "title": "Status...",
+      "placeholder": "Seleccione un status"
     },
-    "buttonAccept":{
-      "title":"Registrar"
+    "create_date": {
+      "title": "Fecha de Creacion",
+      "placeholder": "Seleccione una fecha"
     },
-    "buttonCancel":{
+    "cancel_button": {
       "title": "Cancelar"
     },
-    "username": {
-      "title": "Usuario",
-      "placeholder": "Usuario",
-      "validationMessages": {
-        "required": "Alias de usuario es requerido",
-        "minLength": "Longitud mínima",
-        "maxLength": "Longitud máxima"
-      }
-    },
-    "password":{
-      "title": "Clave",
-      "placeholder": "Clave",
-      "validationMessages": {
-        "required": "La clave es requerido",
-        "minLength": "Longitud mínima",
-        "maxLength": "Longitud máxima"
-      }
-    },
-    "confirmPassword":{
-      "title": "Confirmación de Clave",
-      "placeholder": "Confirmación de Clave",
-      "validationMessages": {
-        "required": "La clave es requerido",
-        "minLength": "Longitud mínima",
-        "maxLength": "Longitud máxima",
-        "mustMatch": "La clave debe coincidir"
-      }
+    "create_button": {
+      "title": "Crear"
     }
   },
-  "frmLogin": {
-    "_comment_002":"Formulario para la autenticacion de usuario",
-    "user": {
-      "placeholder": "Usuario",
-      "validationMessages": {
-        "required": "El usuario es requerido",
-        "minLength": "Longitud mínima",
-        "maxLength": "Longitud máxima"
+  "edit_offer": {
+    "title": "Editar Oferta",
+    "id": {
+      "title": "Id",
+      "placeholder": "Id"
+    },
+    "mode": {
+      "title": "Modalidad",
+      "placeholder": "Seleccione una modalidad"
+    },
+    "term": {
+      "title": "Termino",
+      "placeholder": "Seleccione un termino"
+    },
+    "status": {
+      "title": "Status",
+      "placeholder": "Seleccione un status"
+    },
+    "create_date": {
+      "title": "Fecha de Creacion",
+      "placeholder": "Seleccione una fecha"
+    },
+    "update_date": {
+      "title": "Fecha de Actualizacion",
+      "placeholder": "Seleccione una fecha"
+    },
+    "comments": {
+      "title": "Comentarios",
+      "placeholder": "Ingresar comentarios"
+    },
+    "data_grid": {
+      "id": {
+        "title": "Id",
+        "tooltip": ""
       },
-      "tooltip": "Debe ingresar nombre de usuario"
-    },
-    "password":{
-      "placeholder": "Clave",
-      "validationMessages": {
-        "required": "La clave es requerido",
-        "minLength": "Longitud mínima",
-        "maxLength": "Longitud máxima"
+      "comments": {
+        "title": "Comentarios",
+        "tooltip": ""
       },
-      "tooltip": "Debe ingresar clave de usuario"
+      "update_date": {
+        "title": "Fecha de Actualizacion",
+        "tooltip": ""
+      },
+      "status": {
+        "title": "Status",
+        "tooltip": ""
+      }
     },
-    "remember": {
-      "title":"Recuerdame"
+    "cancel_button": {
+      "title": "Cancelar"
     },
-    "buttonAccept":{
-      "title": "Ingresar"
+    "update_button": {
+      "title": "Actualizar"
+    }
+  },
+  "dialog_confirm:": {
+    "message": "Confirmar eliminacion",
+    "button_cancel": {
+      "title": "Cancelar"
     },
-    "buttonRegistry":{
-      "title":"Registrar"
+    "button_ok": {
+      "title": "Confirmar"
     }
   }
 }
