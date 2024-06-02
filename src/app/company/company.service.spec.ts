@@ -1,7 +1,8 @@
 import {TestBed} from '@angular/core/testing';
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import {CompanyService} from './company.service';
 import {JOB_BACKEND_SERVICE_BASE_URL} from "@shared/app.const";
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('CompanyService', () => {
   let service: CompanyService;
@@ -9,9 +10,9 @@ describe('CompanyService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [CompanyService]
-    });
+    imports: [],
+    providers: [CompanyService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
 
     service = TestBed.inject(CompanyService);
     httpMock = TestBed.inject(HttpTestingController);

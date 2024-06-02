@@ -4,7 +4,8 @@ import {ModeComponent} from './mode.component';
 import {DebugElement} from "@angular/core";
 import {ModeService} from "./mode.service";
 import {of, throwError} from "rxjs";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('ModeComponent', () => {
   let component: ModeComponent;
@@ -14,8 +15,9 @@ describe('ModeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ModeComponent, HttpClientTestingModule],
-    })
+    imports: [ModeComponent],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+})
       .compileComponents();
 
     fixture = TestBed.createComponent(ModeComponent);

@@ -3,8 +3,9 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {PositionComponent} from './position.component';
 import {PositionService} from "./position.service";
 import {DebugElement} from "@angular/core";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import {of, throwError} from "rxjs";
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('PositionComponent', () => {
   let component: PositionComponent;
@@ -14,8 +15,9 @@ describe('PositionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PositionComponent, HttpClientTestingModule],
-    })
+    imports: [PositionComponent],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+})
       .compileComponents();
 
     fixture = TestBed.createComponent(PositionComponent);

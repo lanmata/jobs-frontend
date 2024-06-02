@@ -1,5 +1,5 @@
 import {inject, Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import {ServiceTemplate} from "@shared/services/service-template";
 import {HTTP_OPTIONS_STANDARD, JOB_BACKEND_SERVICE_BASE_URL} from "@shared/app.const";
 import {catchError} from "rxjs/operators";

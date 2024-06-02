@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {ServiceTemplate} from "@shared/services/service-template";
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import {HTTP_OPTIONS, JOB_BACKEND_SERVICE_BASE_URL} from "@shared/app.const";
 import {Observable} from "rxjs";
 import {catchError} from "rxjs/operators";

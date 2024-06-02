@@ -1,8 +1,9 @@
 import {TestBed} from '@angular/core/testing';
 
 import {PositionService} from './position.service';
-import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
+import { HttpTestingController, provideHttpClientTesting } from "@angular/common/http/testing";
 import {JOB_BACKEND_SERVICE_BASE_URL} from "@shared/app.const";
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('PositionService', () => {
   let service: PositionService;
@@ -10,9 +11,9 @@ describe('PositionService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [PositionService]
-    });
+    imports: [],
+    providers: [PositionService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
 
     service = TestBed.inject(PositionService);
     httpMock = TestBed.inject(HttpTestingController);

@@ -1,10 +1,11 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {CompanyComponent} from './company.component';
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import {DebugElement} from "@angular/core";
 import {CompanyService} from "./company.service";
 import {of, throwError} from "rxjs";
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('CompanyComponent', () => {
   let component: CompanyComponent;
@@ -14,8 +15,9 @@ describe('CompanyComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CompanyComponent, HttpClientTestingModule],
-    })
+    imports: [CompanyComponent],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+})
       .compileComponents();
 
     fixture = TestBed.createComponent(CompanyComponent);

@@ -2,9 +2,10 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {StatusComponent} from './status.component';
 import {DebugElement} from "@angular/core";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import {of, throwError} from "rxjs";
 import {StatusService} from "./status.service";
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('StatusComponent', () => {
   let component: StatusComponent;
@@ -14,8 +15,9 @@ describe('StatusComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [StatusComponent, HttpClientTestingModule],
-    })
+    imports: [StatusComponent],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+})
       .compileComponents();
 
     fixture = TestBed.createComponent(StatusComponent);

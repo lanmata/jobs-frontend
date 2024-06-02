@@ -3,11 +3,11 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {OfferDetailConfirmDialogComponent} from './offer-detail-confirm-dialog.component';
 import {TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService} from "@ngx-translate/core";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import {OfferService} from "../offer.service";
 import {OfferDetailService} from "../../offer-detail/offer-detail.service";
 import {AlertService} from "@shared/services/alert.service";
-import {HttpClient} from "@angular/common/http";
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {DebugElement} from "@angular/core";
 
@@ -23,19 +23,15 @@ describe('OfferDetailConfirmComponent', () => {
   beforeEach(async () => {
     matDialogRef = jasmine.createSpyObj('MatDialogRef', ['close']);
     await TestBed.configureTestingModule({
-      imports: [
-        OfferDetailConfirmDialogComponent,
+    imports: [OfferDetailConfirmDialogComponent,
         BrowserAnimationsModule,
-        HttpClientTestingModule,
-        TranslateModule.forRoot(
-          {
+        TranslateModule.forRoot({
             loader: {
-              provide: TranslateLoader,
-              useClass: TranslateFakeLoader
+                provide: TranslateLoader,
+                useClass: TranslateFakeLoader
             }
-          })
-      ],
-      providers: [
+        })],
+    providers: [
         AlertService,
         OfferService,
         TranslateService,
@@ -43,8 +39,10 @@ describe('OfferDetailConfirmComponent', () => {
         { provide: HttpClient, useValue: jasmine.createSpyObj('httpClient', ['get']) },
         { provide: MatDialogRef, useValue: matDialogRef },
         { provide: MAT_DIALOG_DATA, useValue: { data: '9ad27569-7778-4877-819f-57d24445b006' } },
-      ]
-    })
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+})
       .compileComponents();
 
     fixture = TestBed.createComponent(OfferDetailConfirmDialogComponent);

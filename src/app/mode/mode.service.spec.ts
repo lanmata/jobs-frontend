@@ -2,7 +2,8 @@ import {TestBed} from '@angular/core/testing';
 
 import {ModeService} from './mode.service';
 import {JOB_BACKEND_SERVICE_BASE_URL} from "@shared/app.const";
-import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
+import { HttpTestingController, provideHttpClientTesting } from "@angular/common/http/testing";
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('ModeService', () => {
     let service: ModeService;
@@ -10,9 +11,9 @@ describe('ModeService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            providers: [ModeService]
-        });
+    imports: [],
+    providers: [ModeService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
 
         service = TestBed.inject(ModeService);
         httpMock = TestBed.inject(HttpTestingController);
