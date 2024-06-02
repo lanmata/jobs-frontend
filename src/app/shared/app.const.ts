@@ -7,6 +7,14 @@ export const HTTP_OPTIONS = {
     'Access-Control-Allow-Origin': '*'
   })
 };
+
+export const HTTP_OPTIONS_STANDARD = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+    'responseType': 'arraybuffer'
+  })
+};
 // tslint:disable-next-line:no-namespace
 export namespace AppConstants {
 }

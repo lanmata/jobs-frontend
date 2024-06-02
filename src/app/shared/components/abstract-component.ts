@@ -119,8 +119,12 @@ export abstract class AbstractComponent implements OnInit, OnDestroy, AfterViewI
   dataProcess(response: any, sort: MatSort | null, paginator: MatPaginator | null): void {
     this.allData = response;
     this.matTableDataSource = new MatTableDataSource<any>(this.allData);
-    this.matTableDataSource.paginator = paginator;
-    this.matTableDataSource.sort = sort;
+    if (paginator) {
+      this.matTableDataSource.paginator = paginator;
+    }
+    if (sort) {
+      this.matTableDataSource.sort = sort;
+    }
   }
 
   /**
