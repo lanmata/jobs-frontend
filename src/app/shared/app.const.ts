@@ -1,4 +1,4 @@
-import {HttpHeaders} from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 
 export const JOB_BACKEND_SERVICE_BASE_URL = '/jobs/v1';
 export const HTTP_OPTIONS = {

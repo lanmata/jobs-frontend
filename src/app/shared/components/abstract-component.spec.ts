@@ -3,8 +3,9 @@ import {Component} from "@angular/core";
 import {MatPaginator} from "@angular/material/paginator";
 import {of} from "rxjs";
 import {ComponentFixture, TestBed} from "@angular/core/testing";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import {MatTableDataSource} from "@angular/material/table";
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 // Mock component for testing
 @Component({
@@ -37,9 +38,10 @@ describe('AbstractComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TestComponent],
-      imports: [HttpClientTestingModule],
-    })
+    declarations: [TestComponent],
+    imports: [],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+})
       .compileComponents();
 
     fixture = TestBed.createComponent(TestComponent);

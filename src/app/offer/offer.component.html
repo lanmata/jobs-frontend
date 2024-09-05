@@ -6,11 +6,11 @@
 
 <ng-container>
   <div class="panel-buttons">
-    <button mat-icon-button color="primary" [routerLink]="'/'+appConst.JOBS_NAVIGATOR.NEW_OFFER_PATH" [routerLinkActive]="'active'"
+    <button mat-icon-button [routerLink]="'/'+appConst.JOBS_NAVIGATOR.NEW_OFFER_PATH" [routerLinkActive]="'active'"
             [matTooltip]="'jobs_board.new_offer_button.title' | translate">
       <mat-icon>add</mat-icon>
     </button>
-    <button mat-icon-button color="primary" (click)="exportToExcel()"
+    <button mat-icon-button (click)="exportToExcel()"
             [matTooltip]="'jobs_board.export_to_excel_button.title' | translate">
       <mat-icon>description</mat-icon>
     </button>

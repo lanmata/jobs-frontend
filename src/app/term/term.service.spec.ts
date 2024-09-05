@@ -1,8 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 
 import { TermService } from './term.service';
-import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
+import { HttpTestingController, provideHttpClientTesting } from "@angular/common/http/testing";
 import {JOB_BACKEND_SERVICE_BASE_URL} from "@shared/app.const";
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('TermService', () => {
   let service: TermService;
@@ -10,9 +11,9 @@ describe('TermService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [TermService]
-    });
+    imports: [],
+    providers: [TermService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
 
     service = TestBed.inject(TermService);
     httpMock = TestBed.inject(HttpTestingController);

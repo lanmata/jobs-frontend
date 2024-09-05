@@ -1,8 +1,9 @@
 import {TestBed} from '@angular/core/testing';
 
 import {StatusService} from './status.service';
-import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
+import { HttpTestingController, provideHttpClientTesting } from "@angular/common/http/testing";
 import {JOB_BACKEND_SERVICE_BASE_URL} from "@shared/app.const";
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('StatusService', () => {
   let service: StatusService;
@@ -10,9 +11,9 @@ describe('StatusService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [StatusService]
-    });
+    imports: [],
+    providers: [StatusService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
 
     service = TestBed.inject(StatusService);
     httpMock = TestBed.inject(HttpTestingController);

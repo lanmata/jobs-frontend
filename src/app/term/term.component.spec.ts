@@ -3,8 +3,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TermComponent } from './term.component';
 import {TermService} from "./term.service";
 import {DebugElement} from "@angular/core";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import {of, throwError} from "rxjs";
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('TermComponent', () => {
   let component: TermComponent;
@@ -14,8 +15,9 @@ describe('TermComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TermComponent, HttpClientTestingModule],
-    })
+    imports: [TermComponent],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+})
       .compileComponents();
 
     fixture = TestBed.createComponent(TermComponent);

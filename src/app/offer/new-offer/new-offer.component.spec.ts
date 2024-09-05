@@ -11,9 +11,9 @@ import {SourceService} from "../../source/source.service";
 import {TermService} from "../../term/term.service";
 import {AlertService} from "@shared/services/alert.service";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import {TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService} from "@ngx-translate/core";
-import {HttpClient} from "@angular/common/http";
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import {of} from "rxjs";
 import {DatePipe} from "@angular/common";
 import {UNIT_TEST_MOCK_GET_COMPANY_RESPONSE} from "../../company/company.model";
@@ -39,20 +39,15 @@ describe('NewOfferComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        NewOfferComponent,
+    imports: [NewOfferComponent,
         BrowserAnimationsModule,
-        HttpClientTestingModule,
-        TranslateModule.forRoot(
-          {
+        TranslateModule.forRoot({
             loader: {
-              provide: TranslateLoader,
-              useClass: TranslateFakeLoader
+                provide: TranslateLoader,
+                useClass: TranslateFakeLoader
             }
-          }
-        )
-      ],
-      providers: [
+        })],
+    providers: [
         DatePipe,
         TranslateService,
         CompanyService,
@@ -64,17 +59,18 @@ describe('NewOfferComponent', () => {
         TermService,
         AlertService,
         {
-          provide: ActivatedRoute,
-          useValue: {
-            snapshot:
-              {
-                params: of({offerId: '0645d0de-fe0d-488c-920b-91145ac35387'})
-              }
-          }
+            provide: ActivatedRoute,
+            useValue: {
+                snapshot: {
+                    params: of({ offerId: '0645d0de-fe0d-488c-920b-91145ac35387' })
+                }
+            }
         },
-        {provide: HttpClient, useValue: jasmine.createSpyObj('httpClient', ['get', 'post'])}
-      ]
-    })
+        { provide: HttpClient, useValue: jasmine.createSpyObj('httpClient', ['get', 'post']) },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
       .compileComponents();
 
     fixture = TestBed.createComponent(NewOfferComponent);

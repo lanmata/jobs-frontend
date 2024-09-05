@@ -3,8 +3,9 @@ import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {HeaderComponent} from './header.component';
 import {ActivatedRoute} from "@angular/router";
 import {of} from "rxjs";
-import {HttpClientTestingModule} from "@angular/common/http/testing"
+import { provideHttpClientTesting } from "@angular/common/http/testing"
 import {DatePipe} from "@angular/common";
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -12,17 +13,19 @@ describe('HeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HeaderComponent, HttpClientTestingModule, TranslateModule.forRoot()],
-      providers: [
+    imports: [HeaderComponent, TranslateModule.forRoot()],
+    providers: [
         DatePipe,
         {
-          provide: ActivatedRoute,
-          useValue: {
-            params: of({id: 'testId'})
-          }
-        }
-      ]
-    })
+            provide: ActivatedRoute,
+            useValue: {
+                params: of({ id: 'testId' })
+            }
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
       .compileComponents();
 
     fixture = TestBed.createComponent(HeaderComponent);

@@ -3,13 +3,13 @@ import {EditOfferComponent} from './edit-offer.component';
 import {OfferService} from '../offer.service';
 import {of} from 'rxjs';
 import {UNIT_TEST_MOCK_OFFER_EDIT, UNIT_TEST_MOCK_OFFER_UPDATE_REQUEST} from '../offer.model';
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import {ActivatedRoute} from "@angular/router";
 import {DatePipe} from "@angular/common";
 import {TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService} from "@ngx-translate/core";
 import {DebugElement} from "@angular/core";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {HttpClient} from "@angular/common/http";
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import {StatusService} from "../../status/status.service";
 import {UNIT_TEST_MOCK_GET_STATUS_RESPONSE} from "../../status/status.model";
 
@@ -23,35 +23,32 @@ describe('EditOfferComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        EditOfferComponent,
+    imports: [EditOfferComponent,
         BrowserAnimationsModule,
-        HttpClientTestingModule,
-        TranslateModule.forRoot(
-          {
+        TranslateModule.forRoot({
             loader: {
-              provide: TranslateLoader,
-              useClass: TranslateFakeLoader
+                provide: TranslateLoader,
+                useClass: TranslateFakeLoader
             }
-          }
-        )],
-      providers: [
+        })],
+    providers: [
         DatePipe,
         TranslateService,
         OfferService,
         StatusService,
         {
-          provide: ActivatedRoute,
-          useValue: {
-            snapshot:
-              {
-                params: of({offerId: '0645d0de-fe0d-488c-920b-91145ac35387'})
-              }
-          }
+            provide: ActivatedRoute,
+            useValue: {
+                snapshot: {
+                    params: of({ offerId: '0645d0de-fe0d-488c-920b-91145ac35387' })
+                }
+            }
         },
-        {provide: HttpClient, useValue: jasmine.createSpyObj('httpClient', ['get', 'put'])}
-      ]
-    })
+        { provide: HttpClient, useValue: jasmine.createSpyObj('httpClient', ['get', 'put']) },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
       .compileComponents();
 
     activatedRoute = TestBed.inject(ActivatedRoute);

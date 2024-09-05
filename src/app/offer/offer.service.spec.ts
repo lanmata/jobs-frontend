@@ -1,8 +1,9 @@
 import {TestBed} from '@angular/core/testing';
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import {OfferService} from './offer.service';
 import {JOB_BACKEND_SERVICE_BASE_URL} from "@shared/app.const";
 import {UNIT_TEST_MOCK_NEW_OFFER_REQUEST, UNIT_TEST_MOCK_OFFER_UPDATE_REQUEST} from "./offer.model";
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('OfferService', () => {
   let service: OfferService;
@@ -10,9 +11,9 @@ describe('OfferService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [OfferService]
-    });
+    imports: [],
+    providers: [OfferService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
 
     service = TestBed.inject(OfferService);
     httpMock = TestBed.inject(HttpTestingController);

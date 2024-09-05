@@ -3,9 +3,10 @@ import {provideRouter} from '@angular/router';
 
 import {routes} from './app.routes';
 import {provideAnimations} from "@angular/platform-browser/animations";
-import {HttpClient, provideHttpClient} from "@angular/common/http";
+import { HttpClient, provideHttpClient } from "@angular/common/http";
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 function createTranslateLoader(httpClient: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(httpClient);
@@ -22,6 +23,6 @@ export const appConfig: ApplicationConfig = {
           deps: [HttpClient]
         }
       }
-    ).providers!
+    ).providers!, provideAnimationsAsync()
   ]
 };

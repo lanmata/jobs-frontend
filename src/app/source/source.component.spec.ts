@@ -2,9 +2,10 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {SourceComponent} from './source.component';
 import {DebugElement} from "@angular/core";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import {of, throwError} from "rxjs";
 import {SourceService} from "./source.service";
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('SourceComponent', () => {
   let component: SourceComponent;
@@ -14,8 +15,9 @@ describe('SourceComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SourceComponent, HttpClientTestingModule],
-    })
+    imports: [SourceComponent],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+})
       .compileComponents();
 
     fixture = TestBed.createComponent(SourceComponent);

@@ -1,4 +1,4 @@
-import {HttpHeaders} from "@angular/common/http";
+import { HttpHeaders } from "@angular/common/http";
 
 export class AppConst {
   public static readonly STATUS_TYPE = {

@@ -1,14 +1,14 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {OfferComponent} from './offer.component';
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import {DebugElement} from "@angular/core";
 import {of, throwError} from "rxjs";
 import {OfferService} from "./offer.service";
 import {TranslateFakeLoader, TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {ActivatedRoute} from "@angular/router";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {HttpClient} from "@angular/common/http";
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import {UNIT_TEST_MOCK_GET_STATUS_RESPONSE} from "../status/status.model";
 import {UNIT_TEST_MOCK_GET_OFFER_RESPONSE} from "./offer.model";
 
@@ -20,33 +20,29 @@ describe('OfferComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        OfferComponent,
+    imports: [OfferComponent,
         BrowserAnimationsModule,
-        HttpClientTestingModule,
-        TranslateModule.forRoot(
-          {
+        TranslateModule.forRoot({
             loader: {
-              provide: TranslateLoader,
-              useClass: TranslateFakeLoader
+                provide: TranslateLoader,
+                useClass: TranslateFakeLoader
             }
-          }
-        )
-      ],
-      providers: [
+        })],
+    providers: [
         OfferService,
         {
-          provide: ActivatedRoute,
-          useValue: {
-            snapshot:
-              {
-                params: of({offerId: '0645d0de-fe0d-488c-920b-91145ac35387'})
-              }
-          }
+            provide: ActivatedRoute,
+            useValue: {
+                snapshot: {
+                    params: of({ offerId: '0645d0de-fe0d-488c-920b-91145ac35387' })
+                }
+            }
         },
-        {provide: HttpClient, useValue: jasmine.createSpyObj('httpClient', ['get', 'post'])}
-      ]
-    })
+        { provide: HttpClient, useValue: jasmine.createSpyObj('httpClient', ['get', 'post']) },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
       .compileComponents();
 
     fixture = TestBed.createComponent(OfferComponent);
