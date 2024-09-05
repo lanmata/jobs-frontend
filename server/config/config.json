@@ -7,7 +7,7 @@
       },
       "urlRewrite": {
         "from": "/jobs/v1",
-        "to": "/api/jobs-backend/v1"
+        "to": "/jobs-backend/api/v1"
       }
     }
   ]

@@ -1,29 +1,9 @@
-/* You can add global styles to this file, and also import other style files */
-@use '@angular/material' as mat;
-@import '@angular/material/prebuilt-themes/purple-green.css';
+@use "@angular/material" as mat;
 
-html, body { height: 100%; }
-body { height: 100%; margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+@include mat.core();
 
-$jobs-front-app-primary: mat.define-palette(mat.$amber-palette);
-$jobs-front-app-accent: mat.define-palette(mat.$amber-palette, A200, A100, A400);
-$jobs-front-app-warn: mat.define-palette(mat.$red-palette);
-
-$jobs-front-app-theme: mat.define-dark-theme((
-  color: (
-    primary: $jobs-front-app-primary,
-    accent: $jobs-front-app-accent,
-    warn: $jobs-front-app-warn
-  )
-));
-
-@include mat.all-component-themes($jobs-front-app-theme);
-
-:root {
-  color-scheme: light dark;
-  background-color: #424242;
-}
-
-p {
-  margin-left: 1.25rem;
+html, body {
+  height: 100%;
+  background: #424242;
+  color: #ffffff;
 }
