@@ -3,10 +3,10 @@
     {
       "applicationName": "jobs-backend",
       "matchOn": {
-        "startWith": "/jobs/v1"
+        "startWith": "/api/v1"
       },
       "urlRewrite": {
-        "from": "/jobs/v1",
+        "from": "/api/v1",
         "to": "/jobs-backend/api/v1"
       }
     }

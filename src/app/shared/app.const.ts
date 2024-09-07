@@ -1,6 +1,6 @@
 import { HttpHeaders } from '@angular/common/http';
 
-export const JOB_BACKEND_SERVICE_BASE_URL = '/jobs/v1';
+export const JOB_BACKEND_SERVICE_BASE_URL = '/api/v1';
 export const HTTP_OPTIONS = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
