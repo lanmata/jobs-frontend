@@ -35,7 +35,7 @@ export class CompanyService extends ServiceTemplate {
    * @type {string}
    * The base URL for the company-related endpoints of the job backend service.
    */
-  private CONTEXT_PATH: string = `${JOB_BACKEND_SERVICE_BASE_URL}/companies`;
+  private readonly CONTEXT_PATH: string = `${JOB_BACKEND_SERVICE_BASE_URL}/companies`;
 
   constructor() {
     super();
