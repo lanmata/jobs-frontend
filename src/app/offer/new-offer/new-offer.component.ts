@@ -21,7 +21,7 @@ import {AppConst} from "@shared/util/app-const";
 import {Router, RouterLink, RouterLinkActive} from "@angular/router";
 import {NewOfferRequest} from "../offer.model";
 import {OfferService} from "../offer.service";
-import {FormatUtil} from "@shared/util/format-util";
+import {FormatUtil} from "@shared/util/format.util";
 import {StatusCollection} from "../../status/status.model";
 import {StatusService} from "../../status/status.service";
 import {AlertService} from "@shared/services/alert.service";

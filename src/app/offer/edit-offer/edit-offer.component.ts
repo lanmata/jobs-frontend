@@ -16,226 +16,228 @@ import {FlexModule} from "@angular/flex-layout";
 import {StatusService} from "../../status/status.service";
 import {StatusCollection} from "../../status/status.model";
 import {AlertService} from "@shared/services/alert.service";
-import {FormatUtil} from "@shared/util/format-util";
+import {FormatUtil} from "@shared/util/format.util";
 import {OfferDetailService} from "../../offer-detail/offer-detail.service";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {OfferDetailConfirmDialogComponent} from "../offer-detail-confirm-dialog/offer-detail-confirm-dialog.component";
 
 @Component({
-  selector: 'app-edit-offer',
-  standalone: true,
-  imports: [CommonModule, MaterialModule, TranslateModule, ReactiveFormsModule, FlexModule, RouterLinkActive, RouterLink],
-  templateUrl: './edit-offer.component.html',
-  styleUrl: './edit-offer.component.css'
+    selector: 'app-edit-offer',
+    standalone: true,
+    imports: [CommonModule, MaterialModule, TranslateModule, ReactiveFormsModule, FlexModule, RouterLinkActive, RouterLink],
+    templateUrl: './edit-offer.component.html',
+    styleUrl: './edit-offer.component.css'
 })
 export class EditOfferComponent extends AbstractComponent {
 
-  jobOfferId: string = '';
-  private dialog: MatDialog = inject(MatDialog);
-  private activatedRoute = inject(ActivatedRoute);
-  private offerDetailService: OfferDetailService = inject(OfferDetailService);
-  private statusService: StatusService = inject(StatusService);
-  protected loader: LoadingService = inject(LoadingService);
-  private offerService: OfferService = inject(OfferService);
-  private formBuilder = inject(FormBuilder);
-  private alertService: AlertService = inject(AlertService);
-  private datePipe = inject(DatePipe);
-  private formatUtil!: FormatUtil;
-  offer!: OfferEdit;
-  protected readonly statusCollection: StatusCollection = new StatusCollection();
-  protected readonly appConst = AppConst;
-  protected minDate!: Date;
-  protected maxDate!: Date
+    jobOfferId: string = '';
+    private dialog: MatDialog = inject(MatDialog);
+    private activatedRoute = inject(ActivatedRoute);
+    private offerDetailService: OfferDetailService = inject(OfferDetailService);
+    private statusService: StatusService = inject(StatusService);
+    protected loader: LoadingService = inject(LoadingService);
+    private offerService: OfferService = inject(OfferService);
+    private formBuilder = inject(FormBuilder);
+    private alertService: AlertService = inject(AlertService);
+    private datePipe = inject(DatePipe);
+    private formatUtil!: FormatUtil;
+    offer!: OfferEdit;
+    protected readonly statusCollection: StatusCollection = new StatusCollection();
+    protected readonly appConst = AppConst;
+    protected minDate!: Date;
+    protected maxDate!: Date
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
-  editOfferForm: FormGroup;
-  dialogConfirm: FormGroup;
-  /**
-   * dataSource is an array of offers.
-   */
-  readonly displayedColumns: Iterable<string> = ['datetime', 'description', 'status', 'delete'];
+    @ViewChild(MatPaginator) paginator!: MatPaginator;
+    @ViewChild(MatSort) sort!: MatSort;
+    editOfferForm: FormGroup;
+    dialogConfirm: FormGroup;
+    /**
+     * dataSource is an array of offers.
+     */
+    readonly displayedColumns: Iterable<string> = ['datetime', 'description', 'status', 'delete'];
 
-  constructor() {
-    super();
-    this.editOfferForm = this.formBuilder.group({
-      status: ['', [Validators.required]],
-      updateDate: ['', [Validators.required]],
-      comments: ['', [Validators.required]]
-    });
-    this.dialogConfirm = this.formBuilder.group({});
-  }
+    constructor() {
+        super();
+        this.editOfferForm = this.formBuilder.group({
+            status: ['', [Validators.required]],
+            updateDate: ['', [Validators.required]],
+            comments: ['', [Validators.required]]
+        });
+        this.dialogConfirm = this.formBuilder.group({});
+    }
 
-  override ngAfterViewInit(): void {
-    this.changeDetectorRefs.detectChanges();
-  }
+    override ngAfterViewInit(): void {
+        this.changeDetectorRefs.detectChanges();
+    }
 
-  override ngOnDestroy(): void {
-    this.subject$.next();
-    this.subject$.complete();
-  }
+    override ngOnDestroy(): void {
+        this.subject$.next();
+        this.subject$.complete();
+    }
 
-  override ngOnInit(): void {
-    this.loader.show();
-    this.formatUtil = new FormatUtil(this.datePipe);
-    this.offer = new OfferEdit();
-    this.offer.postDetailList = [{
-      datetime: new Date(),
-      id: '',
-      description: '',
-      mountRate: 0,
-      jobOfferId: '',
-      statusId: '',
-      status: ''
-    }];
-    this.jobOfferId = this.activatedRoute.snapshot.params['offerId'];
-    this.listStatus(false);
-    this.loadOffer();
-  }
+    override ngOnInit(): void {
+        this.loader.show();
+        this.formatUtil = new FormatUtil(this.datePipe);
+        this.offer = new OfferEdit();
+        this.offer.postDetailList = [{
+            datetime: new Date(),
+            id: '',
+            description: '',
+            mountRate: 0,
+            jobOfferId: '',
+            statusId: '',
+            status: ''
+        }];
+        this.jobOfferId = this.activatedRoute.snapshot.params['offerId'];
+        this.listStatus(false);
+        this.loadOffer();
+    }
 
 
-  updateOffer() {
-    this.loader.show();
-    const offerUpdateRequest = new OfferUpdateRequest();
-    offerUpdateRequest.statusId = this.editOfferForm.get('status')?.value;
-    offerUpdateRequest.description = this.editOfferForm.get('comments')?.value;
-    offerUpdateRequest.createdDateTime = this.formatUtil.datetimeStandard(this.editOfferForm.get('updateDate')?.value);
+    updateOffer() {
+        this.loader.show();
+        const offerUpdateRequest = new OfferUpdateRequest();
+        offerUpdateRequest.statusId = this.editOfferForm.get('status')?.value;
+        offerUpdateRequest.description = this.editOfferForm.get('comments')?.value;
+        offerUpdateRequest.createdDateTime = this.formatUtil.datetimeStandard(this.editOfferForm.get('updateDate')?.value);
+        this.logInfo('this.formatUtil:', this.formatUtil);
+        this.logInfo('this.formatUtil.datetimeStandard:', this.formatUtil.datetimeStandard);
 
-    this.offerService.putOffer(this.jobOfferId, offerUpdateRequest).pipe(takeUntil(this.subject$))
-      .subscribe({
-        next: (response: any) => {
-          this.loadOffer();
-          this.cleanValues();
-          this.alertService.success(`Updated  offer #${response.id} successfully`, true);
-        },
-        error: (errorResponse: any) => {
-          this.logError('Error updating offer:', errorResponse)
-          this.alertService.success('We have a error to process the request.', true);
-          this.loader.hide();
-        },
-        complete: () => {
-          this.loader.hide();
-        }
-      });
-  }
+        this.offerService.putOffer(this.jobOfferId, offerUpdateRequest).pipe(takeUntil(this.subject$))
+            .subscribe({
+                next: (response: any) => {
+                    this.loadOffer();
+                    this.cleanValues();
+                    this.alertService.success(`Updated  offer #${response.id} successfully`, true);
+                },
+                error: (errorResponse: any) => {
+                    this.logError('Error updating offer:', errorResponse)
+                    this.alertService.success('We have a error to process the request.', true);
+                    this.loader.hide();
+                },
+                complete: () => {
+                    this.loader.hide();
+                }
+            });
+    }
 
-  openDialogConfirm(offerDetailId: string) {
-    const offerDetailDeleteDialogConfig = new MatDialogConfig();
-    offerDetailDeleteDialogConfig.disableClose = true;
-    offerDetailDeleteDialogConfig.autoFocus = true;
-    offerDetailDeleteDialogConfig.panelClass = "offer-delete";
-    offerDetailDeleteDialogConfig.data = offerDetailId;
-    this.cleanValues();
-    const offerDetailDeleteDialog = this.dialog.open(OfferDetailConfirmDialogComponent, offerDetailDeleteDialogConfig);
-    offerDetailDeleteDialog.afterClosed().subscribe(value => {
-      if (value) {
-        this.deleteOfferDetail(offerDetailId);
-      }
-    });
-  }
-
-  private deleteOfferDetail(offerDetailId: string) {
-    this.loader.show();
-    this.offerDetailService.deleteOfferDetail(offerDetailId).pipe(takeUntil(this.subject$))
-      .subscribe({
-        next: (response: any) => {
-          this.loadOffer();
-          this.alertService.success(`Deleted offer detail #${response.id} successfully`, true);
-        },
-        error: (errorResponse: any) => {
-          this.logError('Error deleting offer detail:', errorResponse)
-          this.alertService.success('We have a error to process the request.', true);
-          this.loader.hide();
-        },
-        complete: () => {
-          this.loader.hide();
-        }
-      });
-  }
-
-  private loadOffer(): void {
-    if (this.jobOfferId !== undefined) {
-      this.offerService.getOffer(this.jobOfferId).pipe(takeUntil(this.subject$))
-        .subscribe({
-          next: (response: any) => {
-            this.offer = response
-            this.setCalendarRange();
-            this.setStatus();
-            this.dataProcess(this.offer.postDetailList, this.sort, this.paginator);
-          },
-          error: (errorResponse: any) => this.logError('Error loading offer:', errorResponse),
-          complete: () => {
-            this.loader.hide();
-          }
+    openDialogConfirm(offerDetailId: string) {
+        const offerDetailDeleteDialogConfig = new MatDialogConfig();
+        offerDetailDeleteDialogConfig.disableClose = true;
+        offerDetailDeleteDialogConfig.autoFocus = true;
+        offerDetailDeleteDialogConfig.panelClass = "offer-delete";
+        offerDetailDeleteDialogConfig.data = offerDetailId;
+        this.cleanValues();
+        const offerDetailDeleteDialog = this.dialog.open(OfferDetailConfirmDialogComponent, offerDetailDeleteDialogConfig);
+        offerDetailDeleteDialog.afterClosed().subscribe(value => {
+            if (value) {
+                this.deleteOfferDetail(offerDetailId);
+            }
         });
     }
-  }
 
-  /**
-   * Get the list of statuses.
-   * It calls the status service to get the list of statuses.
-   *
-   * @method
-   * @memberof StatusComponent
-   * @description Get statuses
-   * @param includeActive - A boolean value to determine whether to include active statuses.
-   * @since 1.0.0
-   * @version 1.0.0
-   */
-  private listStatus(includeActive: boolean): void {
-    this.statusService.getStatus(includeActive).pipe(takeUntil(this.subject$))
-      .subscribe({
-        next: (response: any) => this.statusCollection.statuses = response.statusTOCollection,
-        error: (error: any) => this.setErrorFound('statuses', error),
-        complete: () => {
-          this.logInfo(`Get statuses completed. ${this.statusCollection.statuses.length} statuses found`);
-        }
-      });
-  }
-
-  private setStatus(): void {
-    if (this.offer.postDetailList && this.statusCollection?.statuses) {
-      this.offer.postDetailList.forEach((postDetail) => {
-        this.statusCollection.statuses.filter((status) => {
-          if (status.id === postDetail.statusId) {
-            postDetail.status = status.name;
-          }
-        });
-      });
+    private deleteOfferDetail(offerDetailId: string) {
+        this.loader.show();
+        this.offerDetailService.deleteOfferDetail(offerDetailId).pipe(takeUntil(this.subject$))
+            .subscribe({
+                next: (response: any) => {
+                    this.loadOffer();
+                    this.alertService.success(`Deleted offer detail #${response.id} successfully`, true);
+                },
+                error: (errorResponse: any) => {
+                    this.logError('Error deleting offer detail:', errorResponse)
+                    this.alertService.success('We have a error to process the request.', true);
+                    this.loader.hide();
+                },
+                complete: () => {
+                    this.loader.hide();
+                }
+            });
     }
-  }
 
-  /**
-   * Set the error found.
-   * It sets the error found to true and logs the error.
-   *
-   * @method
-   * @memberof NewOfferComponent
-   * @param element - The element to set the error found.
-   * @param errorResponse - The error response to log.
-   * @since 1.0.0
-   * @version 1.0.0
-   */
-  private setErrorFound(element: string, errorResponse: Error): void {
-    this.isErrorFound = true;
-    this.logError(`Error occurred while getting ${element} ${errorResponse}`);
-  }
+    private loadOffer(): void {
+        if (this.jobOfferId !== undefined) {
+            this.offerService.getOffer(this.jobOfferId).pipe(takeUntil(this.subject$))
+                .subscribe({
+                    next: (response: any) => {
+                        this.offer = response
+                        this.setCalendarRange();
+                        this.setStatus();
+                        this.dataProcess(this.offer.postDetailList, this.sort, this.paginator);
+                    },
+                    error: (errorResponse: any) => this.logError('Error loading offer:', errorResponse),
+                    complete: () => {
+                        this.loader.hide();
+                    }
+                });
+        }
+    }
 
-  private setCalendarRange() {
-    this.minDate = new Date(this.offer.postDetailList[0].datetime);
-    this.maxDate = new Date();
-  }
+    /**
+     * Get the list of statuses.
+     * It calls the status service to get the list of statuses.
+     *
+     * @method
+     * @memberof StatusComponent
+     * @description Get statuses
+     * @param includeActive - A boolean value to determine whether to include active statuses.
+     * @since 1.0.0
+     * @version 1.0.0
+     */
+    private listStatus(includeActive: boolean): void {
+        this.statusService.getStatus(includeActive).pipe(takeUntil(this.subject$))
+            .subscribe({
+                next: (response: any) => this.statusCollection.statuses = response.statusTOCollection,
+                error: (error: any) => this.setErrorFound('statuses', error),
+                complete: () => {
+                    this.logInfo(`Get statuses completed. ${this.statusCollection.statuses.length} statuses found`);
+                }
+            });
+    }
 
-  cleanValues() {
-    this.editOfferForm.controls['status'].reset();
-    this.editOfferForm.controls['status'].markAsPending({onlySelf: true});
-    this.editOfferForm.controls['updateDate'].reset();
-    this.editOfferForm.controls['updateDate'].markAsPending({onlySelf: true});
-    this.editOfferForm.controls['comments'].reset();
-    this.editOfferForm.controls['comments'].markAsPending({onlySelf: true});
-  }
+    private setStatus(): void {
+        if (this.offer.postDetailList && this.statusCollection?.statuses) {
+            this.offer.postDetailList.forEach((postDetail) => {
+                this.statusCollection.statuses.filter((status) => {
+                    if (status.id === postDetail.statusId) {
+                        postDetail.status = status.name;
+                    }
+                });
+            });
+        }
+    }
 
-  onNoClick() {
+    /**
+     * Set the error found.
+     * It sets the error found to true and logs the error.
+     *
+     * @method
+     * @memberof NewOfferComponent
+     * @param element - The element to set the error found.
+     * @param errorResponse - The error response to log.
+     * @since 1.0.0
+     * @version 1.0.0
+     */
+    private setErrorFound(element: string, errorResponse: Error): void {
+        this.isErrorFound = true;
+        this.logError(`Error occurred while getting ${element} ${errorResponse}`);
+    }
 
-  }
+    private setCalendarRange() {
+        this.minDate = new Date(this.offer.postDetailList[0].datetime);
+        this.maxDate = new Date();
+    }
+
+    cleanValues() {
+        this.editOfferForm.controls['status'].reset();
+        this.editOfferForm.controls['status'].markAsPending({onlySelf: true});
+        this.editOfferForm.controls['updateDate'].reset();
+        this.editOfferForm.controls['updateDate'].markAsPending({onlySelf: true});
+        this.editOfferForm.controls['comments'].reset();
+        this.editOfferForm.controls['comments'].markAsPending({onlySelf: true});
+    }
+
+    onNoClick() {
+
+    }
 }
