@@ -110,7 +110,7 @@ UNIT_TEST_MOCK_OFFER_EDIT.postDetailList = [
     mountRate: 0,
     jobOfferId: '0645d0de-fe0d-488c-920b-91145ac35387',
     statusId: '2c7c9f5f-11b8-414d-b07d-cf82652cf31f',
-    status: 'Test Status'
+    status: 'Test Status',
   },
   {
     datetime: new Date(),
