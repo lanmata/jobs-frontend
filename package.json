@@ -1,6 +1,6 @@
 {
   "name": "jobs-frontend",
-  "version": "0.0.0",
+  "version": "1.0.1",
   "scripts": {
     "ng": "ng",
     "start-dev": "node server.js --ssl --ssl-key ssl/manager-front.key --ssl-cert ssl/manager-front.crt  --port 7001 --configuration=development",
