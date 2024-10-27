@@ -1,7 +1,7 @@
 stages:
   - install
-  - test
   - build
+  - test
   - deploy
 
 variables:
@@ -27,26 +27,26 @@ install_dependencies:
     paths:
       - node_modules/
 
+build_project:
+  stage: build
+  image: node:20
+  script:
+    - npm install -force
+    - ng build
+  artifacts:
+    paths:
+      - dist/
+
 run_tests:
   stage: test
   image: node:20
   script:
-    - npm install -force
     - npm test --coverage --coverageReporters=html
   artifacts:
     reports:
       junit: test-results.xml
     paths:
       - coverage/
-
-build_project:
-  stage: build
-  image: node:20
-  script:
-    - ng build
-  artifacts:
-    paths:
-      - dist/
 
 deploy:
   stage: deploy
