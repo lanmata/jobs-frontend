@@ -20,6 +20,7 @@ before_script:
 
 install_dependencies:
   stage: install
+  image: node:20
   script:
     - npm ci
   artifacts:
@@ -28,6 +29,7 @@ install_dependencies:
 
 run_tests:
   stage: test
+  image: node:20
   script:
     - npm test
   artifacts:
@@ -38,6 +40,7 @@ run_tests:
 
 build_project:
   stage: build
+  image: node:20
   script:
     - npm run build
   artifacts:
@@ -46,8 +49,11 @@ build_project:
 
 deploy:
   stage: deploy
+  image: node:120
   script:
     - echo "Deploying to production server..."
-    # Aquí puedes agregar los comandos para desplegar tu aplicación
+    # Here you can add the commands to deploy your application
   only:
     - main
+    - develop
+    - merge_requests
