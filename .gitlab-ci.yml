@@ -49,7 +49,7 @@ build_project:
 
 deploy:
   stage: deploy
-  image: node:120
+  image: node:20
   script:
     - echo "Deploying to production server..."
     # Here you can add the commands to deploy your application
