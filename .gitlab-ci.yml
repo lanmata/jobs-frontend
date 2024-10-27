@@ -1,0 +1,53 @@
+stages:
+  - install
+  - test
+  - build
+  - deploy
+
+variables:
+  NODE_ENV: 'production'
+  ANGULAR_CLI_VERSION: '14.0.0'
+  NPM_CACHE_DIR: '$CI_PROJECT_DIR/.npm'
+
+cache:
+  paths:
+    - .npm
+    - node_modules/
+
+before_script:
+  - npm config set cache $NPM_CACHE_DIR --global
+  - npm install -g @angular/cli@$ANGULAR_CLI_VERSION
+
+install_dependencies:
+  stage: install
+  script:
+    - npm ci
+  artifacts:
+    paths:
+      - node_modules/
+
+run_tests:
+  stage: test
+  script:
+    - npm test
+  artifacts:
+    reports:
+      junit: test-results.xml
+    paths:
+      - coverage/
+
+build_project:
+  stage: build
+  script:
+    - npm run build
+  artifacts:
+    paths:
+      - dist/
+
+deploy:
+  stage: deploy
+  script:
+    - echo "Deploying to production server..."
+    # Aquí puedes agregar los comandos para desplegar tu aplicación
+  only:
+    - main
