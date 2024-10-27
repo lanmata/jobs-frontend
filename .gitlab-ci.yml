@@ -4,7 +4,7 @@ stages:
 
 variables:
   NODE_ENV: 'production'
-  ANGULAR_CLI_VERSION: '18.2.2'
+  ANGULAR_CLI_VERSION: '18.2.9'
   NPM_CACHE_DIR: '$CI_PROJECT_DIR/.npm'
 
 cache:
