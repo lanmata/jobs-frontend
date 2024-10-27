@@ -1,6 +1,4 @@
 stages:
-  - install
-  - build
   - test
   - deploy
 
@@ -18,25 +16,6 @@ before_script:
   - npm config set cache $NPM_CACHE_DIR --global
   - npm install -g @angular/cli@$ANGULAR_CLI_VERSION
 
-install_dependencies:
-  stage: install
-  image: node:20
-  script:
-    - npm install -force
-  artifacts:
-    paths:
-      - node_modules/
-
-build_project:
-  stage: build
-  image: node:20
-  script:
-    - npm install -force
-    - ng build
-  artifacts:
-    paths:
-      - dist/
-
 run_tests:
   stage: test
   image: node:20
@@ -48,6 +27,8 @@ run_tests:
     reports:
       junit: test-results.xml
     paths:
+      - node_modules/
+      - dist/
       - coverage/
 
 deploy:
