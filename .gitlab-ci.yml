@@ -31,10 +31,10 @@ run_tests:
       - node_modules/
       - dist/
       - coverage/
-    only:
-      - main
-      - develop
-      - merge_requests
+  only:
+    - main
+    - develop
+    - merge_requests
 
 deploy:
   stage: deploy
