@@ -1,52 +1,46 @@
 stages:
-  - install
   - test
-  - build
   - deploy
+  - sonarcloud-check
 
 variables:
-  NODE_ENV: 'production'
-  ANGULAR_CLI_VERSION: '18.2.2'
+  NODE_ENV: 'development'
+  ANGULAR_CLI_VERSION: '18.2.9'
   NPM_CACHE_DIR: '$CI_PROJECT_DIR/.npm'
+  SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"
+  GIT_DEPTH: "0"
 
 cache:
   paths:
     - .npm
+    - dist/
     - node_modules/
-
-before_script:
-  - npm config set cache $NPM_CACHE_DIR --global
-  - npm install -g @angular/cli@$ANGULAR_CLI_VERSION
-
-install_dependencies:
-  stage: install
-  image: node:20
-  script:
-    - npm install
-  artifacts:
-    paths:
-      - node_modules/
 
 run_tests:
   stage: test
   image: node:20
   script:
-    - npm install
-    - npm test
+    - npm config set cache $NPM_CACHE_DIR --global
+    - npm config set cache $NPM_CACHE_DIR --userconfig ~/.npmrc
+    - npm install -g @angular/cli@$ANGULAR_CLI_VERSION
+    - wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+    - echo "deb http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list
+    - apt-get update
+    - apt-get install -y google-chrome-stable xvfb
+    - npm install -force
+    - npm run build
+    - npm run test
   artifacts:
     reports:
       junit: test-results.xml
     paths:
-      - coverage/
-
-build_project:
-  stage: build
-  image: node:20
-  script:
-    - npm run build
-  artifacts:
-    paths:
+      - node_modules/
       - dist/
+      - coverage/
+  only:
+    - main
+    - develop
+    - merge_requests
 
 deploy:
   stage: deploy
@@ -56,5 +50,17 @@ deploy:
     # Here you can add the commands to deploy your application
   only:
     - main
-    - develop
+sonarcloud-check:
+  image:
+    name: sonarsource/sonar-scanner-cli:latest
+    entrypoint: [ "" ]
+  cache:
+    key: "${CI_JOB_NAME}"
+    paths:
+      - .sonar/cache
+  script:
+    - sonar-scanner
+  only:
     - merge_requests
+    - master
+    - develop
