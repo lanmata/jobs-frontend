@@ -1,6 +1,7 @@
 stages:
   - test
   - deploy
+  - sonarcloud-check
 
 variables:
   NODE_ENV: 'development'

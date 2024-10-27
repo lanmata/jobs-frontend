@@ -6,7 +6,7 @@
     "start-dev": "node server.js --ssl --ssl-key ssl/manager-front.key --ssl-cert ssl/manager-front.crt  --port 7001 --configuration development --vaultToken hvs.CAESIL8rt23yN5ImRA4QUOz4u8ydVo8yYADAAaX9YqbNuiXAGh4KHGh2cy44dUVkQmVGZ2lxQXRFSFJkenBJTVpCMG8 --vaultUrl http://prx-qa.vault.tst --vaultPath PRX/data/jobs-frontend/dev --DEBUG_MODE true",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test --code-coverage --browsers ChromeHeadless"
+    "test": "ng test --code-coverage --browsers ChromeHeadlessNoSandbox"
   },
   "private": true,
   "dependencies": {
