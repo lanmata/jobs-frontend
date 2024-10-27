@@ -22,7 +22,7 @@ install_dependencies:
   stage: install
   image: node:20
   script:
-    - npm install
+    - npm install -force
   artifacts:
     paths:
       - node_modules/
@@ -31,8 +31,8 @@ run_tests:
   stage: test
   image: node:20
   script:
-    - npm install
-    - npm test
+    - npm install -force
+    - npm test --coverage --coverageReporters=html
   artifacts:
     reports:
       junit: test-results.xml
@@ -56,5 +56,3 @@ deploy:
     # Here you can add the commands to deploy your application
   only:
     - main
-    - develop
-    - merge_requests
