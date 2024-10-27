@@ -16,15 +16,13 @@ cache:
     - dist/
     - node_modules/
 
-before_script:
-  - sudo npm config set cache $NPM_CACHE_DIR --global
-  - npm config set cache $NPM_CACHE_DIR --userconfig ~/.npmrc
-  - npm install -g @angular/cli@$ANGULAR_CLI_VERSION
-
 run_tests:
   stage: test
   image: node:20
   script:
+    - npm config set cache $NPM_CACHE_DIR --global
+    - npm config set cache $NPM_CACHE_DIR --userconfig ~/.npmrc
+    - npm install -g @angular/cli@$ANGULAR_CLI_VERSION
     - wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
     - echo "deb http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list
     - apt-get update
