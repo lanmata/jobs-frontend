@@ -69,4 +69,4 @@ COPY --from=build /usr/src/app/. ./.
 EXPOSE 7001
 
 # Run the application.
-CMD node server.js
+CMD node server.js --ssl --ssl-key ssl/manager-front.key --ssl-cert ssl/manager-front.crt --port ${APP_PORT} --configuration ${APP_PROFILE} --vaultToken ${VAULT_TOKEN} --vaultUrl ${VAULT_URI} --vaultPath ${VAULT_PATH} --DEBUG_MODE ${IS_DEBUG_ENABLED}

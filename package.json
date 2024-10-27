@@ -3,7 +3,7 @@
   "version": "1.0.1",
   "scripts": {
     "ng": "ng",
-    "start-dev": "node server.js --ssl --ssl-key ssl/manager-front.key --ssl-cert ssl/manager-front.crt  --port 7001 --configuration=development --vaultToken=hvs.CAESIL8rt23yN5ImRA4QUOz4u8ydVo8yYADAAaX9YqbNuiXAGh4KHGh2cy44dUVkQmVGZ2lxQXRFSFJkenBJTVpCMG8 --vaultUrl=http://prx-qa.vault.tst:80 --vaultPath=PRX/data/jobs-frontend/dev --DEBUG_MODE=true",
+    "start-dev": "node server.js --ssl --ssl-key ssl/manager-front.key --ssl-cert ssl/manager-front.crt  --port 7001 --configuration development --vaultToken hvs.CAESIL8rt23yN5ImRA4QUOz4u8ydVo8yYADAAaX9YqbNuiXAGh4KHGh2cy44dUVkQmVGZ2lxQXRFSFJkenBJTVpCMG8 --vaultUrl http://prx-qa.vault.tst --vaultPath PRX/data/jobs-frontend/dev --DEBUG_MODE true",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test --code-coverage"
@@ -32,6 +32,7 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "express-http-context": "^1.2.4",
+    "file-saver": "^2.0.5",
     "js-yaml": "^4.1.0",
     "jsonwebtoken": "^9.0.2",
     "logform": "^2.6.0",
