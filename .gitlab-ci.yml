@@ -41,6 +41,8 @@ run_tests:
   stage: test
   image: node:20
   script:
+    - npm install -force
+    - ng build
     - npm test --coverage --coverageReporters=html
   artifacts:
     reports:
