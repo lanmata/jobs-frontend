@@ -1,4 +1,9 @@
+/**
+ * OAuth client instance.
+ * @type {Object|null}
+ */
 let oauthClient = null;
+
 const jwt = require('jsonwebtoken');
 const appConfig = require('../config/app.config');
 const constants = require('../config/constants.util.js');
@@ -7,20 +12,21 @@ const config = require('config');
 const jobsProxyConfig = appConfig.getJobsProxyConfig();
 const oauthclient = require('../proxy/oauth-client');
 const logger = appConfig.getLogger();
-const apiServiceMap = JSON.parse(config.get('proxy.service.jobs.url'));
 const httpContext = require('express-http-context');
-const {v4: uuidv4} = require('uuid');
-// const rest = require('restler');
+const { v4: uuidv4 } = require('uuid');
 const util = require('util');
 const fs = require('fs');
 const fsunlink = util.promisify(fs.unlink);
 const needle = require('needle');
 
-const OAUTH_CLIENT_ID = process.env.OAUTH_CLIENT_ID;
-const OAUTH_CLIENT_SECRET = process.env.OAUTH_CLIENT_SECRET;
-const OAUTH_GRANT_TYPE = process.env.OAUTH_GRANT_TYPE;
-const OAUTH_TOKEN_URL = process.env.OAUTH_TOKEN_URL;
-const OAUTH_AUTHENTICATION_TYPE = process.env.OAUTH_AUTHENTICATION_TYPE;
+const API_SERVICE_JOBS_MAP = JSON.parse(process.env.API_SERVICE_JOBS_MAP);
+const OAUTH_AUTHENTICATION_TYPE = process.env.AUTH_AUTHENTICATION_TYPE;
+const OAUTH_CLIENT_ID = process.env.AUTH_CLIENT_ID;
+const OAUTH_CLIENT_SECRET = process.env.AUTH_CLIENT_SECRET;
+const OAUTH_GRANT_TYPE = process.env.AUTH_GRANT_TYPE;
+const OAUTH_TOKEN_URL = process.env.AUTH_SERVER_URI;
+const OAUTH_USER_ALIAS = process.env.AUTH_USER_ALIAS;
+const OAUTH_USER_PASSWORD = process.env.AUTH_USER_PASSWORD;
 
 const Agent = require('agentkeepalive');
 const HttpsAgent = require('agentkeepalive').HttpsAgent;
@@ -36,6 +42,13 @@ const httpConnectionOptions = {
 const keepaliveAgent = new Agent(httpConnectionOptions);
 const keepaliveHttpsAgent = new HttpsAgent(httpConnectionOptions);
 
+/**
+ * Retrieves the API endpoint for a given path.
+ *
+ * @param {string} path - The request path.
+ * @returns {string} - The full API endpoint URL.
+ * @throws {Error} - Throws an error if the API endpoint is not found.
+ */
 let getApiEndpoint = function (path) {
     let finalPath = null;
     let applicationName = null;
@@ -50,8 +63,7 @@ let getApiEndpoint = function (path) {
             break;
         }
     }
-
-    let apiURL = apiServiceMap[applicationName];
+    let apiURL = API_SERVICE_JOBS_MAP[applicationName];
 
     if (apiURL != null) {
         return apiURL + finalPath;
@@ -63,6 +75,11 @@ let getApiEndpoint = function (path) {
     }
 };
 
+/**
+ * Retrieves the OAuth client instance, initializing it if necessary.
+ *
+ * @returns {Object} - The OAuth client instance.
+ */
 let getOauthClient = function () {
     if (oauthClient) {
         return oauthClient;
@@ -72,18 +89,26 @@ let getOauthClient = function () {
         clientSecret: OAUTH_CLIENT_SECRET,
         grantType: OAUTH_GRANT_TYPE,
         tokenUrl: OAUTH_TOKEN_URL,
-        authenticationType: OAUTH_AUTHENTICATION_TYPE
+        authenticationType: OAUTH_AUTHENTICATION_TYPE,
+        username: OAUTH_USER_ALIAS,
+        password: OAUTH_USER_PASSWORD
     });
     return oauthClient;
 }
 
+/**
+ * Proxies API requests to the appropriate backend service.
+ *
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @param {Function} next - The next middleware function.
+ */
 exports.proxyApi = async (req, res, next) => {
     let response = null;
     try {
         const apiURL = getApiEndpoint(req.url);
-        let token = null;
-        // let token = await getOauthClient().getBearerToken();
-        let headers = getBasicHeader(req, token, constants.CONTENT_TYPE_DEFAULT, constants.CONTENT_TYPE_DEFAULT)
+        let token = await getOauthClient().getBearerToken();
+        let headers = getBasicHeader(req, token, constants.CONTENT_TYPE_DEFAULT, constants.CONTENT_TYPE_DEFAULT);
 
         // Trace
         logger.info(`[Jobs] Proxying request to ${apiURL}`);
@@ -106,8 +131,17 @@ exports.proxyApi = async (req, res, next) => {
     res.send(response);
 };
 
+/**
+ * Constructs the basic headers for the proxied request.
+ *
+ * @param {Object} req - The request object.
+ * @param {string} token - The OAuth bearer token.
+ * @param {string} defaultAccept - The default Accept header value.
+ * @param {string} defaultContentType - The default Content-Type header value.
+ * @returns {Object} - The constructed headers.
+ */
 const getBasicHeader = function (req, token, defaultAccept, defaultContentType) {
-    let headers = {}
+    let headers = {};
     headers['FID-LOGGER-TRACKING-ID'] = req.header("FID-LOGGER-TRACKING-ID") == null ? uuidv4() : req.header("FID-LOGGER-TRACKING-ID");
     headers['FID-USER-ID'] = req.header("FID-USER-ID") == null ? "anonymous" : req.header("FID-USER-ID");
     headers['Authorization'] = `Bearer ${token}`;
@@ -116,6 +150,15 @@ const getBasicHeader = function (req, token, defaultAccept, defaultContentType) 
     return headers;
 }
 
+/**
+ * Creates the request options for the proxied request.
+ *
+ * @param {string} method - The HTTP method.
+ * @param {string} url - The request URL.
+ * @param {Object} body - The request body.
+ * @param {Object} headers - The request headers.
+ * @returns {Object} - The constructed request options.
+ */
 let createRequestOption = function (method, url, body, headers) {
     return {
         method: method.toLowerCase(),
@@ -127,4 +170,3 @@ let createRequestOption = function (method, url, body, headers) {
         responseType: headers['Accept'] === constants.CONTENT_TYPE_DEFAULT ? 'arraybuffer' : 'json'
     }
 }
-
