@@ -43,7 +43,7 @@ build_project:
   stage: build
   image: node:20
   script:
-    - npm run build
+    - ng build
   artifacts:
     paths:
       - dist/
