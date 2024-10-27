@@ -17,7 +17,8 @@ cache:
     - node_modules/
 
 before_script:
-  - npm config set cache $NPM_CACHE_DIR --global
+  - sudo npm config set cache $NPM_CACHE_DIR --global
+  - npm config set cache $NPM_CACHE_DIR --userconfig ~/.npmrc
   - npm install -g @angular/cli@$ANGULAR_CLI_VERSION
 
 run_tests:
