@@ -22,7 +22,7 @@ install_dependencies:
   stage: install
   image: node:20
   script:
-    - npm ci
+    - npm install
   artifacts:
     paths:
       - node_modules/
