@@ -16,6 +16,7 @@ cache:
 before_script:
   - npm config set cache $NPM_CACHE_DIR --global
   - npm install -g @angular/cli@$ANGULAR_CLI_VERSION
+  - npm install -g @angular-devkit/build-angular:18.2.10
 
 run_tests:
   stage: test
