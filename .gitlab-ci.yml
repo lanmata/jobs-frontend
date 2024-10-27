@@ -10,6 +10,7 @@ variables:
 cache:
   paths:
     - .npm
+    - dist/
     - node_modules/
 
 before_script:
@@ -21,8 +22,8 @@ run_tests:
   image: node:20
   script:
     - npm install -force
-    - ng build
-    - npm test --coverage --coverageReporters=html
+    - npm run build
+    - npm run test
   artifacts:
     reports:
       junit: test-results.xml
@@ -30,6 +31,10 @@ run_tests:
       - node_modules/
       - dist/
       - coverage/
+    only:
+      - main
+      - develop
+      - merge_requests
 
 deploy:
   stage: deploy
