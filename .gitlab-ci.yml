@@ -3,7 +3,7 @@ stages:
   - deploy
 
 variables:
-  NODE_ENV: 'production'
+  NODE_ENV: 'development'
   ANGULAR_CLI_VERSION: '18.2.9'
   NPM_CACHE_DIR: '$CI_PROJECT_DIR/.npm'
 
@@ -16,7 +16,6 @@ cache:
 before_script:
   - npm config set cache $NPM_CACHE_DIR --global
   - npm install -g @angular/cli@$ANGULAR_CLI_VERSION
-  - npm install -g @angular-devkit/build-angular:latest
 
 run_tests:
   stage: test
