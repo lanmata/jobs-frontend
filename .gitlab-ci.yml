@@ -55,7 +55,7 @@ deploy:
 sonarcloud-check:
   image:
     name: sonarsource/sonar-scanner-cli:latest
-    entrypoint: [""]
+    entrypoint: [ "" ]
   cache:
     key: "${CI_JOB_NAME}"
     paths:
