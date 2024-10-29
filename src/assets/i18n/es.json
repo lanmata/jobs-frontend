@@ -182,5 +182,53 @@
     "button_ok": {
       "title": "Confirmar"
     }
+  },
+  "company_board": {
+    "title": "Compañias",
+    "new_company_button": {
+      "title": "Nueva Compañia",
+      "tooltip": "Crear una nueva compañia"
+    },
+    "export_to_excel_button": {
+      "title": "Exportar a Excel",
+      "tooltip": "Exportar a Excel"
+    },
+    "search": {
+      "title": "Buscar",
+      "placeholder": "Buscar por nombre de compañia"
+    },
+    "show_closed": {
+      "title": "Mostrar compañias inactivas"
+    },
+    "data_grid": {
+      "id": {
+        "title": "Id",
+        "tooltip": ""
+      },
+      "name": {
+        "title": "Nombre",
+        "tooltip": ""
+      },
+      "description": {
+        "title": "Descripcion",
+        "tooltip": ""
+      },
+      "active": {
+        "title": "Status",
+        "tooltip": "Status activo o inactivo"
+      },
+      "edit": {
+        "title": "Editar",
+        "tooltip": "Editar"
+      },
+      "add_status": {
+        "title": "Agregar Status",
+        "tooltip": "Agregar Status"
+      },
+      "delete": {
+        "title": "Eliminar",
+        "tooltip": "Eliminar position de trabajo aplicada"
+      }
+    }
   }
 }
