@@ -36,7 +36,7 @@ export class CompanyComponent extends AbstractComponent {
     public loader: LoadingService = inject(LoadingService);
 
     /**
-     * dataSource is an array of offers.
+     * dataSource is an array of companies.
      */
     readonly displayedColumns: Iterable<string> = ['id', 'name', 'description', 'active', 'edit', 'add_status', 'delete'];
 
@@ -47,9 +47,24 @@ export class CompanyComponent extends AbstractComponent {
      * @type {CompanyService}
      * @private
      */
-    private companyService: CompanyService = inject(CompanyService);
+    private readonly companyService: CompanyService = inject(CompanyService);
 
+    /**
+     * AppConst is an instance of the AppConst.
+     * It is used to access the constants.
+     *
+     * @type {AppConst}
+     */
+    protected readonly appConst = AppConst;
+
+    /**
+     * The MatPaginator is a component to control the pagination of a table.
+     */
     @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+    /**
+     * The MatSort is a component to control the sorting of a table.
+     */
     @ViewChild(MatSort) sort!: MatSort;
 
     /**
@@ -115,8 +130,6 @@ export class CompanyComponent extends AbstractComponent {
                 }
             });
     }
-
-    protected readonly appConst = AppConst;
 
     // PENDING - Implement the following methods
     addStatus(element: any) {
