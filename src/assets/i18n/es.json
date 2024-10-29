@@ -183,6 +183,54 @@
       "title": "Confirmar"
     }
   },
+  "mode_board": {
+    "title": "Modalidades",
+    "new_mode_button": {
+      "title": "Nueva Modalidad",
+      "tooltip": "Crear una nueva modalidad"
+    },
+    "export_to_excel_button": {
+      "title": "Exportar a Excel",
+      "tooltip": "Exportar a Excel"
+    },
+    "search": {
+      "title": "Buscar",
+      "placeholder": "Buscar por nombre de modalidad"
+    },
+    "show_closed": {
+      "title": "Mostrar modalidades inactivas"
+    },
+    "data_grid": {
+      "id": {
+        "title": "Id",
+        "tooltip": ""
+      },
+      "name": {
+        "title": "Nombre",
+        "tooltip": ""
+      },
+      "description": {
+        "title": "Descripcion",
+        "tooltip": ""
+      },
+      "active": {
+        "title": "Status",
+        "tooltip": "Status activo o inactivo"
+      },
+      "edit": {
+        "title": "Editar",
+        "tooltip": "Editar"
+      },
+      "add_status": {
+        "title": "Agregar modalidad",
+        "tooltip": "Agregar Status"
+      },
+      "delete": {
+        "title": "Eliminar",
+        "tooltip": "Eliminar modalidad"
+      }
+    }
+  },
   "company_board": {
     "title": "Compañias",
     "new_company_button": {
@@ -222,12 +270,12 @@
         "tooltip": "Editar"
       },
       "add_status": {
-        "title": "Agregar Status",
-        "tooltip": "Agregar Status"
+        "title": "Agregar compañia",
+        "tooltip": "Agregar compañia"
       },
       "delete": {
         "title": "Eliminar",
-        "tooltip": "Eliminar position de trabajo aplicada"
+        "tooltip": "Eliminar compañia"
       }
     }
   }

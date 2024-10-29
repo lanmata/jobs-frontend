@@ -29,6 +29,7 @@ export class AppConst {
     COMPANIES_PATH : 'companies',
     EDIT_COMPANY_PATH: "company/edit-offer",
     MODE_PATH : 'mode',
+    EDIT_MODE_PATH: 'mode/edit-mode',
     OFFER_PATH : 'offer',
     POSITION_PATH : 'position',
     SOURCE_PATH: "source",
