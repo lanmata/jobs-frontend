@@ -374,5 +374,53 @@
         "tooltip": "Eliminar fuente"
       }
     }
+  },
+  "status_board": {
+    "title": "Status",
+    "new_status_button": {
+      "title": "Nuevo Status",
+      "tooltip": "Crear un nuevo status"
+    },
+    "export_to_excel_button": {
+      "title": "Exportar a Excel",
+      "tooltip": "Exportar a Excel"
+    },
+    "search": {
+      "title": "Buscar",
+      "placeholder": "Buscar por nombre de status"
+    },
+    "show_closed": {
+      "title": "Mostrar status inactivos"
+    },
+    "data_grid": {
+      "id": {
+        "title": "Id",
+        "tooltip": ""
+      },
+      "name": {
+        "title": "Nombre",
+        "tooltip": ""
+      },
+      "description": {
+        "title": "Descripcion",
+        "tooltip": ""
+      },
+      "active": {
+        "title": "Status",
+        "tooltip": "Status activo o inactivo"
+      },
+      "edit": {
+        "title": "Editar",
+        "tooltip": "Editar"
+      },
+      "add_status": {
+        "title": "Agregar status",
+        "tooltip": "Agregar status"
+      },
+      "delete": {
+        "title": "Eliminar",
+        "tooltip": "Eliminar status"
+      }
+    }
   }
 }

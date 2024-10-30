@@ -38,9 +38,12 @@ export class AppConst {
     EDIT_SOURCE_PATH: "source/edit-source",
     NEW_SOURCE_PATH: "source/new-source",
     STATUS_PATH: "status",
+    NEW_STATUS_PATH: "status/new-status",
+    EDIT_STATUS_PATH: "status/edit-status",
     TERM_PATH: "term",
     NEW_OFFER_PATH: "offer/new-offer",
     EDIT_OFFER_PATH: "offer/edit-offer"
+
 
   }
 
