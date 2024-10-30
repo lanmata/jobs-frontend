@@ -326,5 +326,53 @@
         "tooltip": "Eliminar posicion"
       }
     }
+  },
+  "source_board": {
+    "title": "Fuentes",
+    "new_source_button": {
+      "title": "Nueva Fuente",
+      "tooltip": "Crear una nueva fuente"
+    },
+    "export_to_excel_button": {
+      "title": "Exportar a Excel",
+      "tooltip": "Exportar a Excel"
+    },
+    "search": {
+      "title": "Buscar",
+      "placeholder": "Buscar por nombre de fuente"
+    },
+    "show_closed": {
+      "title": "Mostrar fuentes inactivas"
+    },
+    "data_grid": {
+      "id": {
+        "title": "Id",
+        "tooltip": ""
+      },
+      "name": {
+        "title": "Nombre",
+        "tooltip": ""
+      },
+      "description": {
+        "title": "Descripcion",
+        "tooltip": ""
+      },
+      "active": {
+        "title": "Status",
+        "tooltip": "Status activo o inactivo"
+      },
+      "edit": {
+        "title": "Editar",
+        "tooltip": "Editar"
+      },
+      "add_status": {
+        "title": "Agregar fuente",
+        "tooltip": "Agregar fuente"
+      },
+      "delete": {
+        "title": "Eliminar",
+        "tooltip": "Eliminar fuente"
+      }
+    }
   }
 }
