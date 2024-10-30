@@ -14,6 +14,7 @@ export class AppConst {
     JOB_STATUS_PATH : 'job-status',
     COMPANY_PATH : 'company',
     COMPANY_EDITOR_PATH : 'company-editor',
+    NEW_COMPANY_PATH: "company/new-offer",
     COMPANY_TYPES_PATH : 'company-types',
     COMPANY_TYPE_PATH : 'company-type',
     COMPANY_STATUSES_PATH : 'company-statuses',
@@ -26,15 +27,18 @@ export class AppConst {
     JOB_APPLICATION_STATUSES_EDITOR_PATH : 'job-application-statuses-editor',
     JOB_APPLICATION_STATUS_EDITOR_PATH : 'job-application-status-editor',
     COMPANIES_PATH : 'companies',
+    EDIT_COMPANY_PATH: "company/edit-offer",
     MODE_PATH : 'mode',
+    EDIT_MODE_PATH: 'mode/edit-mode',
     OFFER_PATH : 'offer',
     POSITION_PATH : 'position',
+    EDIT_POSITION_PATH: "position/edit-position",
+    NEW_POSITION_PATH: "position/new-position",
     SOURCE_PATH: "source",
     STATUS_PATH: "status",
     TERM_PATH: "term",
     NEW_OFFER_PATH: "offer/new-offer",
     EDIT_OFFER_PATH: "offer/edit-offer"
-
   }
 
   public static readonly HTTP_OPTIONS = {

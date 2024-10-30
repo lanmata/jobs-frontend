@@ -182,5 +182,149 @@
     "button_ok": {
       "title": "Confirmar"
     }
+  },
+  "mode_board": {
+    "title": "Modalidades",
+    "new_mode_button": {
+      "title": "Nueva Modalidad",
+      "tooltip": "Crear una nueva modalidad"
+    },
+    "export_to_excel_button": {
+      "title": "Exportar a Excel",
+      "tooltip": "Exportar a Excel"
+    },
+    "search": {
+      "title": "Buscar",
+      "placeholder": "Buscar por nombre de modalidad"
+    },
+    "show_closed": {
+      "title": "Mostrar modalidades inactivas"
+    },
+    "data_grid": {
+      "id": {
+        "title": "Id",
+        "tooltip": ""
+      },
+      "name": {
+        "title": "Nombre",
+        "tooltip": ""
+      },
+      "description": {
+        "title": "Descripcion",
+        "tooltip": ""
+      },
+      "active": {
+        "title": "Status",
+        "tooltip": "Status activo o inactivo"
+      },
+      "edit": {
+        "title": "Editar",
+        "tooltip": "Editar"
+      },
+      "add_status": {
+        "title": "Agregar modalidad",
+        "tooltip": "Agregar Status"
+      },
+      "delete": {
+        "title": "Eliminar",
+        "tooltip": "Eliminar modalidad"
+      }
+    }
+  },
+  "company_board": {
+    "title": "Compañias",
+    "new_company_button": {
+      "title": "Nueva Compañia",
+      "tooltip": "Crear una nueva compañia"
+    },
+    "export_to_excel_button": {
+      "title": "Exportar a Excel",
+      "tooltip": "Exportar a Excel"
+    },
+    "search": {
+      "title": "Buscar",
+      "placeholder": "Buscar por nombre de compañia"
+    },
+    "show_closed": {
+      "title": "Mostrar compañias inactivas"
+    },
+    "data_grid": {
+      "id": {
+        "title": "Id",
+        "tooltip": ""
+      },
+      "name": {
+        "title": "Nombre",
+        "tooltip": ""
+      },
+      "description": {
+        "title": "Descripcion",
+        "tooltip": ""
+      },
+      "active": {
+        "title": "Status",
+        "tooltip": "Status activo o inactivo"
+      },
+      "edit": {
+        "title": "Editar",
+        "tooltip": "Editar"
+      },
+      "add_status": {
+        "title": "Agregar compañia",
+        "tooltip": "Agregar compañia"
+      },
+      "delete": {
+        "title": "Eliminar",
+        "tooltip": "Eliminar compañia"
+      }
+    }
+  },
+  "position_board": {
+    "title": "Posiciones",
+    "new_position_button": {
+      "title": "Nueva Posicion",
+      "tooltip": "Crear una nueva posicion"
+    },
+    "export_to_excel_button": {
+      "title": "Exportar a Excel",
+      "tooltip": "Exportar a Excel"
+    },
+    "search": {
+      "title": "Buscar",
+      "placeholder": "Buscar por nombre de posicion"
+    },
+    "show_closed": {
+      "title": "Mostrar posiciones inactivas"
+    },
+    "data_grid": {
+      "id": {
+        "title": "Id",
+        "tooltip": ""
+      },
+      "name": {
+        "title": "Nombre",
+        "tooltip": ""
+      },
+      "description": {
+        "title": "Descripcion",
+        "tooltip": ""
+      },
+      "active": {
+        "title": "Status",
+        "tooltip": "Status activo o inactivo"
+      },
+      "edit": {
+        "title": "Editar",
+        "tooltip": "Editar"
+      },
+      "add_status": {
+        "title": "Agregar posicion",
+        "tooltip": "Agregar posicion"
+      },
+      "delete": {
+        "title": "Eliminar",
+        "tooltip": "Eliminar posicion"
+      }
+    }
   }
 }
