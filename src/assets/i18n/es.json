@@ -278,5 +278,53 @@
         "tooltip": "Eliminar compañia"
       }
     }
+  },
+  "position_board": {
+    "title": "Posiciones",
+    "new_position_button": {
+      "title": "Nueva Posicion",
+      "tooltip": "Crear una nueva posicion"
+    },
+    "export_to_excel_button": {
+      "title": "Exportar a Excel",
+      "tooltip": "Exportar a Excel"
+    },
+    "search": {
+      "title": "Buscar",
+      "placeholder": "Buscar por nombre de posicion"
+    },
+    "show_closed": {
+      "title": "Mostrar posiciones inactivas"
+    },
+    "data_grid": {
+      "id": {
+        "title": "Id",
+        "tooltip": ""
+      },
+      "name": {
+        "title": "Nombre",
+        "tooltip": ""
+      },
+      "description": {
+        "title": "Descripcion",
+        "tooltip": ""
+      },
+      "active": {
+        "title": "Status",
+        "tooltip": "Status activo o inactivo"
+      },
+      "edit": {
+        "title": "Editar",
+        "tooltip": "Editar"
+      },
+      "add_status": {
+        "title": "Agregar posicion",
+        "tooltip": "Agregar posicion"
+      },
+      "delete": {
+        "title": "Eliminar",
+        "tooltip": "Eliminar posicion"
+      }
+    }
   }
 }
