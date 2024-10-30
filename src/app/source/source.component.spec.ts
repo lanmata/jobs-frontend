@@ -2,64 +2,93 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {SourceComponent} from './source.component';
 import {DebugElement} from "@angular/core";
-import { provideHttpClientTesting } from "@angular/common/http/testing";
+import {provideHttpClientTesting} from "@angular/common/http/testing";
 import {of, throwError} from "rxjs";
 import {SourceService} from "./source.service";
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import {HttpClient, provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
+import {ActivatedRoute, Router} from "@angular/router";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {TranslateFakeLoader, TranslateLoader, TranslateModule} from "@ngx-translate/core";
+import {DatePipe} from "@angular/common";
 
 describe('SourceComponent', () => {
-  let component: SourceComponent;
-  let fixture: ComponentFixture<SourceComponent>;
-  let sourceService: SourceService;
-  let debugElement: DebugElement;
+    let component: SourceComponent;
+    let fixture: ComponentFixture<SourceComponent>;
+    let sourceService: SourceService;
+    let debugElement: DebugElement;
+    let mockActivatedRoute: ActivatedRoute;
+    let mockRouter: Router;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-    imports: [SourceComponent],
-    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-})
-      .compileComponents();
+    beforeEach(async () => {
+        mockRouter = {
+            navigate: jasmine.createSpy('navigate'),
+            events: of({}) // Mock the events property
+        } as any;
+        mockActivatedRoute = {
+            snapshot: {
+                params: of({offerId: '0645d0de-fe0d-488c-920b-91145ac35387'})
+            }
+        } as any;
 
-    fixture = TestBed.createComponent(SourceComponent);
-    debugElement = fixture.debugElement;
-    component = fixture.componentInstance;
-    sourceService = debugElement.injector.get(SourceService);
-    fixture.detectChanges();
-  });
+        await TestBed.configureTestingModule({
+            imports: [SourceComponent,
+                BrowserAnimationsModule,
+                TranslateModule.forRoot({
+                    loader: {
+                        provide: TranslateLoader,
+                        useClass: TranslateFakeLoader
+                    }
+                })],
+            providers: [
+                {provide: ActivatedRoute, useValue: mockActivatedRoute},
+                {provide: HttpClient, useValue: jasmine.createSpyObj('httpClient', ['get', 'post'])},
+                {provide: DatePipe, useValue: jasmine.createSpyObj('DatePipe', ['transform'])},
+                provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting(),
+                {provide: Router, useValue: mockRouter}
+            ]
+        })
+            .compileComponents();
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+        fixture = TestBed.createComponent(SourceComponent);
+        debugElement = fixture.debugElement;
+        component = fixture.componentInstance;
+        sourceService = debugElement.injector.get(SourceService);
+        fixture.detectChanges();
+    });
 
-  it('should list sources including inactive ones when requested', () => {
-    const mockSources = {
-      sourceTOList: [
-        {
-          id: 'ee0d55ce-827c-4663-a99f-38324b9322a8',
-          name: 'Source 1',
-          description: 'Description Source 1',
-          active: true
-        },
-        {
-          id: '7a5ea908-e4e8-4d8d-a777-699158b4c94e',
-          name: 'Source 2',
-          description: 'Description Source 2',
-          active: false
-        }
-      ]
-    };
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 
-    spyOn(sourceService, 'getSources').and.returnValue(of(mockSources));
-    component.ngOnInit();
+    it('should list sources including inactive ones when requested', () => {
+        const mockSources = {
+            sourceTOList: [
+                {
+                    id: 'ee0d55ce-827c-4663-a99f-38324b9322a8',
+                    name: 'Source 1',
+                    description: 'Description Source 1',
+                    active: true
+                },
+                {
+                    id: '7a5ea908-e4e8-4d8d-a777-699158b4c94e',
+                    name: 'Source 2',
+                    description: 'Description Source 2',
+                    active: false
+                }
+            ]
+        };
 
-    expect(component.dataSource).toEqual(mockSources.sourceTOList);
-  });
+        spyOn(sourceService, 'getSources').and.returnValue(of(mockSources));
+        component.ngOnInit();
 
-  it('should handle error when listing sources fails', () => {
-    const errorResponse = new Error('Error occurred while getting sources');
-    spyOn(sourceService, 'getSources').and.returnValue(throwError(errorResponse));
-    component.ngOnInit();
-    expect(component.isErrorFound).toBeTrue();
-  });
+        expect(component.allData).toEqual(mockSources.sourceTOList);
+    });
+
+    it('should handle error when listing sources fails', () => {
+        const errorResponse = new Error('Error occurred while getting sources');
+        spyOn(sourceService, 'getSources').and.returnValue(throwError(errorResponse));
+        component.ngOnInit();
+        expect(component.isErrorFound).toBeTrue();
+    });
 
 });

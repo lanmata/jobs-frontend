@@ -1,6 +1,101 @@
-<p>source works!</p>
-@for (source of allData; track source.id) {
-  <p>{{source.id}} | {{source.name}} | {{source.description}} | {{source.active}} </p>
-} @empty {
-  <p>no source</p>
+<h1 id="sourceTitle">{{ 'source_board.title' | translate }}</h1>
+@if (loader.loading$ | async) {
+    <div class="overlay"></div>
+    <mat-progress-spinner [mode]="'indeterminate'"></mat-progress-spinner>
 }
+
+<ng-container>
+    <div class="panel-buttons">
+        <button mat-icon-button [routerLink]="'/' + appConst.JOBS_NAVIGATOR.NEW_SOURCE_PATH" [routerLinkActive]="'active'"
+                [matTooltip]="'source_board.new_source_button.title' | translate">
+            <mat-icon>add</mat-icon>
+        </button>
+        <button mat-icon-button (click)="exportToExcel()"
+                [matTooltip]="'source_board.export_to_excel_button.title' | translate">
+            <mat-icon>description</mat-icon>
+        </button>
+        <mat-form-field class="panel-search">
+            <mat-label>{{ 'source_board.search.title' | translate }}</mat-label>
+            <input id="source-filter" placeholder="{{'source_board.search.placeholder' | translate}}"
+                   (keyup)="search($event)" maxlength="150" matInput>
+        </mat-form-field>
+        <mat-slide-toggle id="source_status_filter" class="inactive-option"
+                          [(ngModel)]="isInactiveShow"
+                          [ngModelOptions]="{standalone: true}"
+                          (change)="showInactive()">{{ 'source_board.show_closed.title' | translate }}
+        </mat-slide-toggle>
+    </div>
+</ng-container>
+
+<div class="mat-elevation-z8">
+    <mat-table aria-describedby="sourceTitle" [dataSource]="matTableDataSource" matSort>
+        <!-- ID Column -->
+        <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'source_board.data_grid.id.title' | translate }}
+            </mat-header-cell>
+            <mat-cell *matCellDef="let source"> {{ source.id }}</mat-cell>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'source_board.data_grid.name.title' | translate }}
+            </mat-header-cell>
+            <mat-cell *matCellDef="let source"> {{ source.name }}</mat-cell>
+        </ng-container>
+
+        <!-- Description Column -->
+        <ng-container matColumnDef="description">
+            <mat-header-cell *matHeaderCellDef
+                             mat-sort-header>{{ 'source_board.data_grid.description.title' | translate }}
+            </mat-header-cell>
+            <mat-cell *matCellDef="let source"> {{ source.description }}</mat-cell>
+        </ng-container>
+
+        <!-- Active Column -->
+        <ng-container matColumnDef="active">
+            <mat-header-cell *matHeaderCellDef>{{ 'source_board.data_grid.active.title' | translate }}
+            </mat-header-cell>
+            <mat-cell *matCellDef="let source">
+                @if (source.active) {
+                    <mat-icon>check</mat-icon>
+                } @else {
+                    <mat-icon>close</mat-icon>
+                }
+            </mat-cell>
+        </ng-container>
+        <!-- Edit-->
+        <ng-container matColumnDef="edit">
+            <mat-header-cell *matHeaderCellDef>{{ 'source_board.data_grid.edit.title' | translate }}</mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <button mat-icon-button [routerLink]="'/'+appConst.JOBS_NAVIGATOR.EDIT_SOURCE_PATH+'/'+element.id">
+                    <mat-icon>edit</mat-icon>
+                </button>
+            </mat-cell>
+        </ng-container>
+        <!-- Add Status-->
+        <ng-container matColumnDef="add_status">
+            <mat-header-cell *matHeaderCellDef>{{ 'source_board.data_grid.add_status.title' | translate }}
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <button mat-icon-button (click)="addStatus(element)">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </mat-cell>
+        </ng-container>
+        <!-- Delete-->
+        <ng-container matColumnDef="delete">
+            <mat-header-cell *matHeaderCellDef>{{ 'source_board.data_grid.delete.title' | translate }}
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <button mat-icon-button (click)="deleteSource(element)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <!-- Paginator-->
+    <mat-paginator [pageSizeOptions]="pageSizeOptions" [pageSize]="pageSize" showFirstLastButtons></mat-paginator>
+</div>

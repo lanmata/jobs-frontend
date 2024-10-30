@@ -35,10 +35,13 @@ export class AppConst {
     EDIT_POSITION_PATH: "position/edit-position",
     NEW_POSITION_PATH: "position/new-position",
     SOURCE_PATH: "source",
+    EDIT_SOURCE_PATH: "source/edit-source",
+    NEW_SOURCE_PATH: "source/new-source",
     STATUS_PATH: "status",
     TERM_PATH: "term",
     NEW_OFFER_PATH: "offer/new-offer",
     EDIT_OFFER_PATH: "offer/edit-offer"
+
   }
 
   public static readonly HTTP_OPTIONS = {
