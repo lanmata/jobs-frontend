@@ -422,5 +422,53 @@
         "tooltip": "Eliminar status"
       }
     }
+  },
+  "term_board": {
+    "title": "Terminos",
+    "new_term_button": {
+      "title": "Nuevo Termino",
+      "tooltip": "Crear un nuevo termino"
+    },
+    "export_to_excel_button": {
+      "title": "Exportar a Excel",
+      "tooltip": "Exportar a Excel"
+    },
+    "search": {
+      "title": "Buscar",
+      "placeholder": "Buscar por nombre de termino"
+    },
+    "show_closed": {
+      "title": "Mostrar terminos inactivos"
+    },
+    "data_grid": {
+      "id": {
+        "title": "Id",
+        "tooltip": ""
+      },
+      "name": {
+        "title": "Nombre",
+        "tooltip": ""
+      },
+      "description": {
+        "title": "Descripcion",
+        "tooltip": ""
+      },
+      "active": {
+        "title": "Status",
+        "tooltip": "Status activo o inactivo"
+      },
+      "edit": {
+        "title": "Editar",
+        "tooltip": "Editar"
+      },
+      "add_status": {
+        "title": "Agregar termino",
+        "tooltip": "Agregar termino"
+      },
+      "delete": {
+        "title": "Eliminar",
+        "tooltip": "Eliminar termino"
+      }
+    }
   }
 }
