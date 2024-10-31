@@ -91,4 +91,31 @@ describe('ModeComponent', () => {
         expect(component.isErrorFound).toBeTrue();
     });
 
+    it('should log message when adding status', () => {
+        spyOn(console, 'log');
+        const element = {id: 1, name: 'Test'};
+        component.addStatus(element);
+        expect(console.log).toHaveBeenCalledWith('Adding status', element);
+    });
+
+    it('should log message when deleting mode', () => {
+        spyOn(console, 'log');
+        const element = {id: 1, name: 'Test'};
+        component.deleteCompany(element);
+        expect(console.log).toHaveBeenCalledWith('Deleting mode', element);
+    });
+
+    it('should log message when exporting mode list to excel', () => {
+        spyOn(console, 'log');
+        component.exportToExcel();
+        expect(console.log).toHaveBeenCalledWith('Export mode list to excel');
+    });
+
+    it('should log message and return false when showing inactive', () => {
+        spyOn(console, 'log');
+        const result = component.showInactive();
+        expect(console.log).toHaveBeenCalledWith('Showing inactive');
+        expect(result).toBeFalse();
+    });
+
 });

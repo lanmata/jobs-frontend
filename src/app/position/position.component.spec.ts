@@ -91,4 +91,31 @@ describe('PositionComponent', () => {
         expect(component.isErrorFound).toBeTrue();
     });
 
+    it('should log message when adding status', () => {
+        spyOn(console, 'log');
+        const element = {id: 1, name: 'Test'};
+        component.addStatus(element);
+        expect(console.log).toHaveBeenCalledWith('Adding status', element);
+    });
+
+    it('should log message when deleting position', () => {
+        spyOn(console, 'log');
+        const element = {id: 1, name: 'Test'};
+        component.deletePosition(element);
+        expect(console.log).toHaveBeenCalledWith('Deleting position', element);
+    });
+
+    it('should log message when exporting position list to excel', () => {
+        spyOn(console, 'log');
+        component.exportToExcel();
+        expect(console.log).toHaveBeenCalledWith('Export position list to excel');
+    });
+
+    it('should log message and return false when showing inactive', () => {
+        spyOn(console, 'log');
+        const result = component.showInactive();
+        expect(console.log).toHaveBeenCalledWith('Showing inactive');
+        expect(result).toBeFalse();
+    });
+
 });

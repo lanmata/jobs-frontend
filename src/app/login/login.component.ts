@@ -12,6 +12,10 @@ import {Store} from '@ngrx/store';
 import {setSharedData} from '@app/state/app.action';
 import {AppConst} from "@shared/util/app-const";
 
+/**
+ * LoginComponent is responsible for handling the login functionality.
+ * It includes form validation, state management, and navigation.
+ */
 @Component({
     selector: 'app-login',
     standalone: true,
@@ -39,31 +43,40 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
     /** Change detector reference */
     protected changeDetectorRefs = inject(ChangeDetectorRef);
 
-    /**
-     * router is an instance of the Router.
-     * @private
-     */
+    /** Router instance */
     private readonly router: Router = inject(Router);
 
+    /** Application constants */
     protected readonly appConst = AppConst;
-    
+
     /** Form builder */
     private readonly formBuilder = inject(FormBuilder);
 
+    /** Observable for shared data */
     sharedData$: Observable<SharedData>;
+
+    /** Current shared data */
     sharedDataCurrent: SharedData;
 
+    /** Getter for form controls */
     get f() {
         return this.loginForm.controls;
     }
 
+    /** Flag to indicate if the form has been submitted */
     submitted = false;
 
+    /** Flag to indicate if loading is in progress */
     loading = false;
 
+    /** Login form group */
     loginForm: FormGroup;
 
-    constructor(private store: Store<{ app: AppState }>) {
+    /**
+     * Constructor to initialize the component with necessary services and state.
+     * @param store - The store to manage application state.
+     */
+    constructor(private readonly store: Store<{ app: AppState }>) {
         this.logInfo = (...arg: any) => console.info(arg);
         this.logError = (...arg: any) => console.error(arg);
         this.loginForm = this.formBuilder.group({
@@ -75,37 +88,47 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
         this.sharedData$ = store.select(state => state.app.sharedData);
     }
 
+    /** Lifecycle hook that is called after the component's view has been fully initialized */
     ngAfterViewInit(): void {
         this.changeDetectorRefs.detectChanges();
     }
 
+    /** Lifecycle hook that is called when the component is destroyed */
     ngOnDestroy(): void {
         this.subject$.next();
         this.subject$.complete();
     }
 
+    /** Lifecycle hook that is called when the component is initialized */
     ngOnInit(): void {
         this.loader.show();
         this.sharedData$.subscribe(data => {
             console.log(data);
             this.sharedDataCurrent = data;
-            // this.logged = data;
         });
+        const updatedSharedData = { ...this.sharedDataCurrent, logged: false };
+        this.store.dispatch(setSharedData({data: updatedSharedData}));
     }
 
+    /**
+     * Validates the access credentials entered in the form.
+     * If the form is invalid, the method will return early.
+     */
     public validateAccess(): void {
         this.logInfo("Ingresa!");
         this.logInfo(this.loginForm.value);
 
         this.submitted = true;
 
-        // interrumpe la continuidad del metodo por datos invalidos
+        // Interrupts the method if the form data is invalid
         if (this.loginForm.invalid) {
             return;
         }
-
     }
 
+    /**
+     * Signs in the user by updating the shared data and navigating to the offer path.
+     */
     signin() {
         const updatedSharedData = { ...this.sharedDataCurrent, logged: true };
         this.store.dispatch(setSharedData({data: updatedSharedData}));
