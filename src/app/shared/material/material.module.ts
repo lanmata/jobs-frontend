@@ -9,13 +9,7 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
-import {
-  MatSnackBar, MatSnackBarAction,
-  MatSnackBarActions,
-  MatSnackBarLabel,
-  MatSnackBarModule,
-  MatSnackBarRef
-} from '@angular/material/snack-bar';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
@@ -30,38 +24,38 @@ import {MatGridListModule} from "@angular/material/grid-list";
 import {MatNativeDateModule} from "@angular/material/core";
 
 @NgModule({
-  exports: [
-    MatCardModule,
-    MatTableModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatMenuModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatSnackBarModule,
-    MatDatepickerModule,
-    MatSnackBarModule,
-    MatExpansionModule,
-    MatProgressSpinnerModule,
-    MatTooltipModule,
-    MatDialogModule,
-    MatDividerModule,
-    MatCheckboxModule,
-    MatListModule,
-    MatMenuModule,
-    MatSortModule,
-    MatSlideToggleModule,
-    MatSelectModule,
-    MatCardModule,
-    MatGridListModule,
-    MatDatepickerModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatNativeDateModule
-  ]
+    exports: [
+        MatCardModule,
+        MatTableModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatMenuModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatSnackBarModule,
+        MatDatepickerModule,
+        MatSnackBarModule,
+        MatExpansionModule,
+        MatProgressSpinnerModule,
+        MatTooltipModule,
+        MatDialogModule,
+        MatDividerModule,
+        MatCheckboxModule,
+        MatListModule,
+        MatMenuModule,
+        MatSortModule,
+        MatSlideToggleModule,
+        MatSelectModule,
+        MatCardModule,
+        MatGridListModule,
+        MatDatepickerModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatNativeDateModule
+    ]
 })
 export class MaterialModule {
 }
