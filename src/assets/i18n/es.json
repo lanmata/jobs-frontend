@@ -470,5 +470,38 @@
         "tooltip": "Eliminar termino"
       }
     }
+  },
+  "frm_login": {
+    "_comment_002":"Formulario para la autenticacion de usuario",
+    "user": {
+      "placeholder": "Ingrese su usuario",
+      "validation_messages": {
+        "required": "El usuario es requerido",
+        "minLength": "Longitud mínima",
+        "maxLength": "Longitud máxima"
+      },
+      "tooltip": "Debe ingresar nombre de usuario"
+    },
+    "password":{
+      "placeholder": "Ingrese su clave",
+      "validation_messages": {
+        "required": "La clave es requerido",
+        "min_length": "Longitud mínima",
+        "max_length": "Longitud máxima"
+      },
+      "tooltip": "Debe ingresar clave de usuario"
+    },
+    "remember": {
+      "title":"Recuerdame"
+    },
+    "button_accept":{
+      "title": "Ingresar"
+    },
+    "button_forget": {
+      "title": "Olvide mi contraseña"
+    },
+    "button_registry":{
+      "title":"Registrar"
+    }
   }
 }

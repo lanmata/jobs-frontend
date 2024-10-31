@@ -1,0 +1,55 @@
+<body>
+<form class="form-signin" [formGroup]="loginForm" (ngSubmit)="validateAccess()">
+    <img class="mb-4 center-image" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt=""
+         width="72"
+         height="72">
+    <h1 class="title-center h3 mb-3 font-weight-normal">Jobs Offer</h1>
+    <!-- Usuario -->
+    <ng-container>
+        <mat-form-field class="width-style">
+            <mat-label class="sr-only">{{ 'frm_login.user.placeholder' | translate }}</mat-label>
+            <input matInput formControlName="alias" id="alias"
+                   [ngClass]="{ 'is-invalid': submitted && f['alias'].errors }"/>
+            @if (submitted && f['alias'].errors) {
+                <div class="invalid-feedback">
+                    @if (f['alias'].errors['required']) {
+                        <div>{{ 'frm_login.user.tooltip' | translate }}</div>
+                    }
+                </div>
+            }
+        </mat-form-field>
+        <!-- Clave -->
+        <mat-form-field class="width-style">
+            <mat-label class="sr-only">{{ 'frm_login.password.placeholder' | translate }}</mat-label>
+            <input matInput type="password" formControlName="password" id="password"
+                   [ngClass]="{ 'is-invalid': submitted && f['password'].errors }"/>
+            @if (submitted && f['password'].errors) {
+                <div class="invalid-feedback">
+                    @if (f['password'].errors['required']) {
+                        <div>{{ 'frm_login.password.tooltip' | translate }}</div>
+                    }
+                </div>
+            }
+        </mat-form-field>
+        <!-- Casilla de verificacion para recordatorio de usuario -->
+        <div class="checkbox mb-3 align-items-center">
+            <mat-checkbox name="chkRememberMe" value="remember" formControlName="remember">
+                {{ 'frm_login.remember.title' | translate }}
+            </mat-checkbox>
+            <a routerLink="/register" class="btn btn-link align-right">
+                {{ 'frm_login.button_forget.title' | translate }}
+            </a>
+        </div>
+    </ng-container>
+    <!-- Botones -->
+    <ng-container class="panel-buttons">
+        <!-- Ingreso de usuario -->
+        <button mat-raised-button color="primary" class="width-style" (click)="signin()" >
+            @if (loading) {
+                <span class="spinner-border spinner-border-sm mr-1"></span>
+            }
+            <span>{{ 'frm_login.button_accept.title' | translate }}</span>
+        </button>
+    </ng-container>
+</form>
+</body>

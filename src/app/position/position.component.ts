@@ -158,12 +158,12 @@ export class PositionComponent extends AbstractComponent {
 
     // PENDING - Implement the following methods
     deletePosition(element: any) {
-        console.log('Deleting company', element);
+        console.log('Deleting position', element);
     }
 
     // PENDING - Implement the following methods
     exportToExcel() {
-        console.log('Export company list to excel');
+        console.log('Export position list to excel');
 
     }
 
