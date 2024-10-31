@@ -91,4 +91,31 @@ describe('SourceComponent', () => {
         expect(component.isErrorFound).toBeTrue();
     });
 
+    it('should log message when adding status', () => {
+        spyOn(console, 'log');
+        const element = {id: 1, name: 'Test'};
+        component.addStatus(element);
+        expect(console.log).toHaveBeenCalledWith('Adding status', element);
+    });
+
+    it('should log message when deleting source', () => {
+        spyOn(console, 'log');
+        const element = {id: 1, name: 'Test'};
+        component.deleteSource(element);
+        expect(console.log).toHaveBeenCalledWith('Deleting source', element);
+    });
+
+    it('should log message when exporting to excel', () => {
+        spyOn(console, 'log');
+        component.exportToExcel();
+        expect(console.log).toHaveBeenCalledWith('Export slurce list to excel');
+    });
+
+    it('should log message and return false when showing inactive', () => {
+        spyOn(console, 'log');
+        const result = component.showInactive();
+        expect(console.log).toHaveBeenCalledWith('Showing inactive');
+        expect(result).toBeFalse();
+    });
+
 });

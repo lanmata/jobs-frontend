@@ -60,7 +60,7 @@ export class OfferComponent extends AbstractComponent {
    * router is an instance of the Router.
    * @private
    */
-  private router: Router = inject(Router);
+  private readonly router: Router = inject(Router);
   /**
    * datePipe is an instance of the DatePipe.
    * @private

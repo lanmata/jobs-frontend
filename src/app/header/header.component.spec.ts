@@ -8,23 +8,27 @@ import {DatePipe} from "@angular/common";
 import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
 import {AlertService} from "@shared/services/alert.service";
 import {NotifyComponent} from "@shared/components/notify-component/notify.component";
+import {Store} from "@ngrx/store";
 
 describe('HeaderComponent', () => {
     let component: HeaderComponent;
     let fixture: ComponentFixture<HeaderComponent>;
     let alertService: AlertService;
+    let mockStore: any;
 
     beforeEach(async () => {
+        mockStore = {
+            select: jasmine.createSpy().and.returnValue(of({})),
+            dispatch: jasmine.createSpy()
+        };
 
         await TestBed.configureTestingModule({
             imports: [HeaderComponent, TranslateModule.forRoot()],
             providers: [
+                { provide: Store, useValue: mockStore },
                 DatePipe,
                 {
-                    provide: ActivatedRoute,
-                    useValue: {
-                        params: of({id: 'testId'})
-                    }
+                    provide: ActivatedRoute, useValue: {params: of({id: 'testId'})},
                 },
                 provideHttpClient(withInterceptorsFromDi()),
                 provideHttpClientTesting()

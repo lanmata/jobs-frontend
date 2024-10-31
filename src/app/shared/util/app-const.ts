@@ -44,7 +44,8 @@ export class AppConst {
         EDIT_STATUS_PATH: "status/edit-status",
         TERM_PATH: "term",
         EDIT_TERM_PATH: "term/edit-term",
-        NEW_TERM_PATH: "term/new-term"
+        NEW_TERM_PATH: "term/new-term",
+        LOGIN_PATH: "login"
 
     }
 

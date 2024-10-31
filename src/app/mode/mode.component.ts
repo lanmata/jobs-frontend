@@ -164,12 +164,12 @@ export class ModeComponent extends AbstractComponent {
 
     // PENDING - Implement the following methods
     deleteCompany(element: any) {
-        console.log('Deleting company', element);
+        console.log('Deleting mode', element);
     }
 
     // PENDING - Implement the following methods
     exportToExcel() {
-        console.log('Export company list to excel');
+        console.log('Export mode list to excel');
 
     }
 
