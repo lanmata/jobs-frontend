@@ -19,10 +19,6 @@ import {FormatUtil} from "@shared/util/format.util";
 import {OfferDetailService} from "@app/offer-detail/offer-detail.service";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {OfferDetailConfirmDialogComponent} from "../offer-detail-confirm-dialog/offer-detail-confirm-dialog.component";
-import {Store} from "@ngrx/store";
-import {AppState} from "@app/state/app.state";
-
-const COMPONENT_NAME = 'edit-offer.component';
 
 /**
  * Component for editing an offer.
@@ -32,8 +28,8 @@ const COMPONENT_NAME = 'edit-offer.component';
     selector: 'app-edit-offer',
     standalone: true,
     imports: [CommonModule, MaterialModule, TranslateModule, ReactiveFormsModule, FlexModule, RouterLinkActive, RouterLink],
-    templateUrl: `${COMPONENT_NAME}.html`,
-    styleUrl: `${COMPONENT_NAME}.css`
+    templateUrl: 'edit-offer.component.html',
+    styleUrl: 'edit-offer.component.css'
 })
 export class EditOfferComponent extends AbstractComponent {
 

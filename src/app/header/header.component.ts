@@ -12,14 +12,12 @@ import {Store} from "@ngrx/store";
 import {setSharedData} from "@app/state/app.action";
 import {StoreComponent} from "@shared/components/store/store.component";
 
-const COMPONENT_NAME = 'header.component';
-
 @Component({
     selector: 'app-header',
     standalone: true,
     imports: [CommonModule, MaterialModule, RouterLink, ReactiveFormsModule, FormsModule, TranslateModule, NotifyComponent],
-    templateUrl: `${COMPONENT_NAME}.html`,
-    styleUrl: `${COMPONENT_NAME}.css`,
+    templateUrl: 'header.component.html',
+    styleUrl: 'header.component.css'
 })
 export class HeaderComponent extends StoreComponent implements OnInit, OnDestroy {
     private readonly alertService: AlertService = inject(AlertService);
@@ -27,7 +25,7 @@ export class HeaderComponent extends StoreComponent implements OnInit, OnDestroy
     private readonly horizontalPosition: MatSnackBarHorizontalPosition = 'end';
     private readonly verticalPosition: MatSnackBarVerticalPosition = 'top';
 
-    alias!: String;
+    alias!: string;
 
     constructor(store: Store<{ app: AppState }>) {
         super(store);
@@ -65,7 +63,9 @@ export class HeaderComponent extends StoreComponent implements OnInit, OnDestroy
     override ngOnInit(): void {
         super.ngOnInit();
         this.notification();
-        this.alias = this.sharedDataCurrent.userAuth.alias;
+        if(this?.sharedDataCurrent?.userAuth?.alias) {
+            this.alias = this.sharedDataCurrent.userAuth.alias;
+        }
     }
 
     logout() {

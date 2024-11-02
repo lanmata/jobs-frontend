@@ -4,10 +4,8 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {AfterViewInit, ChangeDetectorRef, inject, Injectable, OnDestroy, OnInit} from '@angular/core';
 import {merge, of, startWith, Subject, switchMap} from 'rxjs';
-import {Store} from "@ngrx/store";
-import {AppState} from "@app/state/app.state";
 import {StoreComponent} from "@shared/components/store/store.component";
-import { AppConst } from '../util/app-const';
+import {AppConst} from '../util/app-const';
 import {Router} from "@angular/router";
 
 /**

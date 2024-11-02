@@ -32,16 +32,13 @@
         <mat-menu #menu="matMenu">
             <span mat-menu-item>{{ alias }}</span>
             <button mat-menu-item>
-                <mat-icon>dialpad</mat-icon>
-                <span>Redial</span>
+                <mat-icon>badge</mat-icon>
+                <span>{{ 'profile_menu.profile.title' | translate }}</span>
             </button>
-            <button mat-menu-item disabled>
-                <mat-icon>voicemail</mat-icon>
-                <span>Check voice mail</span>
-            </button>
+            <mat-divider></mat-divider>
             <button mat-menu-item (click)="logout()">
                 <mat-icon>power_settings_new</mat-icon>
-                <span>Logout</span>
+                <span>{{ 'profile_menu.logout.title' | translate }}</span>
             </button>
         </mat-menu>
     </mat-toolbar>

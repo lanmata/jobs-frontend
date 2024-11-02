@@ -1,7 +1,7 @@
 <body>
 <form class="form-signin" [formGroup]="loginForm" (ngSubmit)="validateAccess()">
     <img class="mb-4 center-image" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt=""  width="72" height="72"/>
-    <h1 class="title-center h3 mb-3 font-weight-normal">Jobs Offer</h1>
+    <h1 class="title-center h3 mb-3 font-weight-normal">{{ 'title' | translate }}</h1>
     <!-- Usuario -->
     <ng-container>
         <mat-form-field class="width-style">
@@ -10,13 +10,13 @@
                    [ngClass]="{ 'is-invalid': submitted && f['alias'].errors }">
             @if (submitted && f['alias'].errors) {
                 <div class="invalid-feedback">
-                    @if (f['alias'].errors['required']) {
+                    @if (f['alias'].errors?.required) {
                         {{ 'frm_login.user.validation_messages.required' | translate }}
                     }
-                    @if (f['alias'].errors['minlength']) {
+                    @if (f['alias']?.errors?.minlength) {
                         {{ 'frm_login.user.validation_messages.minlength' | translate }}
                     }
-                    @if (f['alias'].errors['maxlength']) {
+                    @if (f['alias']?.errors?.maxlength) {
                         {{ 'frm_login.user.validation_messages.maxlength' | translate }}
                     }
                 </div>
@@ -29,13 +29,13 @@
                    [ngClass]="{ 'is-invalid': submitted && f['password'].errors }"/>
             @if (submitted && f['password'].errors) {
                 <div class="invalid-feedback">
-                    @if (f['password'].errors['required']) {
+                    @if (f['password'].errors?.required) {
                         {{ 'frm_login.password.validation_messages.required' | translate }}
                     }
-                    @if (f['password'].errors['minlength']) {
+                    @if (f['password'].errors?.minlength) {
                         {{ 'frm_login.password.validation_messages.minlength' | translate }}
                     }
-                    @if (f['password'].errors['maxlength']) {
+                    @if (f['password'].errors?.maxlength) {
                         {{ 'frm_login.password.validation_messages.maxlength' | translate }}
                     }
                 </div>

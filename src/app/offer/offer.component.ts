@@ -14,8 +14,6 @@ import {ReportService} from "@shared/services/report.service";
 import {FormatUtil} from "@shared/util/format.util";
 import {FileSaverService} from "ngx-filesaver";
 
-let COMPONENT_NAME = 'offer.component';
-
 /**
  * OfferComponent is a component that handles the offers in the application.
  * It extends the AbstractComponent.
@@ -30,8 +28,8 @@ let COMPONENT_NAME = 'offer.component';
     selector: 'app-offer',
     standalone: true,
     imports: [MaterialModule, MatSortModule, TranslateModule, AsyncPipe, FormsModule, RouterLink, RouterLinkActive],
-    templateUrl: `${COMPONENT_NAME}.html`,
-    styleUrl: `${COMPONENT_NAME}.css`
+    templateUrl: 'offer.component.html',
+    styleUrl: 'offer.component.css'
 })
 export class OfferComponent extends AbstractComponent {
 
@@ -81,7 +79,6 @@ export class OfferComponent extends AbstractComponent {
     /**
      * Constructor for the OfferComponent.
      * It calls the constructor of the parent class.
-     * @param store The store for managing application state.
      */
     constructor() {
         super();
@@ -195,11 +192,11 @@ export class OfferComponent extends AbstractComponent {
                     if (response) {
                         let blob = new Blob([response.data], {type: 'application/octet-stream'});
                         this.fileSaverService.save(blob, response.filename);
+                        console.log('Exporting to excel');
                     }
                 }
             );
         }
-        console.log('Exporting to excel');
     }
 
     /**

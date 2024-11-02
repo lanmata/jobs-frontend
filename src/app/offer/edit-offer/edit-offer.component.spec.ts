@@ -10,8 +10,8 @@ import {TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService}
 import {DebugElement} from "@angular/core";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {HttpClient, provideHttpClient, withInterceptorsFromDi} from "@angular/common/http";
-import {StatusService} from "../../status/status.service";
-import {UNIT_TEST_MOCK_GET_STATUS_RESPONSE} from "../../status/status.model";
+import {StatusService} from "@app/status/status.service";
+import {UNIT_TEST_MOCK_GET_STATUS_RESPONSE} from "@app/status/status.model";
 
 describe('EditOfferComponent', () => {
     let component: EditOfferComponent;
@@ -126,7 +126,7 @@ describe('EditOfferComponent', () => {
         component.updateOffer();
 
         expect(mockOfferServicePutOffer).toHaveBeenCalled();
-        expect(mockAlertServiceSuccess).toHaveBeenCalledWith('Updated  offer #3ae33d7a-6762-48b7-b5f4-372434071260 successfully', true);
+        expect(mockAlertServiceSuccess).toHaveBeenCalledWith('Updated offer #3ae33d7a-6762-48b7-b5f4-372434071260 successfully', true);
     });
 
     it('should display error notification on offer update failure', () => {
@@ -140,7 +140,7 @@ describe('EditOfferComponent', () => {
         component.updateOffer();
 
         expect(mockOfferServicePutOffer).toHaveBeenCalled();
-        expect(mockAlertServiceSuccess).toHaveBeenCalledWith('We have a error to process the request.', true);
+        expect(mockAlertServiceSuccess).toHaveBeenCalledWith('We have an error processing the request.', true);
     });
 
     it('should display success notification on offer detail delete success', () => {
@@ -165,6 +165,6 @@ describe('EditOfferComponent', () => {
         component['deleteOfferDetail']('cefaf470-e7e4-4ad2-b5e2-2373ab0796f8');
 
         expect(mockOfferDetailServiceDelete).toHaveBeenCalled();
-        expect(mockAlertServiceSuccess).toHaveBeenCalledWith('We have a error to process the request.', true);
+        expect(mockAlertServiceSuccess).toHaveBeenCalledWith('We have an error processing the request.', true);
     });
 })

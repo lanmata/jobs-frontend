@@ -10,16 +10,13 @@ import {TranslateModule} from "@ngx-translate/core";
 import {RouterLink, RouterLinkActive} from "@angular/router";
 import {FormsModule} from "@angular/forms";
 import {MaterialModule} from "@shared/material/material.module";
-import { AppConst } from '@app/shared/util/app-const';
-
-let COMPONENT_NAME = 'status.component';
 
 @Component({
     selector: 'app-status',
     standalone: true,
     imports: [MaterialModule, MatSortModule, TranslateModule, FormsModule, AsyncPipe, RouterLink, RouterLinkActive],
-    templateUrl: `${COMPONENT_NAME}.html`,
-    styleUrl: `${COMPONENT_NAME}.css`
+    templateUrl: 'status.component.html',
+    styleUrl: 'status.component.css'
 })
 export class StatusComponent extends AbstractComponent {
     /**

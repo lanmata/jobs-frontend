@@ -10,18 +10,13 @@ import {TranslateModule} from "@ngx-translate/core";
 import {RouterLink, RouterLinkActive} from "@angular/router";
 import {FormsModule} from "@angular/forms";
 import {MaterialModule} from "@shared/material/material.module";
-import {AppConst} from "@shared/util/app-const";
-import {Store} from "@ngrx/store";
-import {AppState} from "@app/state/app.state";
-
-const componentName = 'source.component';
 
 @Component({
     selector: 'app-source',
     standalone: true,
     imports: [MaterialModule, MatSortModule, TranslateModule, FormsModule, AsyncPipe, RouterLink, RouterLinkActive],
-    templateUrl: `./${componentName}.html`,
-    styleUrl: `./${componentName}.css`
+    templateUrl: 'source.component.html',
+    styleUrl: 'source.component.css'
 })
 export class SourceComponent extends AbstractComponent {
     /**

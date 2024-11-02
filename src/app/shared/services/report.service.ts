@@ -27,7 +27,7 @@ export class ReportService extends ServiceTemplate {
   /**
    * CONTEXT_PATH is the base URL for the reports backend service.
    */
-  private readonly CONTEXT_PATH: string = `${JOB_BACKEND_SERVICE_BASE_URL}/job-offers/reports`;
+  private readonly CONTEXT_PATH: string = `${JOB_BACKEND_SERVICE_BASE_URL}/reports`;
 
   constructor() {
     super();

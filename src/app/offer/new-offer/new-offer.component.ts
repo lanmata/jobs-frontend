@@ -26,8 +26,6 @@ import {StatusService} from "@app/status/status.service";
 import {AlertService} from "@shared/services/alert.service";
 import { AppConst } from '@app/shared/util/app-const';
 
-const COMPONENT_NAME = 'new-offer.component';
-
 /**
  * Component for creating a new job offer.
  * Implements OnInit, OnDestroy, and AfterViewInit lifecycle hooks.
@@ -37,8 +35,8 @@ const COMPONENT_NAME = 'new-offer.component';
     standalone: true,
     imports: [CommonModule, MaterialModule, FormsModule, FlexModule, TranslateModule, RouterLink, RouterLinkActive, ReactiveFormsModule],
     providers: [provideNativeDateAdapter()],
-    templateUrl: `${COMPONENT_NAME}.html`,
-    styleUrl: `${COMPONENT_NAME}.css`
+    templateUrl: 'new-offer.component.html',
+    styleUrl: 'new-offer.component.css'
 })
 export class NewOfferComponent implements OnInit, OnDestroy, AfterViewInit {
 

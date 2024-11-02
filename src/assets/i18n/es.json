@@ -1,5 +1,5 @@
 {
-  "title": "PRX Jobs-Offer Board",
+  "title": "Jobs Board",
   "_comment_001": "Formulario registro de usuario",
   "menu_header": {
     "title": "PRX Jobs-Offer Board",
@@ -502,6 +502,16 @@
     },
     "button_registry":{
       "title":"Registrar"
+    }
+  },
+  "profile_menu": {
+    "profile": {
+      "title": "Perfil",
+      "tooltip": "Perfil de usuario"
+    },
+    "logout": {
+      "title": "Cerrar Sesion",
+      "tooltip": "Cerrar Sesion"
     }
   }
 }

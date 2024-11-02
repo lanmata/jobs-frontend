@@ -8,13 +8,8 @@ import {AsyncPipe} from "@angular/common";
 import {TranslateModule} from "@ngx-translate/core";
 import {RouterLink, RouterLinkActive} from "@angular/router";
 import {FormsModule} from "@angular/forms";
-import {AppConst} from "@shared/util/app-const";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
-import { Store } from '@ngrx/store';
-import { AppState } from '@app/state/app.state';
-
-let COMPONENT_NAME = 'position.component';
 
 /**
  * PositionComponent is a component that handles the position related operations.
@@ -26,8 +21,8 @@ let COMPONENT_NAME = 'position.component';
     selector: 'app-position',
     standalone: true,
     imports: [MaterialModule, AsyncPipe, TranslateModule, RouterLink, RouterLinkActive, FormsModule],
-    templateUrl: `${COMPONENT_NAME}.html`,
-    styleUrl: `${COMPONENT_NAME}.css`
+    templateUrl: 'position.component.html',
+    styleUrl: 'position.component.css'
 })
 export class PositionComponent extends AbstractComponent {
     /**

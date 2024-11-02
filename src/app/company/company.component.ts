@@ -10,10 +10,6 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatSort, MatSortModule} from "@angular/material/sort";
 import {FormsModule} from "@angular/forms";
 import {RouterLink, RouterLinkActive} from "@angular/router";
-import {Store} from "@ngrx/store";
-import {AppState} from "@app/state/app.state";
-
-const COMPONENT_NAME = 'company.component';
 
 /**
  * CompanyComponent is a component that handles the company related operations.
@@ -25,8 +21,8 @@ const COMPONENT_NAME = 'company.component';
     selector: 'app-company',
     standalone: true,
     imports: [MaterialModule, MatSortModule, TranslateModule, FormsModule, AsyncPipe, RouterLink, RouterLinkActive],
-    templateUrl: `${COMPONENT_NAME}.html`,
-    styleUrl: `${COMPONENT_NAME}.css`
+    templateUrl: 'company.component.html',
+    styleUrl: 'company.component.css'
 })
 export class CompanyComponent extends AbstractComponent {
     /**

@@ -10,11 +10,6 @@ import {RouterLink, RouterLinkActive} from "@angular/router";
 import {FormsModule} from "@angular/forms";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
-import {AppConst} from "@shared/util/app-const";
-import {Store} from "@ngrx/store";
-import {AppState} from "@app/state/app.state";
-
-const COMPONENT_NAME = 'mode.component';
 
 /**
  * ModeComponent is a component that handles the mode related operations.
@@ -26,8 +21,8 @@ const COMPONENT_NAME = 'mode.component';
     selector: 'app-mode',
     standalone: true,
     imports: [MaterialModule, AsyncPipe, TranslateModule, RouterLink, RouterLinkActive, FormsModule],
-    templateUrl: `${COMPONENT_NAME}.html`,
-    styleUrl: `${COMPONENT_NAME}.css`
+    templateUrl: 'mode.component.html',
+    styleUrl: 'mode.component.css'
 })
 export class ModeComponent extends AbstractComponent {
     /**

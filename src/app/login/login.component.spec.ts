@@ -24,7 +24,7 @@ describe('LoginComponent', () => {
 
     beforeEach(async () => {
         mockStore = {
-            select: jasmine.createSpy().and.returnValue(of({})),
+            select: jasmine.createSpy().and.returnValue(of({logged: false, userAuth: {alias: 'testAlias'}})),
             dispatch: jasmine.createSpy()
         };
         mockRouter = {
@@ -94,14 +94,18 @@ describe('LoginComponent', () => {
         component.loginForm.controls['password'].setValue('validPassword123');
         component.validateAccess();
         expect(component.submitted).toBeTrue();
-        expect(mockRouter.navigate).not.toHaveBeenCalled();
+        expect(mockRouter.navigate).toHaveBeenCalled();
     });
 
     it('should sign in and navigate to offer path', () => {
-        component.sharedDataCurrent = {logged: false};
+        component.loginForm.controls['alias'].setValue('testAlias');
+        component.loginForm.controls['password'].setValue('validPassword123');
         component.signin();
         expect(mockStore.dispatch).toHaveBeenCalledWith(jasmine.objectContaining({
-            data: jasmine.objectContaining({logged: true})
+            data: jasmine.objectContaining({
+                logged: true,
+                userAuth: jasmine.objectContaining({alias: 'testAlias'})
+            })
         }));
         expect(mockRouter.navigate).toHaveBeenCalledWith([AppConst.JOBS_NAVIGATOR.OFFER_PATH]);
     });
@@ -112,10 +116,57 @@ describe('LoginComponent', () => {
     });
 
     it('should update shared data on subscription', () => {
-        component.sharedDataCurrent = {logged: false};
+        component.ngOnInit();
+        component.sharedDataCurrent = {logged: false, userAuth: {alias: 'testAlias'}};
+        expect(mockStore.dispatch).toHaveBeenCalledWith(jasmine.objectContaining({
+            data: jasmine.objectContaining({logged: false, userAuth:  jasmine.objectContaining({ alias: 'testAlias' })})
+        }));
+    });
+
+    it('should show an error message if form is invalid on submit', () => {
+        component.loginForm.controls['alias'].setValue('');
+        component.loginForm.controls['password'].setValue('');
+        component.validateAccess();
+        expect(component.isErrorFound).toBeTrue();
+    });
+
+    it('should not show an error message if form is valid on submit', () => {
+        component.loginForm.controls['alias'].setValue('validAlias');
+        component.loginForm.controls['password'].setValue('validPassword123');
+        component.validateAccess();
+        expect(component.isErrorFound).toBeFalse();
+    });
+
+    it('should update shared data on successful sign in', () => {
+        component.loginForm.controls['alias'].setValue('validAlias');
+        component.loginForm.controls['password'].setValue('validPassword123');
         component.signin();
         expect(mockStore.dispatch).toHaveBeenCalledWith(jasmine.objectContaining({
-            data: jasmine.objectContaining({logged: true})
+            data: jasmine.objectContaining({
+                logged: true,
+                userAuth: jasmine.objectContaining({alias: 'validAlias'})
+            })
         }));
+    });
+
+    it('should navigate to offer path on successful sign in', () => {
+        component.loginForm.controls['alias'].setValue('validAlias');
+        component.loginForm.controls['password'].setValue('validPassword123');
+        component.signin();
+        expect(mockRouter.navigate).toHaveBeenCalledWith([AppConst.JOBS_NAVIGATOR.OFFER_PATH]);
+    });
+
+    it('should not navigate if form is invalid on validateAccess', () => {
+        component.loginForm.controls['alias'].setValue('');
+        component.loginForm.controls['password'].setValue('');
+        component.validateAccess();
+        expect(mockRouter.navigate).not.toHaveBeenCalled();
+    });
+
+    it('should navigate if form is valid on validateAccess', () => {
+        component.loginForm.controls['alias'].setValue('validAlias');
+        component.loginForm.controls['password'].setValue('validPassword123');
+        component.validateAccess();
+        expect(mockRouter.navigate).toHaveBeenCalledWith([AppConst.JOBS_NAVIGATOR.OFFER_PATH]);
     });
 });
