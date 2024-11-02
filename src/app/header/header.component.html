@@ -26,9 +26,24 @@
             </button>
         </mat-menu>
         <span class="spacer"></span>
-        <button mat-icon-button aria-label="Example icon button with a delete icon" (click)="logout()">
-            <mat-icon>exit_to_app</mat-icon>
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>account_circle</mat-icon>
         </button>
+        <mat-menu #menu="matMenu">
+            <span mat-menu-item>{{ alias }}</span>
+            <button mat-menu-item>
+                <mat-icon>dialpad</mat-icon>
+                <span>Redial</span>
+            </button>
+            <button mat-menu-item disabled>
+                <mat-icon>voicemail</mat-icon>
+                <span>Check voice mail</span>
+            </button>
+            <button mat-menu-item (click)="logout()">
+                <mat-icon>power_settings_new</mat-icon>
+                <span>Logout</span>
+            </button>
+        </mat-menu>
     </mat-toolbar>
     </body>
 }

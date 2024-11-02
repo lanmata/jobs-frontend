@@ -11,6 +11,10 @@ import {FormsModule} from "@angular/forms";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {AppConst} from "@shared/util/app-const";
+import {Store} from "@ngrx/store";
+import {AppState} from "@app/state/app.state";
+
+const COMPONENT_NAME = 'mode.component';
 
 /**
  * ModeComponent is a component that handles the mode related operations.
@@ -22,8 +26,8 @@ import {AppConst} from "@shared/util/app-const";
     selector: 'app-mode',
     standalone: true,
     imports: [MaterialModule, AsyncPipe, TranslateModule, RouterLink, RouterLinkActive, FormsModule],
-    templateUrl: './mode.component.html',
-    styleUrl: './mode.component.css'
+    templateUrl: `${COMPONENT_NAME}.html`,
+    styleUrl: `${COMPONENT_NAME}.css`
 })
 export class ModeComponent extends AbstractComponent {
     /**
@@ -56,17 +60,6 @@ export class ModeComponent extends AbstractComponent {
      * @see ModeService
      */
     private readonly modeService: ModeService = inject(ModeService);
-
-    /**
-     * @type {AppConst}
-     * @memberof ModeComponent
-     * @description AppConst
-     * @public
-     * @since 1.0.0
-     * @version 1.0.0
-     * @see AppConst
-     */
-    protected readonly appConst = AppConst;
 
     /**
      * @type {MatPaginator}

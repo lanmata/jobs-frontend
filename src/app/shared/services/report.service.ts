@@ -22,12 +22,12 @@ export class ReportService extends ServiceTemplate {
    * httpClient is an instance of HttpClient.
    * It is used to make HTTP requests.
    */
-  private httpClient: HttpClient = inject(HttpClient);
+  private readonly httpClient: HttpClient = inject(HttpClient);
 
   /**
    * CONTEXT_PATH is the base URL for the reports backend service.
    */
-  private CONTEXT_PATH: string = `${JOB_BACKEND_SERVICE_BASE_URL}/job-offers/reports`;
+  private readonly CONTEXT_PATH: string = `${JOB_BACKEND_SERVICE_BASE_URL}/job-offers/reports`;
 
   constructor() {
     super();

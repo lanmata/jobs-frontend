@@ -11,6 +11,10 @@ import {FormsModule} from "@angular/forms";
 import {AppConst} from "@shared/util/app-const";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
+import { Store } from '@ngrx/store';
+import { AppState } from '@app/state/app.state';
+
+let COMPONENT_NAME = 'position.component';
 
 /**
  * PositionComponent is a component that handles the position related operations.
@@ -22,8 +26,8 @@ import {MatSort} from "@angular/material/sort";
     selector: 'app-position',
     standalone: true,
     imports: [MaterialModule, AsyncPipe, TranslateModule, RouterLink, RouterLinkActive, FormsModule],
-    templateUrl: './position.component.html',
-    styleUrl: './position.component.css'
+    templateUrl: `${COMPONENT_NAME}.html`,
+    styleUrl: `${COMPONENT_NAME}.css`
 })
 export class PositionComponent extends AbstractComponent {
     /**
@@ -54,14 +58,6 @@ export class PositionComponent extends AbstractComponent {
      * @see PositionService
      */
     private readonly positionService: PositionService = inject(PositionService);
-
-    /**
-     * AppConst is an instance of the AppConst.
-     * It is used to access the constants.
-     *
-     * @type {AppConst}
-     */
-    protected readonly appConst = AppConst;
 
     /**
      * The MatPaginator is a component to control the pagination of a table.

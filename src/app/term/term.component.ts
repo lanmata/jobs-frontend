@@ -4,65 +4,22 @@ import {LoadingService} from "@shared/services/loading.service";
 import {TermService} from "./term.service";
 import {takeUntil} from "rxjs";
 import {AsyncPipe} from "@angular/common";
-import {
-    MatCell,
-    MatCellDef,
-    MatColumnDef,
-    MatHeaderCell,
-    MatHeaderCellDef,
-    MatHeaderRow,
-    MatHeaderRowDef,
-    MatRow,
-    MatRowDef,
-    MatTable
-} from "@angular/material/table";
-import {MatFormField, MatLabel} from "@angular/material/form-field";
-import {MatIcon} from "@angular/material/icon";
-import {MatIconButton} from "@angular/material/button";
-import {MatInput} from "@angular/material/input";
 import {MatPaginator} from "@angular/material/paginator";
-import {MatProgressSpinner} from "@angular/material/progress-spinner";
-import {MatSlideToggle} from "@angular/material/slide-toggle";
-import {MatSort, MatSortHeader} from "@angular/material/sort";
+import {MatSort, MatSortModule} from "@angular/material/sort";
 import {TranslateModule} from "@ngx-translate/core";
 import {RouterLink, RouterLinkActive} from "@angular/router";
-import {MatTooltip} from "@angular/material/tooltip";
 import {FormsModule} from "@angular/forms";
-import {AppConst} from "@shared/util/app-const";
+import {MaterialModule} from "@shared/material/material.module";
+import { AppConst } from '@app/shared/util/app-const';
+
+let COMPONENT_NAME = 'term.component';
 
 @Component({
     selector: 'app-term',
     standalone: true,
-    imports: [
-        AsyncPipe,
-        MatCell,
-        MatCellDef,
-        MatColumnDef,
-        MatFormField,
-        MatHeaderCell,
-        MatHeaderRow,
-        MatHeaderRowDef,
-        MatIcon,
-        MatIconButton,
-        MatInput,
-        MatLabel,
-        MatPaginator,
-        MatProgressSpinner,
-        MatRow,
-        MatRowDef,
-        MatSlideToggle,
-        MatSort,
-        MatSortHeader,
-        MatTable,
-        TranslateModule,
-        RouterLink,
-        RouterLinkActive,
-        MatTooltip,
-        FormsModule,
-        MatHeaderCellDef
-    ],
-    templateUrl: './term.component.html',
-    styleUrl: './term.component.css'
+    imports: [MaterialModule, MatSortModule, TranslateModule, AsyncPipe, FormsModule, RouterLink, RouterLinkActive],
+    templateUrl: `${COMPONENT_NAME}.html`,
+    styleUrl: `${COMPONENT_NAME}.css`
 })
 export class TermComponent extends AbstractComponent {
     /**
@@ -92,15 +49,7 @@ export class TermComponent extends AbstractComponent {
      * @version 1.0.0
      * @see TermService
      */
-    private termService: TermService = inject(TermService);
-
-    /**
-     * AppConst is an instance of the AppConst.
-     * It is used to access the constants.
-     *
-     * @type {AppConst}
-     */
-    protected readonly appConst = AppConst;
+    private readonly termService: TermService = inject(TermService);
 
     /**
      * The MatPaginator is a component to control the pagination of a table.

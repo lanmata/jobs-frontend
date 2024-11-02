@@ -19,8 +19,10 @@ import {
 export class NotifyComponent {
   protected snackBarRef = inject(MatSnackBarRef);
   message: string = '';
+  private readonly data: any
 
-  constructor(@Inject(MAT_SNACK_BAR_DATA) private data: any) {
+  constructor(@Inject(MAT_SNACK_BAR_DATA) data: any) {
+    this.data = data;
     this.message = this.data.message? this.data.message : '';
   }
 

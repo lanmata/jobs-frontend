@@ -4,6 +4,11 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {AfterViewInit, ChangeDetectorRef, inject, Injectable, OnDestroy, OnInit} from '@angular/core';
 import {merge, of, startWith, Subject, switchMap} from 'rxjs';
+import {Store} from "@ngrx/store";
+import {AppState} from "@app/state/app.state";
+import {StoreComponent} from "@shared/components/store/store.component";
+import { AppConst } from '../util/app-const';
+import {Router} from "@angular/router";
 
 /**
  * AbstractComponent is an abstract class that provides common functionality for components that use MatTableDataSource.
@@ -16,7 +21,6 @@ export abstract class AbstractComponent implements OnInit, OnDestroy, AfterViewI
     public selection = new SelectionModel<any>(true, []);
     public pageSizeOptions: number[] = [5, 10, 25, 50];
     public isInactiveShow = false;
-    public isVisibleDialogConfirm = false;
     public isErrorFound = false;
     public pageSize = 10;
     public dataSource: any[] = [];
@@ -26,6 +30,23 @@ export abstract class AbstractComponent implements OnInit, OnDestroy, AfterViewI
     protected subject$: Subject<void> = new Subject<void>();
     public allData: any[] = [];
     protected changeDetectorRefs = inject(ChangeDetectorRef);
+
+    /** router is an instance of the Router. */
+    protected readonly router: Router = inject(Router);
+
+    /**
+     * AppConst is an instance of the AppConst.
+     * It is used to access the constants.
+     * @type {AppConst}
+     * @memberof StoreComponent
+     * @description AppConst
+     * @public
+     * @since 1.0.0
+     * @version 1.0.0
+     * @see AppConst
+     */
+    protected readonly appConst = AppConst;
+
 
     /**
      * Constructor for the AbstractComponent class.

@@ -17,7 +17,7 @@ import {ModeCollection} from "./mode.model";
 })
 export class ModeService extends ServiceTemplate {
   // HttpClient instance to make HTTP requests.
-  private httpClient: HttpClient = inject(HttpClient);
+  private readonly httpClient: HttpClient = inject(HttpClient);
 
   // Base URL for the backend service.
   private readonly CONTEXT_PATH: string = `${JOB_BACKEND_SERVICE_BASE_URL}/modes`;

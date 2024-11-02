@@ -477,8 +477,8 @@
       "placeholder": "Ingrese su usuario",
       "validation_messages": {
         "required": "El usuario es requerido",
-        "minLength": "Longitud mínima",
-        "maxLength": "Longitud máxima"
+        "minlength": "Longitud mínima",
+        "maxlength": "Longitud máxima"
       },
       "tooltip": "Debe ingresar nombre de usuario"
     },
@@ -486,8 +486,8 @@
       "placeholder": "Ingrese su clave",
       "validation_messages": {
         "required": "La clave es requerido",
-        "min_length": "Longitud mínima",
-        "max_length": "Longitud máxima"
+        "minlength": "Longitud mínima",
+        "maxlength": "Longitud máxima"
       },
       "tooltip": "Debe ingresar clave de usuario"
     },

@@ -11,13 +11,17 @@ import {RouterLink, RouterLinkActive} from "@angular/router";
 import {FormsModule} from "@angular/forms";
 import {MaterialModule} from "@shared/material/material.module";
 import {AppConst} from "@shared/util/app-const";
+import {Store} from "@ngrx/store";
+import {AppState} from "@app/state/app.state";
+
+const componentName = 'source.component';
 
 @Component({
     selector: 'app-source',
     standalone: true,
     imports: [MaterialModule, MatSortModule, TranslateModule, FormsModule, AsyncPipe, RouterLink, RouterLinkActive],
-    templateUrl: './source.component.html',
-    styleUrl: './source.component.css'
+    templateUrl: `./${componentName}.html`,
+    styleUrl: `./${componentName}.css`
 })
 export class SourceComponent extends AbstractComponent {
     /**
@@ -47,15 +51,7 @@ export class SourceComponent extends AbstractComponent {
      * @version 1.0.0
      * @see SourceService
      */
-    private sourceService: SourceService = inject(SourceService);
-
-    /**
-     * AppConst is an instance of the AppConst.
-     * It is used to access the constants.
-     *
-     * @type {AppConst}
-     */
-    protected readonly appConst = AppConst;
+    private readonly sourceService: SourceService = inject(SourceService);
 
     /**
      * The MatPaginator is a component to control the pagination of a table.

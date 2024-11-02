@@ -12,6 +12,8 @@ import {Store} from '@ngrx/store';
 import {setSharedData} from '@app/state/app.action';
 import {AppConst} from "@shared/util/app-const";
 
+let COMPONENT_NAME = 'login.component';
+
 /**
  * LoginComponent is responsible for handling the login functionality.
  * It includes form validation, state management, and navigation.
@@ -20,8 +22,8 @@ import {AppConst} from "@shared/util/app-const";
     selector: 'app-login',
     standalone: true,
     imports: [CommonModule, MaterialModule, FormsModule, FlexModule, TranslateModule, RouterLink, RouterLinkActive, ReactiveFormsModule],
-    templateUrl: './login.component.html',
-    styleUrl: './login.component.css'
+    templateUrl: `${COMPONENT_NAME}.html`,
+    styleUrl: `${COMPONENT_NAME}.css`
 })
 export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
 
@@ -56,7 +58,7 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
     sharedData$: Observable<SharedData>;
 
     /** Current shared data */
-    sharedDataCurrent: SharedData;
+    sharedDataCurrent: SharedData = new SharedData();
 
     /** Getter for form controls */
     get f() {
@@ -80,11 +82,10 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
         this.logInfo = (...arg: any) => console.info(arg);
         this.logError = (...arg: any) => console.error(arg);
         this.loginForm = this.formBuilder.group({
-            alias: ["", [Validators.required, Validators.min(5), Validators.max(16)]],
-            password: ["", [Validators.required, Validators.min(8), Validators.max(20)]],
+            alias: ["", [Validators.required, Validators.minLength(5), Validators.maxLength(16)]],
+            password: ["", [Validators.required, Validators.minLength(8), Validators.maxLength(20)]],
             remember: []
         });
-        this.sharedDataCurrent = new SharedData();
         this.sharedData$ = store.select(state => state.app.sharedData);
     }
 
@@ -103,11 +104,10 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
     ngOnInit(): void {
         this.loader.show();
         this.sharedData$.subscribe(data => {
-            console.log(data);
             this.sharedDataCurrent = data;
         });
-        const updatedSharedData = { ...this.sharedDataCurrent, logged: false };
-        this.store.dispatch(setSharedData({data: updatedSharedData}));
+        const sharedDataUpdated = { ...this.sharedDataCurrent, logged: false };
+        this.store.dispatch(setSharedData({data: sharedDataUpdated}));
     }
 
     /**
@@ -115,23 +115,28 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
      * If the form is invalid, the method will return early.
      */
     public validateAccess(): void {
-        this.logInfo("Ingresa!");
-        this.logInfo(this.loginForm.value);
-
         this.submitted = true;
 
         // Interrupts the method if the form data is invalid
         if (this.loginForm.invalid) {
+            this.logError('Invalid form data');
             return;
         }
+        this.signin();
     }
 
     /**
      * Signs in the user by updating the shared data and navigating to the offer path.
      */
     signin() {
-        const updatedSharedData = { ...this.sharedDataCurrent, logged: true };
+        const alias = this.f['alias'].value;
+        const userAuth = { alias: alias };
+        const updatedSharedData = { ...this.sharedDataCurrent, logged: true, userAuth: userAuth };
         this.store.dispatch(setSharedData({data: updatedSharedData}));
-        this.router.navigate([this.appConst.JOBS_NAVIGATOR.OFFER_PATH]);
+        this.router.navigate([this.appConst.JOBS_NAVIGATOR.OFFER_PATH]).then(nav => {
+            console.log(nav); // true if navigation is successful
+        }, err => {
+            console.log(err); // when there's an error
+        });;
     }
 }

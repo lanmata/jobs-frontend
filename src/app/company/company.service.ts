@@ -28,7 +28,7 @@ export class CompanyService extends ServiceTemplate {
    * @type {HttpClient}
    * An instance of HttpClient for making HTTP requests.
    */
-  private httpClient: HttpClient = inject(HttpClient);
+  private readonly httpClient: HttpClient = inject(HttpClient);
 
   /**
    * @private

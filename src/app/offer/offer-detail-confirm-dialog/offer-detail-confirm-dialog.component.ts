@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, Inject, inject, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, Inject, inject, OnDestroy} from '@angular/core';
 import {Subject} from "rxjs";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
@@ -6,18 +6,20 @@ import {MaterialModule} from "@shared/material/material.module";
 import {CommonModule} from "@angular/common";
 import {TranslateModule} from "@ngx-translate/core";
 
+let COMPONENT_NAME = 'offer-detail-confirm-dialog.component';
+
 @Component({
   selector: 'app-offer-detail-confirm-dialog',
   standalone: true,
   imports: [ReactiveFormsModule, MaterialModule, CommonModule, TranslateModule],
-  templateUrl: './offer-detail-confirm-dialog.component.html',
-  styleUrl: './offer-detail-confirm-dialog.component.css'
+  templateUrl: `${COMPONENT_NAME}.html`,
+  styleUrl: `${COMPONENT_NAME}.css`
 })
 export class OfferDetailConfirmDialogComponent implements OnDestroy, AfterViewInit {
 
   protected offerDetailDialog: FormGroup;
 
-  private formBuilder = inject(FormBuilder);
+  private readonly formBuilder = inject(FormBuilder);
 
   public isErrorFound = false;
 
@@ -27,8 +29,8 @@ export class OfferDetailConfirmDialogComponent implements OnDestroy, AfterViewIn
 
   protected changeDetectorRefs = inject(ChangeDetectorRef);
 
-  private matDialogRef: MatDialogRef<OfferDetailConfirmDialogComponent> = inject(MatDialogRef<OfferDetailConfirmDialogComponent>);
-  private subject$: Subject<void> = new Subject<void>();
+  private readonly matDialogRef: MatDialogRef<OfferDetailConfirmDialogComponent> = inject(MatDialogRef<OfferDetailConfirmDialogComponent>);
+  private readonly subject$: Subject<void> = new Subject<void>();
   protected offerDetailId: string = '';
 
   constructor(@Inject(MAT_DIALOG_DATA) offerDetailId: string) {

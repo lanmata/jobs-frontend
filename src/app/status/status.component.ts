@@ -10,14 +10,16 @@ import {TranslateModule} from "@ngx-translate/core";
 import {RouterLink, RouterLinkActive} from "@angular/router";
 import {FormsModule} from "@angular/forms";
 import {MaterialModule} from "@shared/material/material.module";
-import {AppConst} from "@shared/util/app-const";
+import { AppConst } from '@app/shared/util/app-const';
+
+let COMPONENT_NAME = 'status.component';
 
 @Component({
     selector: 'app-status',
     standalone: true,
     imports: [MaterialModule, MatSortModule, TranslateModule, FormsModule, AsyncPipe, RouterLink, RouterLinkActive],
-    templateUrl: './status.component.html',
-    styleUrl: './status.component.css'
+    templateUrl: `${COMPONENT_NAME}.html`,
+    styleUrl: `${COMPONENT_NAME}.css`
 })
 export class StatusComponent extends AbstractComponent {
     /**
@@ -47,15 +49,7 @@ export class StatusComponent extends AbstractComponent {
      * @version 1.0.0
      * @see StatusService
      */
-    private statusService: StatusService = inject(StatusService);
-
-    /**
-     * AppConst is an instance of the AppConst.
-     * It is used to access the constants.
-     *
-     * @type {AppConst}
-     */
-    protected readonly appConst = AppConst;
+    private readonly statusService: StatusService = inject(StatusService);
 
     /**
      * The MatPaginator is a component to control the pagination of a table.

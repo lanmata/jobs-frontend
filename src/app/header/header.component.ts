@@ -1,43 +1,36 @@
 import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {TranslateModule} from '@ngx-translate/core';
-import {Router, RouterLink} from "@angular/router";
-import {AppConst} from "@shared/util/app-const";
+import {RouterLink} from "@angular/router";
 import {CommonModule} from "@angular/common";
 import {MaterialModule} from "@shared/material/material.module";
 import {AlertService} from '@shared/services/alert.service';
 import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition} from "@angular/material/snack-bar";
 import {NotifyComponent} from "@shared/components/notify-component/notify.component";
-import {Observable} from "rxjs";
 import {AppState, SharedData} from "@app/state/app.state";
 import {Store} from "@ngrx/store";
 import {setSharedData} from "@app/state/app.action";
+import {StoreComponent} from "@shared/components/store/store.component";
+
+const COMPONENT_NAME = 'header.component';
 
 @Component({
     selector: 'app-header',
     standalone: true,
     imports: [CommonModule, MaterialModule, RouterLink, ReactiveFormsModule, FormsModule, TranslateModule, NotifyComponent],
-    templateUrl: './header.component.html',
-    styleUrl: './header.component.css'
+    templateUrl: `${COMPONENT_NAME}.html`,
+    styleUrl: `${COMPONENT_NAME}.css`,
 })
-export class HeaderComponent implements OnInit, OnDestroy {
-    readonly appConst = AppConst;
+export class HeaderComponent extends StoreComponent implements OnInit, OnDestroy {
     private readonly alertService: AlertService = inject(AlertService);
     private readonly _snackBar: MatSnackBar = inject(MatSnackBar);
     private readonly horizontalPosition: MatSnackBarHorizontalPosition = 'end';
     private readonly verticalPosition: MatSnackBarVerticalPosition = 'top';
 
-    sharedData$: Observable<SharedData>;
-    sharedDataCurrent: SharedData;
-    /**
-     * router is an instance of the Router.
-     * @private
-     */
-    private readonly router: Router = inject(Router);
+    alias!: String;
 
-    constructor(private store: Store<{ app: AppState }>) {
-        this.sharedDataCurrent = new SharedData();
-        this.sharedData$ = store.select(state => state.app.sharedData);
+    constructor(store: Store<{ app: AppState }>) {
+        super(store);
     }
 
     notification(): void {
@@ -69,12 +62,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
         console.info("header component destroyed");
     }
 
-    ngOnInit(): void {
-        this.sharedData$.subscribe(data => {
-            console.log("New value ", data);
-            this.sharedDataCurrent = data;
-        });
+    override ngOnInit(): void {
+        super.ngOnInit();
         this.notification();
+        this.alias = this.sharedDataCurrent.userAuth.alias;
     }
 
     logout() {
