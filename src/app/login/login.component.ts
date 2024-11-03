@@ -12,22 +12,6 @@ import {Store} from '@ngrx/store';
 import {setSharedData} from '@app/state/app.action';
 import {AppConst} from "@shared/util/app-const";
 
-export interface LoginValidationMessage {
-    alias: {
-        required: string;
-        minlength: string;
-        maxlength: string;
-        invalid: boolean;
-    };
-    password: {
-        required: string;
-        minlength: string;
-        maxlength: string;
-        invalid: boolean;
-    };
-    invalid: boolean;
-}
-
 /**
  * LoginComponent is responsible for handling the login functionality.
  * It includes form validation, state management, and navigation.
@@ -94,7 +78,7 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
             if (this.loginForm.controls['alias'].errors['maxlength']) {
                 aliasMaxLength = this.loginForm.controls['alias'].errors['maxlength'];
             }
-            if(aliasRequired || aliasMinLength || aliasMaxLength) {
+            if (aliasRequired || aliasMinLength || aliasMaxLength) {
                 aliasInvalid = true;
             }
         }
@@ -108,7 +92,7 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
             if (this.loginForm.controls['password'].errors['maxlength']) {
                 passwordMaxLength = this.loginForm.controls['password'].errors['maxlength'];
             }
-            if(passwordRequired || passwordMinLength || passwordMaxLength) {
+            if (passwordRequired || passwordMinLength || passwordMaxLength) {
                 passwordInvalid = true;
             }
         }
@@ -125,7 +109,7 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
                 maxlength: passwordMaxLength,
                 invalid: passwordInvalid
             },
-           invalid: aliasInvalid || passwordInvalid
+            invalid: aliasInvalid || passwordInvalid
         };
     }
 
