@@ -12,6 +12,22 @@ import {Store} from '@ngrx/store';
 import {setSharedData} from '@app/state/app.action';
 import {AppConst} from "@shared/util/app-const";
 
+export interface LoginValidationMessage {
+    alias: {
+        required: string;
+        minlength: string;
+        maxlength: string;
+        invalid: boolean;
+    };
+    password: {
+        required: string;
+        minlength: string;
+        maxlength: string;
+        invalid: boolean;
+    };
+    invalid: boolean;
+}
+
 /**
  * LoginComponent is responsible for handling the login functionality.
  * It includes form validation, state management, and navigation.
@@ -59,8 +75,58 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
     sharedDataCurrent: SharedData = new SharedData();
 
     /** Getter for form controls */
-    get f() {
-        return this.loginForm.controls;
+    get loginValid() {
+        let aliasMinLength: any;
+        let aliasMaxLength: any;
+        let aliasRequired: boolean = false;
+        let aliasInvalid: boolean = false;
+        let passwordMinLength: any;
+        let passwordMaxLength: any;
+        let passwordRequired: boolean = false;
+        let passwordInvalid: boolean = false;
+        if (this.loginForm?.controls['alias']?.errors) {
+            if (this.loginForm.controls['alias'].errors['required']) {
+                aliasRequired = this.loginForm.controls['alias'].errors['required'];
+            }
+            if (this.loginForm.controls['alias'].errors['minlength']) {
+                aliasMinLength = this.loginForm.controls['alias'].errors['minlength'];
+            }
+            if (this.loginForm.controls['alias'].errors['maxlength']) {
+                aliasMaxLength = this.loginForm.controls['alias'].errors['maxlength'];
+            }
+            if(aliasRequired || aliasMinLength || aliasMaxLength) {
+                aliasInvalid = true;
+            }
+        }
+        if (this.loginForm?.controls['password']?.errors) {
+            if (this.loginForm.controls['password'].errors['required']) {
+                passwordRequired = this.loginForm.controls['password'].errors['required'];
+            }
+            if (this.loginForm.controls['password'].errors['minlength']) {
+                passwordMinLength = this.loginForm.controls['password'].errors['minlength'];
+            }
+            if (this.loginForm.controls['password'].errors['maxlength']) {
+                passwordMaxLength = this.loginForm.controls['password'].errors['maxlength'];
+            }
+            if(passwordRequired || passwordMinLength || passwordMaxLength) {
+                passwordInvalid = true;
+            }
+        }
+        return {
+            alias: {
+                required: aliasRequired,
+                minlength: aliasMinLength,
+                maxlength: aliasMaxLength,
+                invalid: aliasInvalid
+            },
+            password: {
+                required: passwordRequired,
+                minlength: passwordMinLength,
+                maxlength: passwordMaxLength,
+                invalid: passwordInvalid
+            },
+           invalid: aliasInvalid || passwordInvalid
+        };
     }
 
     /** Flag to indicate if the form has been submitted */
