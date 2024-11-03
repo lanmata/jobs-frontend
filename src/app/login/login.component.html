@@ -1,19 +1,23 @@
 <body>
 <form class="form-signin" [formGroup]="loginForm" (ngSubmit)="validateAccess()">
-    <img class="mb-4 center-image" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt=""
-         width="72"
-         height="72">
-    <h1 class="title-center h3 mb-3 font-weight-normal">Jobs Offer</h1>
+    <img class="mb-4 center-image" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt=""  width="72" height="72"/>
+    <h1 class="title-center h3 mb-3 font-weight-normal">{{ 'title' | translate }}</h1>
     <!-- Usuario -->
     <ng-container>
         <mat-form-field class="width-style">
             <mat-label class="sr-only">{{ 'frm_login.user.placeholder' | translate }}</mat-label>
             <input matInput formControlName="alias" id="alias"
-                   [ngClass]="{ 'is-invalid': submitted && f['alias'].errors }"/>
-            @if (submitted && f['alias'].errors) {
+                   [ngClass]="{ 'is-invalid': submitted && loginValid.invalid}">
+            @if (submitted &&  loginValid.alias.invalid) {
                 <div class="invalid-feedback">
-                    @if (f['alias'].errors['required']) {
-                        <div>{{ 'frm_login.user.tooltip' | translate }}</div>
+                    @if (loginValid.alias.required) {
+                        {{ 'frm_login.user.validation_messages.required' | translate }}
+                    }
+                    @if (loginValid.alias.minlength) {
+                        {{ 'frm_login.user.validation_messages.minlength' | translate }}
+                    }
+                    @if (loginValid.alias.maxlength) {
+                        {{ 'frm_login.user.validation_messages.maxlength' | translate }}
                     }
                 </div>
             }
@@ -22,11 +26,17 @@
         <mat-form-field class="width-style">
             <mat-label class="sr-only">{{ 'frm_login.password.placeholder' | translate }}</mat-label>
             <input matInput type="password" formControlName="password" id="password"
-                   [ngClass]="{ 'is-invalid': submitted && f['password'].errors }"/>
-            @if (submitted && f['password'].errors) {
+                   [ngClass]="{ 'is-invalid': submitted && loginValid.password.invalid}"/>
+            @if (submitted && loginValid.password.invalid) {
                 <div class="invalid-feedback">
-                    @if (f['password'].errors['required']) {
-                        <div>{{ 'frm_login.password.tooltip' | translate }}</div>
+                    @if (loginValid.password.required) {
+                        {{ 'frm_login.password.validation_messages.required' | translate }}
+                    }
+                    @if (loginValid.password.minlength) {
+                        {{ 'frm_login.password.validation_messages.minlength' | translate }}
+                    }
+                    @if (loginValid.password.maxlength) {
+                        {{ 'frm_login.password.validation_messages.maxlength' | translate }}
                     }
                 </div>
             }
@@ -44,7 +54,7 @@
     <!-- Botones -->
     <ng-container class="panel-buttons">
         <!-- Ingreso de usuario -->
-        <button mat-raised-button color="primary" class="width-style" (click)="signin()" >
+        <button mat-raised-button color="primary" class="width-style">
             @if (loading) {
                 <span class="spinner-border spinner-border-sm mr-1"></span>
             }

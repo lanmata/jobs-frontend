@@ -3,9 +3,14 @@ export interface AppState {
 }
 
 export const initialState: AppState = {
-  sharedData: {logged: false}
+  sharedData: {logged: false, userAuth: {alias: ''}}
 };
 
 export class SharedData {
   logged!: boolean;
+  userAuth!: UserAuth;
+}
+
+export class UserAuth {
+  alias!: string;
 }

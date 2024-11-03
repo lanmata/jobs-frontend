@@ -17,7 +17,6 @@ import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} fr
 import {FlexModule} from "@angular/flex-layout";
 import {TranslateModule} from "@ngx-translate/core";
 import {provideNativeDateAdapter} from '@angular/material/core';
-import {AppConst} from "@shared/util/app-const";
 import {Router, RouterLink, RouterLinkActive} from "@angular/router";
 import {NewOfferRequest} from "../offer.model";
 import {OfferService} from "../offer.service";
@@ -25,6 +24,7 @@ import {FormatUtil} from "@shared/util/format.util";
 import {StatusCollection} from "@app/status/status.model";
 import {StatusService} from "@app/status/status.service";
 import {AlertService} from "@shared/services/alert.service";
+import { AppConst } from '@app/shared/util/app-const';
 
 /**
  * Component for creating a new job offer.
@@ -35,8 +35,8 @@ import {AlertService} from "@shared/services/alert.service";
     standalone: true,
     imports: [CommonModule, MaterialModule, FormsModule, FlexModule, TranslateModule, RouterLink, RouterLinkActive, ReactiveFormsModule],
     providers: [provideNativeDateAdapter()],
-    templateUrl: './new-offer.component.html',
-    styleUrl: './new-offer.component.css'
+    templateUrl: 'new-offer.component.html',
+    styleUrl: 'new-offer.component.css'
 })
 export class NewOfferComponent implements OnInit, OnDestroy, AfterViewInit {
 
@@ -55,7 +55,20 @@ export class NewOfferComponent implements OnInit, OnDestroy, AfterViewInit {
     /** Subject to handle component destruction */
     protected subject$: Subject<void> = new Subject<void>();
 
-    /** Application constants */
+    /** router is an instance of the Router. */
+    protected readonly router: Router = inject(Router);
+
+    /**
+     * AppConst is an instance of the AppConst.
+     * It is used to access the constants.
+     * @type {AppConst}
+     * @memberof StoreComponent
+     * @description AppConst
+     * @public
+     * @since 1.0.0
+     * @version 1.0.0
+     * @see AppConst
+     */
     protected readonly appConst = AppConst;
 
     /** Services injected */
@@ -76,9 +89,6 @@ export class NewOfferComponent implements OnInit, OnDestroy, AfterViewInit {
 
     /** Utility for formatting */
     private formatUtil!: FormatUtil;
-
-    /** Router for navigation */
-    private readonly router: Router = inject(Router);
 
     /** Loading service */
     protected loader: LoadingService = inject(LoadingService);

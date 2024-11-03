@@ -26,9 +26,21 @@
             </button>
         </mat-menu>
         <span class="spacer"></span>
-        <button mat-icon-button aria-label="Example icon button with a delete icon" (click)="logout()">
-            <mat-icon>exit_to_app</mat-icon>
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>account_circle</mat-icon>
         </button>
+        <mat-menu #menu="matMenu">
+            <span mat-menu-item>{{ alias }}</span>
+            <button mat-menu-item>
+                <mat-icon>badge</mat-icon>
+                <span>{{ 'profile_menu.profile.title' | translate }}</span>
+            </button>
+            <mat-divider></mat-divider>
+            <button mat-menu-item (click)="logout()">
+                <mat-icon>power_settings_new</mat-icon>
+                <span>{{ 'profile_menu.logout.title' | translate }}</span>
+            </button>
+        </mat-menu>
     </mat-toolbar>
     </body>
 }

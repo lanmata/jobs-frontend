@@ -31,6 +31,7 @@ export class AppConst {
         MODE_PATH: 'mode',
         EDIT_MODE_PATH: 'mode/edit-mode',
         OFFER_PATH: 'offer',
+        MAIN_PATH: 'main',
         NEW_OFFER_PATH: "offer/new-offer",
         EDIT_OFFER_PATH: "offer/edit-offer",
         POSITION_PATH: 'position',

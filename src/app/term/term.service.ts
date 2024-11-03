@@ -14,7 +14,7 @@ export class TermService extends ServiceTemplate {
   /**
    * An instance of HttpClient which is used to make HTTP requests.
    */
-  private httpClient: HttpClient = inject(HttpClient);
+  private readonly httpClient: HttpClient = inject(HttpClient);
 
   /**
    * The base URL for the backend service related to term.
