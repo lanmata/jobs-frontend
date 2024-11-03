@@ -9,7 +9,6 @@ import {AsyncPipe} from "@angular/common";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort, MatSortModule} from "@angular/material/sort";
 import {FormsModule} from "@angular/forms";
-import {AppConst} from "@shared/util/app-const";
 import {RouterLink, RouterLinkActive} from "@angular/router";
 
 /**
@@ -22,8 +21,8 @@ import {RouterLink, RouterLinkActive} from "@angular/router";
     selector: 'app-company',
     standalone: true,
     imports: [MaterialModule, MatSortModule, TranslateModule, FormsModule, AsyncPipe, RouterLink, RouterLinkActive],
-    templateUrl: './company.component.html',
-    styleUrl: './company.component.css'
+    templateUrl: 'company.component.html',
+    styleUrl: 'company.component.css'
 })
 export class CompanyComponent extends AbstractComponent {
     /**
@@ -48,14 +47,6 @@ export class CompanyComponent extends AbstractComponent {
      * @private
      */
     private readonly companyService: CompanyService = inject(CompanyService);
-
-    /**
-     * AppConst is an instance of the AppConst.
-     * It is used to access the constants.
-     *
-     * @type {AppConst}
-     */
-    protected readonly appConst = AppConst;
 
     /**
      * The MatPaginator is a component to control the pagination of a table.

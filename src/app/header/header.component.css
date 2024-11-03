@@ -1,4 +1,4 @@
-@import "../app.component.scss";
+@import "../main/main.component.css";
 body {
   box-shadow: 0px 5px 15px -5px #171717;
 }

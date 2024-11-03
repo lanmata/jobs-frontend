@@ -67,6 +67,7 @@ describe('OfferComponent', () => {
     it('should fetch offers on initialization', () => {
         const offerServiceSpy = spyOn(offerService, 'getOffers').and.returnValue(of(UNIT_TEST_MOCK_GET_STATUS_RESPONSE));
         component.ngOnInit();
+        component.ngAfterViewInit();
         expect(offerServiceSpy).toHaveBeenCalled();
     });
 

@@ -7,7 +7,7 @@ import {LoadingService} from "@shared/services/loading.service";
 import {CommonModule} from "@angular/common";
 import {MaterialModule} from "@shared/material/material.module";
 import {FlexModule} from "@angular/flex-layout";
-import {AppState, SharedData} from '@app/state/app.state';
+import {AppState, SharedData, UserAuth} from '@app/state/app.state';
 import {Store} from '@ngrx/store';
 import {setSharedData} from '@app/state/app.action';
 import {AppConst} from "@shared/util/app-const";
@@ -20,8 +20,8 @@ import {AppConst} from "@shared/util/app-const";
     selector: 'app-login',
     standalone: true,
     imports: [CommonModule, MaterialModule, FormsModule, FlexModule, TranslateModule, RouterLink, RouterLinkActive, ReactiveFormsModule],
-    templateUrl: './login.component.html',
-    styleUrl: './login.component.css'
+    templateUrl: 'login.component.html',
+    styleUrl: 'login.component.css'
 })
 export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
 
@@ -56,11 +56,61 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
     sharedData$: Observable<SharedData>;
 
     /** Current shared data */
-    sharedDataCurrent: SharedData;
+    sharedDataCurrent: SharedData = new SharedData();
 
     /** Getter for form controls */
-    get f() {
-        return this.loginForm.controls;
+    get loginValid() {
+        let aliasMinLength: any;
+        let aliasMaxLength: any;
+        let aliasRequired: boolean = false;
+        let aliasInvalid: boolean = false;
+        let passwordMinLength: any;
+        let passwordMaxLength: any;
+        let passwordRequired: boolean = false;
+        let passwordInvalid: boolean = false;
+        if (this.loginForm?.controls['alias']?.errors) {
+            if (this.loginForm.controls['alias'].errors['required']) {
+                aliasRequired = this.loginForm.controls['alias'].errors['required'];
+            }
+            if (this.loginForm.controls['alias'].errors['minlength']) {
+                aliasMinLength = this.loginForm.controls['alias'].errors['minlength'];
+            }
+            if (this.loginForm.controls['alias'].errors['maxlength']) {
+                aliasMaxLength = this.loginForm.controls['alias'].errors['maxlength'];
+            }
+            if (aliasRequired || aliasMinLength || aliasMaxLength) {
+                aliasInvalid = true;
+            }
+        }
+        if (this.loginForm?.controls['password']?.errors) {
+            if (this.loginForm.controls['password'].errors['required']) {
+                passwordRequired = this.loginForm.controls['password'].errors['required'];
+            }
+            if (this.loginForm.controls['password'].errors['minlength']) {
+                passwordMinLength = this.loginForm.controls['password'].errors['minlength'];
+            }
+            if (this.loginForm.controls['password'].errors['maxlength']) {
+                passwordMaxLength = this.loginForm.controls['password'].errors['maxlength'];
+            }
+            if (passwordRequired || passwordMinLength || passwordMaxLength) {
+                passwordInvalid = true;
+            }
+        }
+        return {
+            alias: {
+                required: aliasRequired,
+                minlength: aliasMinLength,
+                maxlength: aliasMaxLength,
+                invalid: aliasInvalid
+            },
+            password: {
+                required: passwordRequired,
+                minlength: passwordMinLength,
+                maxlength: passwordMaxLength,
+                invalid: passwordInvalid
+            },
+            invalid: aliasInvalid || passwordInvalid
+        };
     }
 
     /** Flag to indicate if the form has been submitted */
@@ -80,11 +130,10 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
         this.logInfo = (...arg: any) => console.info(arg);
         this.logError = (...arg: any) => console.error(arg);
         this.loginForm = this.formBuilder.group({
-            alias: ["", [Validators.required, Validators.min(5), Validators.max(16)]],
-            password: ["", [Validators.required, Validators.min(8), Validators.max(20)]],
+            alias: ["", [Validators.required, Validators.minLength(5), Validators.maxLength(16)]],
+            password: ["", [Validators.required, Validators.minLength(8), Validators.maxLength(20)]],
             remember: []
         });
-        this.sharedDataCurrent = new SharedData();
         this.sharedData$ = store.select(state => state.app.sharedData);
     }
 
@@ -103,11 +152,10 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
     ngOnInit(): void {
         this.loader.show();
         this.sharedData$.subscribe(data => {
-            console.log(data);
             this.sharedDataCurrent = data;
         });
-        const updatedSharedData = { ...this.sharedDataCurrent, logged: false };
-        this.store.dispatch(setSharedData({data: updatedSharedData}));
+        const sharedDataUpdated = {...this.sharedDataCurrent, logged: false};
+        this.store.dispatch(setSharedData({data: sharedDataUpdated}));
     }
 
     /**
@@ -115,23 +163,35 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
      * If the form is invalid, the method will return early.
      */
     public validateAccess(): void {
-        this.logInfo("Ingresa!");
-        this.logInfo(this.loginForm.value);
-
         this.submitted = true;
-
-        // Interrupts the method if the form data is invalid
-        if (this.loginForm.invalid) {
-            return;
+        if (this.loginForm.valid) {
+            this.router.navigate([AppConst.JOBS_NAVIGATOR.OFFER_PATH]);
+            this.signin();
+        } else {
+            this.isErrorFound = true;
+            this.logError('Invalid form data');
         }
     }
 
     /**
      * Signs in the user by updating the shared data and navigating to the offer path.
      */
-    signin() {
-        const updatedSharedData = { ...this.sharedDataCurrent, logged: true };
-        this.store.dispatch(setSharedData({data: updatedSharedData}));
-        this.router.navigate([this.appConst.JOBS_NAVIGATOR.OFFER_PATH]);
+    signin(): void {
+        if (this.loginForm.valid) {
+            const alias = this.loginForm.controls['alias'].value;
+            const userAuth = new UserAuth();
+            userAuth.alias = alias;
+
+            const sharedDataCurrent = new SharedData();
+            sharedDataCurrent.logged = true;
+            sharedDataCurrent.userAuth = userAuth;
+
+            this.store.dispatch({
+                type: '[Shared] Set Data',
+                data: sharedDataCurrent
+            });
+
+            this.router.navigate([AppConst.JOBS_NAVIGATOR.OFFER_PATH]);
+        }
     }
 }

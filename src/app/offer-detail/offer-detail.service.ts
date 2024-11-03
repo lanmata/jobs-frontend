@@ -14,12 +14,12 @@ export class OfferDetailService extends ServiceTemplate {
    * httpClient is an instance of HttpClient.
    * It is used to make HTTP requests.
    */
-  private httpClient: HttpClient = inject(HttpClient);
+  private readonly httpClient: HttpClient = inject(HttpClient);
 
   /**
    * CONTEXT_PATH is the base URL for the job offers backend service.
    */
-  private CONTEXT_PATH: string = `${JOB_BACKEND_SERVICE_BASE_URL}/job-offer-details`;
+  private readonly CONTEXT_PATH: string = `${JOB_BACKEND_SERVICE_BASE_URL}/job-offer-details`;
 
   /**
    * The constructor calls the parent class's constructor.

@@ -10,8 +10,11 @@ export class FormatUtil {
   readonly UNIT_PATTERN = '1.5';
   readonly CENT_PATTERN = '1.8';
   readonly DECIMAL_FORMAT_MAX_VALUE = -9999999.99;
+  private readonly datePipe: DatePipe
 
-  constructor(private datePipe: DatePipe){}
+  constructor(datePipe: DatePipe){
+    this.datePipe = datePipe;
+  }
 
   public datetime = (value: string | null) => this.datePipe.transform(value, this.DATE_TIME_PATTERN);
   public datetimeStandard = (value: string | null) => this.datePipe.transform(value, this.DATE_TIME_PATTERN_YYYY_MM_DD_HH_DD_SS);
@@ -26,7 +29,7 @@ export class FormatUtil {
     return value;
   }
 
-  private getPattern = (value: number) => {
+  private readonly getPattern = (value: number) => {
     let patternSelected = '';
     if (value >= 1){
       if (value < 10){

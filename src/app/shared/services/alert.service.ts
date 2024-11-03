@@ -4,9 +4,9 @@ import { Observable, Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AlertService {
-    private subject = new Subject<any>();
+    private readonly subject = new Subject<any>();
     private keepAfterRouteChange = false;
-    private router = inject(Router)
+    private readonly router = inject(Router)
 
     constructor() {
         // clear alert messages on route change unless 'keepAfterRouteChange' flag is true
