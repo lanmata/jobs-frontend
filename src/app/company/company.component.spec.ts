@@ -74,10 +74,10 @@ describe('CompanyComponent', () => {
     });
 
     it('should update data source when companies are fetched', () => {
-        const response = {companyTOCollection: [{id: 1, name: 'Company1'}, {id: 2, name: 'Company2'}]};
+        const response = {list: [{id: 1, name: 'Company1'}, {id: 2, name: 'Company2'}]};
         spyOn(companyService, 'getCompanies').and.returnValue(of(response));
         component.ngOnInit();
-        expect(component.allData).toEqual(response.companyTOCollection);
+        expect(component.allData).toEqual(response.list);
     });
 
     it('should hide loader when companies are fetched', () => {

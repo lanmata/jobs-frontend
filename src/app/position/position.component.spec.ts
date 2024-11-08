@@ -62,7 +62,7 @@ describe('PositionComponent', () => {
 
     it('should list positions including inactive ones when requested', () => {
         const mockPositions = {
-            positionTOCollection: [
+            list: [
                 {
                     id: 'ee0d55ce-827c-4663-a99f-38324b9322a8',
                     name: 'Position 1',
@@ -81,7 +81,7 @@ describe('PositionComponent', () => {
         spyOn(positionService, 'getPositions').and.returnValue(of(mockPositions));
         component.ngOnInit();
 
-        expect(component.allData).toEqual(mockPositions.positionTOCollection);
+        expect(component.allData).toEqual(mockPositions.list);
     });
 
     it('should handle error when listing positions fails', () => {

@@ -62,7 +62,7 @@ describe('ModeComponent', () => {
 
     it('should list modes including inactive ones when requested', () => {
         const mockModes = {
-            modeTOCollection: [
+            list: [
                 {
                     id: 'ee0d55ce-827c-4663-a99f-38324b9322a8',
                     name: 'ModeModel 1',
@@ -81,7 +81,7 @@ describe('ModeComponent', () => {
         spyOn(modeService, 'getModes').and.returnValue(of(mockModes));
         component.ngOnInit();
 
-        expect(component.allData).toEqual(mockModes.modeTOCollection);
+        expect(component.allData).toEqual(mockModes.list);
     });
 
     it('should handle error when listing modes fails', () => {
