@@ -124,7 +124,7 @@ export class TermComponent extends AbstractComponent {
     private getTerm(includeActive: boolean): void {
         this.termService.getTerm(includeActive).pipe(takeUntil(this.subject$))
             .subscribe({
-                next: (response: any) => this.dataProcess(response.termTOCollection, this.sort, this.paginator),
+                next: (response: any) => this.dataProcess(response.list, this.sort, this.paginator),
                 error: (error: any) => {
                     this.isErrorFound = true;
                     this.logError(`Error occurred while getting term ${error}`);

@@ -130,7 +130,7 @@ export class PositionComponent extends AbstractComponent {
     private getPositions(includeActive: boolean): void {
         this.positionService.getPositions(includeActive).pipe(takeUntil(this.subject$))
             .subscribe({
-                next: (response: any) => this.dataProcess(response.positionTOCollection, this.sort, this.paginator),
+                next: (response: any) => this.dataProcess(response.list, this.sort, this.paginator),
                 error: (error: any) => {
                     this.isErrorFound = true;
                     this.logError(`Error occurred while getting positions ${error}`);

@@ -62,7 +62,7 @@ describe('TermComponent', () => {
 
     it('should list term including inactive ones when requested', () => {
         const mockTerm = {
-            termTOCollection: [
+            list: [
                 {
                     id: 'ee0d55ce-827c-4663-a99f-38324b9322a8',
                     name: 'Term 1',
@@ -81,7 +81,7 @@ describe('TermComponent', () => {
         spyOn(termService, 'getTerm').and.returnValue(of(mockTerm));
         component.ngOnInit();
 
-        expect(component.allData).toEqual(mockTerm.termTOCollection);
+        expect(component.allData).toEqual(mockTerm.list);
     });
 
     it('should handle error when listing term fails', () => {
