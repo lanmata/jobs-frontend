@@ -225,7 +225,7 @@ export class EditOfferComponent extends AbstractComponent {
     private listStatus(includeActive: boolean): void {
         this.statusService.getStatus(includeActive).pipe(takeUntil(this.subject$))
             .subscribe({
-                next: (response: any) => this.statusCollection.statuses = response.statusTOCollection,
+                next: (response: any) => this.statusCollection.statuses = response.list,
                 error: (error: any) => this.setErrorFound('statuses', error),
                 complete: () => {
                     this.logInfo(`Get statuses completed. ${this.statusCollection.statuses.length} statuses found`);
@@ -239,11 +239,10 @@ export class EditOfferComponent extends AbstractComponent {
     private setStatus(): void {
         if (this.offer.postDetailList && this.statusCollection?.statuses) {
             this.offer.postDetailList.forEach((postDetail) => {
-                this.statusCollection.statuses.filter((status) => {
-                    if (status.id === postDetail.statusId) {
-                        postDetail.status = status.name;
-                    }
-                });
+                const matchingStatus = this.statusCollection.statuses.find(status => status.id === postDetail.statusId);
+                if (matchingStatus) {
+                    postDetail.status = matchingStatus.name;
+                }
             });
         }
     }
@@ -271,11 +270,11 @@ export class EditOfferComponent extends AbstractComponent {
      */
     cleanValues() {
         this.editOfferForm.controls['status'].reset();
-        this.editOfferForm.controls['status'].markAsPending({ onlySelf: true });
+        this.editOfferForm.controls['status'].markAsPending({onlySelf: true});
         this.editOfferForm.controls['updateDate'].reset();
-        this.editOfferForm.controls['updateDate'].markAsPending({ onlySelf: true });
+        this.editOfferForm.controls['updateDate'].markAsPending({onlySelf: true});
         this.editOfferForm.controls['comments'].reset();
-        this.editOfferForm.controls['comments'].markAsPending({ onlySelf: true });
+        this.editOfferForm.controls['comments'].markAsPending({onlySelf: true});
     }
 
     /**

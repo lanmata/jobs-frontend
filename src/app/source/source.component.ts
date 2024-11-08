@@ -124,7 +124,7 @@ export class SourceComponent extends AbstractComponent {
     private getSources(includeActive: boolean): void {
         this.sourceService.getSources(includeActive).pipe(takeUntil(this.subject$))
             .subscribe({
-                next: (response: any) => this.dataProcess(response.sourceTOList, this.sort, this.paginator),
+                next: (response: any) => this.dataProcess(response.list, this.sort, this.paginator),
                 error: (error: any) => {
                     this.isErrorFound = true;
                     this.logError(`Error occurred while getting sources ${error}`);

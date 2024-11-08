@@ -110,7 +110,7 @@ export class CompanyComponent extends AbstractComponent {
     private listCompanies(): void {
         this.companyService.getCompanies(true).pipe(takeUntil(this.subject$))
             .subscribe({
-                next: (response: any) => this.dataProcess(response.companyTOCollection, this.sort, this.paginator),
+                next: (response: any) => this.dataProcess(response.list, this.sort, this.paginator),
                 error: (errorResponse) => {
                     this.isErrorFound = true;
                     this.logError(`Error occurred while getting companies ${errorResponse}`);

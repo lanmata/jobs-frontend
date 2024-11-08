@@ -10,7 +10,7 @@ export class StatusCollection {
 }
 
 export const UNIT_TEST_MOCK_GET_STATUS_RESPONSE = {
-  statusTOCollection: [
+  list: [
     {
       id: '2c7c9f5f-11b8-414d-b07d-cf82652cf31f',
       name: 'Cliente N001AB',

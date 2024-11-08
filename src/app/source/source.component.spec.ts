@@ -62,7 +62,7 @@ describe('SourceComponent', () => {
 
     it('should list sources including inactive ones when requested', () => {
         const mockSources = {
-            sourceTOList: [
+            list: [
                 {
                     id: 'ee0d55ce-827c-4663-a99f-38324b9322a8',
                     name: 'Source 1',
@@ -81,7 +81,7 @@ describe('SourceComponent', () => {
         spyOn(sourceService, 'getSources').and.returnValue(of(mockSources));
         component.ngOnInit();
 
-        expect(component.allData).toEqual(mockSources.sourceTOList);
+        expect(component.allData).toEqual(mockSources.list);
     });
 
     it('should handle error when listing sources fails', () => {

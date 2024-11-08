@@ -62,7 +62,7 @@ describe('StatusComponent', () => {
 
     it('should list status including inactive ones when requested', () => {
         const mockStatus = {
-            statusTOCollection: [
+            list: [
                 {
                     id: 'ee0d55ce-827c-4663-a99f-38324b9322a8',
                     name: 'StatusModel 1',
@@ -81,7 +81,7 @@ describe('StatusComponent', () => {
         spyOn(statusService, 'getStatus').and.returnValue(of(mockStatus));
         component.ngOnInit();
 
-        expect(component.allData).toEqual(mockStatus.statusTOCollection);
+        expect(component.allData).toEqual(mockStatus.list);
     });
 
     it('should handle error when listing status fails', () => {

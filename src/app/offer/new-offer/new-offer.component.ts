@@ -175,7 +175,7 @@ export class NewOfferComponent implements OnInit, OnDestroy, AfterViewInit {
     private listCompanies(): void {
         this.companyService.getCompanies(true).pipe(takeUntil(this.subject$))
             .subscribe({
-                next: (response: any) => this.companyCollection.companies = response.companyTOCollection,
+                next: (response: any) => this.companyCollection.companies = response.list,
                 error: (errorResponse) => this.setErrorFound('companies', errorResponse),
                 complete: () => this.logInfo('Get companies completed.')
             });
@@ -195,7 +195,7 @@ export class NewOfferComponent implements OnInit, OnDestroy, AfterViewInit {
     private listModes(includeInactive: boolean): void {
         this.modeService.getModes(includeInactive).pipe(takeUntil(this.subject$))
             .subscribe({
-                next: (response: any) => this.modeCollection.modes = response.modeTOCollection,
+                next: (response: any) => this.modeCollection.modes = response.list,
                 error: (errorResponse) => this.setErrorFound('modes', errorResponse),
                 complete: () => this.logInfo('Get modes completed.')
             });
@@ -215,7 +215,7 @@ export class NewOfferComponent implements OnInit, OnDestroy, AfterViewInit {
     private listPositions(includeActive: boolean): void {
         this.positionService.getPositions(includeActive).pipe(takeUntil(this.subject$))
             .subscribe({
-                next: (response: any) => this.positionCollection.positions = response.positionTOCollection,
+                next: (response: any) => this.positionCollection.positions = response.list,
                 error: (error: any) => this.setErrorFound('positions', error),
                 complete: () => this.logInfo('Get positions completed.')
             });
@@ -235,7 +235,7 @@ export class NewOfferComponent implements OnInit, OnDestroy, AfterViewInit {
     private listSources(includeActive: boolean): void {
         this.sourceService.getSources(includeActive).pipe(takeUntil(this.subject$))
             .subscribe({
-                next: (response: any) => this.sourceCollection.sources = response.sourceTOList,
+                next: (response: any) => this.sourceCollection.sources = response.list,
                 error: (error: any) => this.setErrorFound('sources', error),
                 complete: () => this.logInfo('Get sources completed.')
             });
@@ -255,7 +255,7 @@ export class NewOfferComponent implements OnInit, OnDestroy, AfterViewInit {
     private listStatus(includeActive: boolean): void {
         this.statusService.getStatus(includeActive).pipe(takeUntil(this.subject$))
             .subscribe({
-                next: (response: any) => this.statusCollection.statuses = response.statusTOCollection,
+                next: (response: any) => this.statusCollection.statuses = response.list,
                 error: (error: any) => this.setErrorFound('statuses', error),
                 complete: () => this.logInfo('Get statuses completed.')
             });
@@ -275,7 +275,7 @@ export class NewOfferComponent implements OnInit, OnDestroy, AfterViewInit {
     private listTerms(includeActive: boolean): void {
         this.termService.getTerm(includeActive).pipe(takeUntil(this.subject$))
             .subscribe({
-                next: (response: any) => this.termCollection.terms = response.termTOCollection,
+                next: (response: any) => this.termCollection.terms = response.list,
                 error: (error: any) => this.setErrorFound('terms', error),
                 complete: () => {
                     this.logInfo('Get terms completed.');

@@ -10,7 +10,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {HttpClient, provideHttpClient, withInterceptorsFromDi} from "@angular/common/http";
 import {UNIT_TEST_MOCK_GET_STATUS_RESPONSE} from "../status/status.model";
-import {UNIT_TEST_MOCK_GET_OFFER_RESPONSE} from "./offer.model";
+import {UNIT_TEST_MOCK_ALL_DATA, UNIT_TEST_MOCK_GET_OFFER_RESPONSE} from "./offer.model";
 import {DatePipe} from "@angular/common";
 
 
@@ -81,7 +81,7 @@ describe('OfferComponent', () => {
     it('should update data source when offers are fetched', () => {
         const offerServiceSpy = spyOn(offerService, 'getOffers').and.returnValue(of(UNIT_TEST_MOCK_GET_OFFER_RESPONSE));
         component.ngOnInit();
-        expect(component.allData).toEqual(UNIT_TEST_MOCK_GET_OFFER_RESPONSE);
+        expect(component.allData).toEqual(UNIT_TEST_MOCK_ALL_DATA);
         expect(offerServiceSpy).toHaveBeenCalled();
     });
 
