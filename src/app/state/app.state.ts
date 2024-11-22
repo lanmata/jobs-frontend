@@ -3,7 +3,10 @@ export interface AppState {
 }
 
 export const initialState: AppState = {
-  sharedData: {logged: false, userAuth: {alias: ''}}
+  sharedData: {logged: false, userAuth: {
+      alias: '',
+      fullName: ""
+    }}
 };
 
 export class SharedData {
@@ -13,4 +16,5 @@ export class SharedData {
 
 export class UserAuth {
   alias!: string;
+  fullName!: string;
 }
