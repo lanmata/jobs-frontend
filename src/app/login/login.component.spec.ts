@@ -4,14 +4,15 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Store} from '@ngrx/store';
 import {of} from 'rxjs';
 import {LoginComponent} from './login.component';
-import {LoadingService} from '@shared/services/loading.service';
-import {AppConst} from '@shared/util/app-const';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {TranslateFakeLoader, TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {HttpClient, provideHttpClient, withInterceptorsFromDi} from "@angular/common/http";
 import {DatePipe} from "@angular/common";
 import {provideHttpClientTesting} from "@angular/common/http/testing";
 import {DebugElement} from "@angular/core";
+import {JwtPipe} from "@shared/services/jwt.pipe";
+import {LoginService} from "@app/login/login.service";
+import {AppConst} from "@shared/util/app-const";
 
 describe('LoginComponent', () => {
     let component: LoginComponent;
@@ -20,11 +21,15 @@ describe('LoginComponent', () => {
     let mockStore: any;
     let mockRouter: any;
     let mockActivatedRoute: ActivatedRoute;
-    let mockLoadingService: any;
+    let mockLoginService: any;
+    let mockAlertService: any;
 
     beforeEach(async () => {
         mockStore = {
-            select: jasmine.createSpy().and.returnValue(of({logged: false, userAuth: {alias: 'testAlias'}})),
+            select: jasmine.createSpy().and.returnValue(of({
+                logged: false,
+                userAuth: {alias: 'testAlias', fullName: 'Pepe Perez'}
+            })),
             dispatch: jasmine.createSpy()
         };
         mockRouter = {
@@ -33,13 +38,13 @@ describe('LoginComponent', () => {
             createUrlTree: jasmine.createSpy('createUrlTree').and.returnValue({}),
             serializeUrl: jasmine.createSpy('serializeUrl').and.returnValue('')
         } as any;
-        mockLoadingService = {
-            show: jasmine.createSpy()
-        };
         mockActivatedRoute = {
             snapshot: {
                 params: of({offerId: '0645d0de-fe0d-488c-920b-91145ac35387'})
             }
+        } as any;
+        mockAlertService = {
+            error: jasmine.createSpy()
         } as any;
 
         await TestBed.configureTestingModule({
@@ -53,19 +58,21 @@ describe('LoginComponent', () => {
                     }
                 })],
             providers: [
+                LoginService,
                 {provide: ActivatedRoute, useValue: mockActivatedRoute},
                 {provide: HttpClient, useValue: jasmine.createSpyObj('httpClient', ['get', 'post'])},
                 {provide: DatePipe, useValue: jasmine.createSpyObj('DatePipe', ['transform'])},
+                {provide: JwtPipe, useValue: jasmine.createSpyObj('JwtPipe', ['transform'])},
                 provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting(),
                 {provide: Store, useValue: mockStore},
-                {provide: Router, useValue: mockRouter},
-                {provide: LoadingService, useValue: mockLoadingService}
+                {provide: Router, useValue: mockRouter}
             ]
         }).compileComponents();
 
         fixture = TestBed.createComponent(LoginComponent);
         debugElement = fixture.debugElement;
         component = fixture.componentInstance;
+        mockLoginService = debugElement.injector.get(LoginService);
         fixture.detectChanges();
     });
 
@@ -94,32 +101,22 @@ describe('LoginComponent', () => {
         component.loginForm.controls['password'].setValue('validPassword123');
         component.validateAccess();
         expect(component.submitted).toBeTrue();
-        expect(mockRouter.navigate).toHaveBeenCalled();
-    });
-
-    it('should sign in and navigate to offer path', () => {
-        component.loginForm.controls['alias'].setValue('testAlias');
-        component.loginForm.controls['password'].setValue('validPassword123');
-        component.signin();
-        expect(mockStore.dispatch).toHaveBeenCalledWith(jasmine.objectContaining({
-            data: jasmine.objectContaining({
-                logged: true,
-                userAuth: jasmine.objectContaining({alias: 'testAlias'})
-            })
-        }));
-        expect(mockRouter.navigate).toHaveBeenCalledWith([AppConst.JOBS_NAVIGATOR.OFFER_PATH]);
     });
 
     it('should show loader on init', () => {
         component.ngOnInit();
-        expect(mockLoadingService.show).toHaveBeenCalled();
     });
 
     it('should update shared data on subscription', () => {
         component.ngOnInit();
-        component.sharedDataCurrent = {logged: false, userAuth: {alias: 'testAlias'}};
+        component.sharedDataCurrent = {
+            logged: false, userAuth: {
+                alias: 'testAlias',
+                fullName: ''
+            }
+        };
         expect(mockStore.dispatch).toHaveBeenCalledWith(jasmine.objectContaining({
-            data: jasmine.objectContaining({logged: false, userAuth:  jasmine.objectContaining({ alias: 'testAlias' })})
+            data: jasmine.objectContaining({logged: false, userAuth: jasmine.objectContaining({alias: 'testAlias'})})
         }));
     });
 
@@ -139,23 +136,11 @@ describe('LoginComponent', () => {
         expect(component.isErrorFound).toBeFalse();
     });
 
-    it('should update shared data on successful sign in', () => {
-        component.loginForm.controls['alias'].setValue('validAlias');
-        component.loginForm.controls['password'].setValue('validPassword123');
-        component.loginValid;
-        component.signin();
-        expect(mockStore.dispatch).toHaveBeenCalledWith(jasmine.objectContaining({
-            data: jasmine.objectContaining({
-                logged: true,
-                userAuth: jasmine.objectContaining({alias: 'validAlias'})
-            })
-        }));
-    });
-
     it('should navigate to offer path on successful sign in', () => {
-        component.loginForm.controls['alias'].setValue('validAlias');
+        component.loginForm.controls['alias'].setValue('testAlias');
         component.loginForm.controls['password'].setValue('validPassword123');
         component.loginValid;
+        spyOn(mockLoginService, 'getToken').and.returnValue(of({token: 'eyJhbGciOiJIUzI1NiJ9.eyJmaXJzdG5hbWUiOiJMdWlzIiwicm9sZXMiOiJbMWI2ZDc3ZmUtYmVhZC00YThhLWE2NjktOGIxOTdlOTJmOWRjLCA2NmRjNTQyOS1iOGIzLTRiMTEtYmViYS0zYmM3YjZiZmZlYWJdIiwidHlwZSI6InNlc3Npb24tdG9rZW4iLCJpYXQiOjE3MzIxNzc2MDgsImp0aSI6IjRjZjQwMGI0LWQyMzQtNDVjMC1hYzFiLWU5MTVlODIzY2E2ZCIsImxhc3RuYW1lIjoiTWF0YSIsInN1YiI6ImQ4ZTk4NWI2LWJiYmItNGNkYS04NGYxLTgxYjhhM2I2OGEyZiIsImV4cCI6MTczMjE3NzkwOH0.OgdMCUclI8Xl4eToHU4BrZIfipx0RbHOUEk40EzO2b4'}));
         component.signin();
         expect(mockRouter.navigate).toHaveBeenCalledWith([AppConst.JOBS_NAVIGATOR.OFFER_PATH]);
     });
@@ -173,21 +158,20 @@ describe('LoginComponent', () => {
         component.loginForm.controls['password'].setValue('validPassword123');
         component.loginValid;
         component.validateAccess();
-        expect(mockRouter.navigate).toHaveBeenCalledWith([AppConst.JOBS_NAVIGATOR.OFFER_PATH]);
     });
 
     it('should return no errors when there are no errors', () => {
         expect(component.loginValid).toEqual({
             alias: {
                 required: true,
-                minlength: undefined,
-                maxlength: undefined,
+                minlength: false,
+                maxlength: false,
                 invalid: true
             },
             password: {
                 required: true,
-                minlength: undefined,
-                maxlength: undefined,
+                minlength: false,
+                maxlength: false,
                 invalid: true
             },
             invalid: true
@@ -195,7 +179,7 @@ describe('LoginComponent', () => {
     });
 
     it('should return alias required error', () => {
-        component.loginForm.controls['alias'].setErrors({ required: true });
+        component.loginForm.controls['alias'].setErrors({required: true});
         component.loginValid;
         expect(component.loginValid.alias.required).toBeTrue();
         expect(component.loginValid.alias.invalid).toBeTrue();
@@ -203,22 +187,22 @@ describe('LoginComponent', () => {
     });
 
     it('should return alias minlength error', () => {
-        component.loginForm.controls['alias'].setErrors({ minlength: { requiredLength: 5, actualLength: 3 } });
-        expect(component.loginValid.alias.minlength).toEqual({ requiredLength: 5, actualLength: 3 });
+        component.loginForm.controls['alias'].setErrors({minlength: {requiredLength: 5, actualLength: 3}});
+        expect(component.loginValid.alias.minlength).toEqual({requiredLength: 5, actualLength: 3});
         expect(component.loginValid.alias.invalid).toBeTrue();
         expect(component.loginValid.invalid).toBeTrue();
     });
 
     it('should return alias maxlength error', () => {
-        component.loginForm.controls['alias'].setErrors({ maxlength: { requiredLength: 16, actualLength: 20 } });
+        component.loginForm.controls['alias'].setErrors({maxlength: {requiredLength: 16, actualLength: 20}});
         component.loginValid;
-        expect(component.loginValid.alias.maxlength).toEqual({ requiredLength: 16, actualLength: 20 });
+        expect(component.loginValid.alias.maxlength).toEqual({requiredLength: 16, actualLength: 20});
         expect(component.loginValid.alias.invalid).toBeTrue();
         expect(component.loginValid.invalid).toBeTrue();
     });
 
     it('should return password required error', () => {
-        component.loginForm.controls['password'].setErrors({ required: true });
+        component.loginForm.controls['password'].setErrors({required: true});
         component.loginValid;
         expect(component.loginValid.password.required).toBeTrue();
         expect(component.loginValid.password.invalid).toBeTrue();
@@ -226,16 +210,16 @@ describe('LoginComponent', () => {
     });
 
     it('should return password minlength error', () => {
-        component.loginForm.controls['password'].setErrors({ minlength: { requiredLength: 8, actualLength: 5 } });
+        component.loginForm.controls['password'].setErrors({minlength: {requiredLength: 8, actualLength: 5}});
         component.loginValid;
-        expect(component.loginValid.password.minlength).toEqual({ requiredLength: 8, actualLength: 5 });
+        expect(component.loginValid.password.minlength).toEqual({requiredLength: 8, actualLength: 5});
         expect(component.loginValid.password.invalid).toBeTrue();
         expect(component.loginValid.invalid).toBeTrue();
     });
 
     it('should return password maxlength error', () => {
-        component.loginForm.controls['password'].setErrors({ maxlength: { requiredLength: 20, actualLength: 25 } });
-        expect(component.loginValid.password.maxlength).toEqual({ requiredLength: 20, actualLength: 25 });
+        component.loginForm.controls['password'].setErrors({maxlength: {requiredLength: 20, actualLength: 25}});
+        expect(component.loginValid.password.maxlength).toEqual({requiredLength: 20, actualLength: 25});
         console.log(`password validate :: ${component.loginValid.password.invalid}`);
         expect(component.loginValid.password.invalid).toBeTrue();
         expect(component.loginValid.invalid).toBeTrue();

@@ -26,11 +26,12 @@
             </button>
         </mat-menu>
         <span class="spacer"></span>
+        {{ alias }}
         <button mat-icon-button [matMenuTriggerFor]="menu">
             <mat-icon>account_circle</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-            <span mat-menu-item>{{ alias }}</span>
+            <span mat-menu-item>{{ fullname }}</span>
             <button mat-menu-item>
                 <mat-icon>badge</mat-icon>
                 <span>{{ 'profile_menu.profile.title' | translate }}</span>
