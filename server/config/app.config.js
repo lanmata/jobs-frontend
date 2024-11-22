@@ -3,6 +3,7 @@
  */
 
 let jobsProxyConfig = {};
+let backboneProxyConfig = {};
 const fs = require('fs');
 const path = require('path');
 const {format} = require('logform');
@@ -102,12 +103,31 @@ module.exports.createJobsProxyConfig = function () {
 };
 
 /**
+ * Reads and parses the jobs proxy configuration from a JSON file.
+ */
+module.exports.createBackboneProxyConfig = function () {
+    const configJson = fs.readFileSync('server/config/config.json', 'utf8');
+    const config = JSON.parse(configJson);
+    backboneProxyConfig = config['backboneProxyConfig'];
+    logger.info("[Backbone] - Proxy Config: " + JSON.stringify(backboneProxyConfig));
+};
+
+/**
  * Retrieves the jobs proxy configuration.
  *
  * @returns {Object} - The jobs proxy configuration.
  */
 module.exports.getJobsProxyConfig = function () {
     return jobsProxyConfig;
+};
+
+/**
+ * Retrieves the jobs proxy configuration.
+ *
+ * @returns {Object} - The jobs proxy configuration.
+ */
+module.exports.getBackboneProxyConfig = function () {
+    return backboneProxyConfig;
 };
 
 let printVaultValues = function (vaultValues) {

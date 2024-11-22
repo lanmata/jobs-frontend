@@ -3,7 +3,10 @@ import {SharedData} from './app.state';
 
 describe('App Actions', () => {
     it('should create setSharedData action with correct type and payload', () => {
-        const data: SharedData = {logged: true, userAuth: { alias: 'testAlias' }};
+        const data: SharedData = {logged: true, userAuth: {
+                alias: 'testAlias',
+                fullName: ''
+            }};
         const action = setSharedData({data});
         expect(action.type).toBe('[Shared] Set Data');
         expect(action.data).toEqual(data);

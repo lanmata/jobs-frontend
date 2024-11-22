@@ -26,6 +26,7 @@ export class HeaderComponent extends StoreComponent implements OnInit, OnDestroy
     private readonly verticalPosition: MatSnackBarVerticalPosition = 'top';
 
     alias!: string;
+    fullname!: string;
 
     constructor(store: Store<{ app: AppState }>) {
         super(store);
@@ -65,6 +66,9 @@ export class HeaderComponent extends StoreComponent implements OnInit, OnDestroy
         this.notification();
         if(this?.sharedDataCurrent?.userAuth?.alias) {
             this.alias = this.sharedDataCurrent.userAuth.alias;
+        }
+        if(this?.sharedDataCurrent?.userAuth?.fullName) {
+            this.fullname = this.sharedDataCurrent.userAuth.fullName;
         }
     }
 

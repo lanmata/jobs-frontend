@@ -10,5 +10,17 @@
         "to": "/jobs-offer/api/v1"
       }
     }
+  ],
+  "backboneProxyConfig": [
+    {
+      "applicationName": "backbone",
+      "matchOn": {
+        "startWith": "/backbone/api"
+      },
+      "urlRewrite": {
+        "from": "/backbone/api",
+        "to": "/backbone/v1"
+      }
+    }
   ]
 }
