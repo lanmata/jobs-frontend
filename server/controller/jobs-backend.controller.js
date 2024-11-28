@@ -182,6 +182,7 @@ exports.proxyApi = async (req, res, next) => {
         let httpOptions = createRequestOption(req.method, apiURL, req.body, headers);
         let request = await axios(httpOptions);
 
+        delete request.headers['transfer-encoding'];
         response = request.data;
         res.set(request.headers);
     } catch (error) {
