@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "ng": "ng",
-    "start-dev": "node server.js --ssl --ssl-key ssl/manager-front.key --ssl-cert ssl/manager-front.crt  --port 7001 --configuration development --vaultToken ${env.vaultToken} --vaultUrl http://prx-qa.vault.tst --vaultPath PRX/data/jobs-frontend/dev --DEBUG_MODE true",
+    "start-dev": "node server.js --ssl --ssl-key ssl/manager-front.key --ssl-cert ssl/manager-front.crt  --port 7001 --configuration development --vaultToken  $VAULT_TOKEN  --vaultUrl http://prx-qa.vault.tst --vaultPath PRX/data/jobs-frontend/dev --debugMode DEBUG_MODE",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test --code-coverage --no-watch --browsers ChromeHeadlessNoSandbox"

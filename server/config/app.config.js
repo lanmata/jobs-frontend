@@ -20,7 +20,7 @@ module.exports.bootstrapConfiguration = function (app) {
         require('dotenv').config({path: "default.env"});
 
         if (argv.vaultToken && argv.vaultUrl && argv.vaultPath) {
-            loadSecretsIntoEnv(argv.vaultUrl, argv.vaultToken, argv.vaultPath, argv.DEBUG_MODE).then(config => {
+            loadSecretsIntoEnv(argv.vaultUrl, argv.vaultToken, argv.vaultPath, argv.debugMode).then(config => {
                 resolve(config);
             }, error => {
                 logger.error("Unable to load secrets from vault");
@@ -39,11 +39,16 @@ module.exports.bootstrapConfiguration = function (app) {
  * @param {string} vaultUrl - The URL of the Vault server.
  * @param {string} vaultToken - The token for authenticating with Vault.
  * @param {string} vaultPath - The path in Vault where secrets are stored.
+ * @param isDebugMode - A flag indicating whether debug mode is enabled.
  * @returns {Promise} - A promise that resolves with the configuration or rejects with an error.
  */
 let loadSecretsIntoEnv = function (vaultUrl, vaultToken, vaultPath, isDebugMode) {
     return new Promise(function (resolve, reject) {
         let vaultClient = require("node-vault-client");
+        console.log('[APP-CFG] - Vault token load:: OK');
+        if(isDebugMode) {
+            console.log(`[APP-CFG] - Vault token value:: ${vaultToken}`);
+        }
 
         vaultClient = vaultClient.boot('main', {
             api: {url: vaultUrl},
