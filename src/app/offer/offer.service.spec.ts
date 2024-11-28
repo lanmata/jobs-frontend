@@ -8,6 +8,7 @@ import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
 describe('OfferService', () => {
     let service: OfferService;
     let httpMock: HttpTestingController;
+    const sessionTokenBkd = 'IZUW4ZDMMF3SAY3IMFZGCY3UMVZGS43UNFRXGIDDN5WXA4TFONZWS33OEBZGK4DMNFRWC5DJN5XCAZDFMNVSA2TVNVYGS3THEBZWG2LFNZRWK4ZMEB2GS3LFEBRW63LQNRSXQLRA'
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -29,7 +30,7 @@ describe('OfferService', () => {
             {id: 2, title: 'Offer 2'}
         ];
 
-        service.getOffers().subscribe(offers => {
+        service.getOffers(sessionTokenBkd).subscribe(offers => {
             expect(offers.length).toBe(2);
             expect(offers).toEqual(mockOffers);
         });
@@ -40,7 +41,7 @@ describe('OfferService', () => {
     });
 
     it('should handle error when fetching offers fails', () => {
-        service.getOffers().subscribe(
+        service.getOffers(sessionTokenBkd).subscribe(
             () => fail('Should have failed with 404 error'),
             (error: any) => {
                 expect(error.status).toEqual(404);
