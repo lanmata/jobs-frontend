@@ -4,9 +4,10 @@ export interface AppState {
 
 export const initialState: AppState = {
   sharedData: {logged: false, userAuth: {
-      alias: '',
-      fullName: ""
-    }}
+          alias: '',
+          fullName: "",
+          sessionTokenBkd: ""
+      }}
 };
 
 export class SharedData {
@@ -17,4 +18,5 @@ export class SharedData {
 export class UserAuth {
   alias!: string;
   fullName!: string;
+  sessionTokenBkd!: string;
 }

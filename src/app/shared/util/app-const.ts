@@ -4,7 +4,23 @@ export class AppConst {
     public static readonly STATUS_TYPE = {
         ENABLE_STATUS: {key: 'E', value: 'ENABLED'},
         DISABLE_STATUS: {key: 'D', value: 'DISABLED'}
-    }
+    };
+
+    public static readonly COMMONS_FIELDS = {
+        MINLENGTH: 'minlength',
+        MAXLENGTH: 'maxlength',
+        REQUIRED: 'required',
+        ALIAS: 'alias',
+        PASSWORD: 'password'
+    };
+
+    public static readonly STATUS_CODE = {
+        BAD_REQUEST: {code: 400, message: 'Bad Request'},
+        UNAUTHORIZED: {code: 401, message: 'Unauthorized'},
+        FORBIDDEN: {code: 403, message: 'Forbidden'},
+        NOT_FOUND: {code: 404, message: 'Not Found'},
+        SUCCESS: {code:200, message: ['Success', 'OK']},
+    };
 
     public static readonly JOBS_NAVIGATOR = {
         JOB_EDITOR_PATH: 'job-editor',
@@ -48,7 +64,7 @@ export class AppConst {
         NEW_TERM_PATH: "term/new-term",
         LOGIN_PATH: "login"
 
-    }
+    };
 
     public static readonly HTTP_OPTIONS = {
         headers: new HttpHeaders({'Content-Type': 'application/json'})
