@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {ServiceTemplate} from "@shared/services/service-template";
-import {HTTP_OPTIONS, JOB_BACKEND_SERVICE_BASE_URL} from "@shared/app.const";
+import {HTTP_OPTIONS, HTTP_OPTIONS_TOKEN, JOB_BACKEND_SERVICE_BASE_URL} from "@shared/app.const";
 import { HttpClient } from "@angular/common/http";
 import {Observable} from "rxjs";
 import {catchError} from "rxjs/operators";
@@ -44,8 +44,8 @@ export class OfferService extends ServiceTemplate {
    *
    * @returns An Observable that emits the response from the backend service.
    */
-  getOffers(): Observable<any> {
-    return this.httpClient.get<Offer>(`${this.CONTEXT_PATH}/collection`, HTTP_OPTIONS)
+  getOffers(sessionTokenBkd: string): Observable<any> {
+    return this.httpClient.get<Offer>(`${this.CONTEXT_PATH}/collection`, HTTP_OPTIONS_TOKEN(sessionTokenBkd))
       .pipe(catchError(this.handlerError));
   }
 
@@ -73,7 +73,7 @@ export class OfferService extends ServiceTemplate {
    * @returns An Observable that emits the response from the backend service.
    */
   getOffer(offerId: string): Observable<any> {
-    return this.httpClient.get<Offer>(`${this.CONTEXT_PATH}?jobOfferId=${offerId}`, HTTP_OPTIONS)
+    return this.httpClient.get<Offer>(`${this.CONTEXT_PATH}?jobOfferId=${offerId}`)
       .pipe(catchError(this.handlerError));
   }
 

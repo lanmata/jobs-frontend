@@ -16,6 +16,16 @@ export const HTTP_OPTIONS_STANDARD = {
     'responseType': 'arraybuffer'
   })
 };
+
+export const HTTP_OPTIONS_TOKEN = function (token: string) {
+  return {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'session-token-bkd': token,
+      'Access-Control-Allow-Origin': '*'
+    })
+  };
+}
 // tslint:disable-next-line:no-namespace
 export namespace AppConstants {
 }

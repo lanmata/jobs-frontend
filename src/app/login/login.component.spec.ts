@@ -141,7 +141,7 @@ describe('LoginComponent', () => {
         component.loginForm.controls['password'].setValue('validPassword123');
         component.loginValid;
         spyOn(mockLoginService, 'getToken').and.returnValue(of({token: 'eyJhbGciOiJIUzI1NiJ9.eyJmaXJzdG5hbWUiOiJMdWlzIiwicm9sZXMiOiJbMWI2ZDc3ZmUtYmVhZC00YThhLWE2NjktOGIxOTdlOTJmOWRjLCA2NmRjNTQyOS1iOGIzLTRiMTEtYmViYS0zYmM3YjZiZmZlYWJdIiwidHlwZSI6InNlc3Npb24tdG9rZW4iLCJpYXQiOjE3MzIxNzc2MDgsImp0aSI6IjRjZjQwMGI0LWQyMzQtNDVjMC1hYzFiLWU5MTVlODIzY2E2ZCIsImxhc3RuYW1lIjoiTWF0YSIsInN1YiI6ImQ4ZTk4NWI2LWJiYmItNGNkYS04NGYxLTgxYjhhM2I2OGEyZiIsImV4cCI6MTczMjE3NzkwOH0.OgdMCUclI8Xl4eToHU4BrZIfipx0RbHOUEk40EzO2b4'}));
-        component.signin();
+        component.signIn();
         expect(mockRouter.navigate).toHaveBeenCalledWith([AppConst.JOBS_NAVIGATOR.OFFER_PATH]);
     });
 
