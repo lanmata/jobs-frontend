@@ -31,56 +31,105 @@ import {JwtPipe} from '@app/shared/services/jwt.pipe';
 })
 export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
 
-    /** Loading service */
+    /**
+     * Loading service
+     * @private
+     */
     protected loader: LoadingService = inject(LoadingService);
-
+    /**
+     * Login service
+     * @private
+     */
     private readonly loginService = inject(LoginService);
-
+    /**
+     * Alert service
+     * @private
+     */
     private readonly alertService: AlertService = inject(AlertService);
-
-    /** Flag to indicate if an error was found */
+    /**
+     * Flag to indicate if an error was found
+     * @private
+     */
     public isErrorFound = false;
-
-    /** Function to log information */
+    /**
+     * Function to log information
+     * @private
+     */
     protected logInfo: (...arg: any) => void;
-
-    /** Function to log errors */
+    /**
+     * Function to log errors
+     * @private
+     */
     protected logError: (...arg: any) => void;
-
-    /** Subject to handle component destruction */
+    /**
+     * Subject to handle component destruction
+     * @private
+     */
     protected subject$: Subject<void> = new Subject<void>();
-
-    /** Change detector reference */
+    /**
+     * Change detector reference
+     * @private
+     */
     protected changeDetectorRefs = inject(ChangeDetectorRef);
-
-    /** Router instance */
+    /**
+     * Router instance
+     * @private
+     */
     private readonly router: Router = inject(Router);
-
-    /** Application constants */
+    /**
+     * Application constants
+     * @private
+     */
     protected readonly appConst = AppConst;
-
-    /** Form builder */
+    /**
+     * Form builder
+     * @private
+     */
     private readonly formBuilder = inject(FormBuilder);
-
+    /**
+     * Jwt pipe
+     * @private
+     */
     private readonly jwtPipe = inject(JwtPipe);
-
-    /** Observable for shared data */
+    /**
+     * Shared data observable
+     * @private
+     */
     sharedData$: Observable<SharedData>;
-
-    /** Current shared data */
+    /**
+     * Current shared data
+     * @private
+     */
     sharedDataCurrent: SharedData = new SharedData();
-
-    /** Flag to indicate if the form has been submitted */
+    /**
+     * Shared data observable
+     * @private
+     */
     submitted = false;
-
-    /** Flag to indicate if loading is in progress */
+    /**
+     * Shared data observable
+     * @private
+     */
     loading = false;
-
-    /** Login form group */
+    /**
+     * Shared data observable
+     * @private
+     */
     loginForm: FormGroup;
-
+    /**
+     * Shared data observable
+     * @private
+     */
     private readonly _snackBar: MatSnackBar = inject(MatSnackBar);
+    /**
+     * Horizontal position for the snack bar.
+     * @private
+     */
     private readonly horizontalPosition: MatSnackBarHorizontalPosition = 'end';
+    /**
+     * Vertical position for the snack bar.
+     * @private
+     */
     private readonly verticalPosition: MatSnackBarVerticalPosition = 'top';
 
     /**
@@ -98,32 +147,40 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
         this.sharedData$ = store.select(state => state.app.sharedData);
     }
 
-    /** Lifecycle hook that is called after the component's view has been fully initialized */
+    /**
+     * Lifecycle hook that is called after a component's view has been fully initialized.
+     * @throws {Error} Method not implemented.
+     */
     ngAfterViewInit(): void {
         this.changeDetectorRefs.detectChanges();
     }
 
-    /** Lifecycle hook that is called when the component is destroyed */
+    /**
+     * Lifecycle hook that is called when the component is destroyed
+     * It completes the subject$ observable to avoid memory leaks.
+     */
     ngOnDestroy(): void {
         this.subject$.next();
         this.subject$.complete();
     }
 
-    /** Lifecycle hook that is called when the component is initialized */
+    /**
+     * Lifecycle hook that is called when the component is initialized
+     * It loads shared data and shows notifications.
+     */
     ngOnInit(): void {
         this.loader.show();
-        this.sharedData$.subscribe(data => {
-            this.sharedDataCurrent = data;
-        });
-        const sharedDataUpdated = {...this.sharedDataCurrent, logged: false};
-        this.store.dispatch(setSharedData({data: sharedDataUpdated}));
+        this.loadSharedData();
         this.notification();
     }
 
-    /** Getter for form controls */
+    /**
+     * Getter for form controls
+     * @returns The form controls
+     */
     get loginValid() {
-        let aliasValid = this.validate(this.loginForm.controls['alias']);
-        let passwordValid = this.validate(this.loginForm.controls['password']);
+        let aliasValid = this.validate(this.loginForm.controls[this.appConst.COMMONS_FIELDS.ALIAS]);
+        let passwordValid = this.validate(this.loginForm.controls[this.appConst.COMMONS_FIELDS.PASSWORD]);
         const isInvalid = aliasValid.invalid || passwordValid.invalid;
 
         return {
@@ -133,6 +190,26 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
         };
     }
 
+    /**
+     * Method to load shared data
+     * It subscribes to the shared data observable and updates the shared data in the store.
+     * It also sets the logged flag to false.
+     * @private
+     */
+    private loadSharedData() {
+        this.sharedData$.subscribe(data => {
+            this.sharedDataCurrent = data;
+        });
+        const sharedDataUpdated = {...this.sharedDataCurrent, logged: false};
+        this.store.dispatch(setSharedData({data: sharedDataUpdated}));
+    }
+
+    /**
+     * Method to validate form controls
+     * @param control - The form control to validate
+     * @returns The validation result
+     * @private
+     */
     private validate(control: any): any {
         let deep = {
             required: false,
@@ -141,14 +218,14 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
             invalid: false
         };
         if (control?.errors) {
-            if (control.errors['required']) {
-                deep.required = control.errors['required'];
+            if (control.errors[this.appConst.COMMONS_FIELDS.REQUIRED]) {
+                deep.required = control.errors[this.appConst.COMMONS_FIELDS.REQUIRED];
             }
-            if (control.errors['minlength']) {
-                deep.minlength = control.errors['minlength'];
+            if (control.errors[this.appConst.COMMONS_FIELDS.MINLENGTH]) {
+                deep.minlength = control.errors[this.appConst.COMMONS_FIELDS.MINLENGTH];
             }
-            if (control.errors['maxlength']) {
-                deep.maxlength = control.errors['maxlength'];
+            if (control.errors[this.appConst.COMMONS_FIELDS.MAXLENGTH]) {
+                deep.maxlength = control.errors[this.appConst.COMMONS_FIELDS.MAXLENGTH];
             }
             if (deep.required || deep.minlength || deep.maxlength) {
                 deep.invalid = true;
@@ -160,11 +237,18 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
     /**
      * Validates the access credentials entered in the form.
      * If the form is invalid, the method will return early.
+     * If the form is valid, the method will call the signIn method.
+     * @public
+     * @returns void
+     * @throws {Error} Invalid form data
+     * @throws {Error} Error occurred while getting token
+     * @throws {Error} Invalid credentials
+     * @throws {Error} User not found
      */
     public validateAccess(): void {
         this.submitted = true;
         if (this.loginForm.valid) {
-            this.signin();
+            this.signIn();
         } else {
             this.isErrorFound = true;
             this.logError('Invalid form data');
@@ -173,38 +257,47 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
 
     /**
      * Signs in the user by updating the shared data and navigating to the offer path.
+     * If the login form is valid, the method will call the getToken method of the login service.
+     * If the login form is invalid, the method will return early.
+     * @public
+     * @returns void
+     * @throws {Error} Error occurred while getting token
+     * @throws {Error} Invalid credentials
+     * @throws {Error} User not found
      */
-    signin(): void {
+    signIn(): void {
         this.loader.show();
         if (this.loginForm.valid) {
-            const alias = this.loginForm.controls['alias'].value;
-            const password = this.loginForm.controls['password'].value;
+            const alias = this.loginForm.controls[this.appConst.COMMONS_FIELDS.ALIAS].value;
+            const password = this.loginForm.controls[this.appConst.COMMONS_FIELDS.PASSWORD].value;
             let userAuth = new UserAuth();
 
             this.loginService.getToken(alias, password).pipe(takeUntil(this.subject$))
                 .subscribe({
                     next: (response: any) => {
                         this.loader.hide?.();
+                        localStorage.setItem('backboneSessionToken', response.token);
                         const decodedToken =this.jwtPipe.transform(response.token);
                         if(decodedToken) {
                             userAuth = {
                                 ...userAuth,
                                 alias: alias,
-                                fullName: `${decodedToken.firstname} ${decodedToken.lastname}`.trim()
+                                fullName: `${decodedToken.firstname} ${decodedToken.lastname}`.trim(),
+                                sessionTokenBkd: response.token
                             };
                             const sharedDataUpdated = {...this.sharedDataCurrent, logged: true, userAuth: userAuth};
                             this.store.dispatch(setSharedData({data: sharedDataUpdated}));
-                            this.router.navigate([AppConst.JOBS_NAVIGATOR.OFFER_PATH]);
+                            this.router.navigate([this.appConst.JOBS_NAVIGATOR.OFFER_PATH]);
                         }
                         this.loader.hide?.();
                     },
                     error: (error: any) => {
                         this.loader.hide?.();
                         this.isErrorFound = true;
-                        if (error.status === 401) {
+                        if (error.status === this.appConst.STATUS_CODE.UNAUTHORIZED) {
                             this.alertService.error('Invalid credentials', true);
                         }
-                        if (error.status === 404) {
+                        if (error.status === this.appConst.STATUS_CODE.NOT_FOUND) {
                             this.alertService.error('User not found', true);
                         }
                         this.logError(`Error occurred while getting token ${error.statusText}`);
@@ -217,10 +310,20 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
         }
     }
 
+    /**
+     * Shows a notification in the snack bar.
+     * It subscribes to the alert service and shows a notification in the snack bar based on the alert type.
+     * @public
+     * @returns void
+     * @throws {Error} Invalid alert type
+     * @throws {Error} Invalid alert text
+     * @throws {Error} Invalid alert duration
+     * @throws {Error} Invalid alert
+     */
     notification(): void {
         this.alertService.getAlert().pipe().subscribe((alert) => {
             if (alert) {
-                if (alert.type === 'success') {
+                if (alert.type === this.appConst.STATUS_CODE.SUCCESS.message[0] || alert.type === this.appConst.STATUS_CODE.SUCCESS.message[1]) {
                     this._snackBar.openFromComponent(NotifyComponent, {
                         horizontalPosition: this.horizontalPosition,
                         verticalPosition: this.verticalPosition,
@@ -234,6 +337,16 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
         });
     }
 
+    /**
+     * Shows a message in the snack bar.
+     * @public
+     * @param message
+     * @param duration
+     * @returns void
+     * @throws {Error} Invalid message
+     * @throws {Error} Invalid duration
+     * @throws {Error} Invalid snack bar
+     */
     message(message: string, duration: number): void {
         this._snackBar.open(message, '', {
             horizontalPosition: this.horizontalPosition,

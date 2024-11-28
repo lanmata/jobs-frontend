@@ -1,7 +1,7 @@
 import {Component, inject, ViewChild} from '@angular/core';
 import {AbstractComponent} from "@shared/components/abstract-component";
 import {OfferService} from "./offer.service";
-import {map, takeUntil} from "rxjs";
+import {map, Observable, takeUntil} from "rxjs";
 import {MaterialModule} from "@shared/material/material.module";
 import {TranslateModule} from "@ngx-translate/core";
 import {LoadingService} from "@shared/services/loading.service";
@@ -13,6 +13,8 @@ import {RouterLink, RouterLinkActive} from "@angular/router";
 import {ReportService} from "@shared/services/report.service";
 import {FormatUtil} from "@shared/util/format.util";
 import {FileSaverService} from "ngx-filesaver";
+import {AppState, SharedData} from "@app/state/app.state";
+import {Store} from "@ngrx/store";
 
 /**
  * OfferComponent is a component that handles the offers in the application.
@@ -76,12 +78,22 @@ export class OfferComponent extends AbstractComponent {
      */
     private rowSelected: any;
 
+    /** Observable for shared data */
+    sharedData$: Observable<SharedData>;
+
+    /** Current shared data */
+    sharedDataCurrent: SharedData = new SharedData();
+
     /**
      * Constructor for the OfferComponent.
      * It calls the constructor of the parent class.
      */
-    constructor() {
+    constructor(private readonly store: Store<{ app: AppState }>) {
         super();
+        this.sharedData$ = store.select(state => state.app.sharedData);
+        this.sharedData$.pipe(takeUntil(this.subject$)).subscribe(data => {
+            this.sharedDataCurrent = data;
+        });
     }
 
     /**
@@ -118,7 +130,7 @@ export class OfferComponent extends AbstractComponent {
      * If an error occurs while fetching the offers, it logs the error.
      */
     private getOffers(): void {
-        this.offerService.getOffers().pipe(takeUntil(this.subject$))
+        this.offerService.getOffers(this.sharedDataCurrent.userAuth.sessionTokenBkd).pipe(takeUntil(this.subject$))
             .subscribe({
                 next: (response: any) => this.dataProcess(response.list, this.sort, this.paginator),
                 error: (errorResponse) => {

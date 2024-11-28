@@ -35,10 +35,8 @@ app.set('port', port);
 appConfig.bootstrapConfiguration(app).then(
   config => {
     appConfig.createJobsProxyConfig();
-    appConfig.createBackboneProxyConfig();
 
     app.use("/", require("./server/routes/jobs-backend.routes"));
-    app.use("/", require("./server/routes/backbone.routes"));
     app.use(express.static("dist/jobs-frontend/browser"));
     app.get("/*", (req, res) => {
       res.sendFile(path.join(__dirname, "dist/jobs-frontend/browser", "index.html"));
