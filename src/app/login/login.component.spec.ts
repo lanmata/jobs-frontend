@@ -13,6 +13,7 @@ import {DebugElement} from "@angular/core";
 import {JwtPipe} from "@shared/services/jwt.pipe";
 import {LoginService} from "@app/login/login.service";
 import {AppConst} from "@shared/util/app-const";
+import { NotifyComponent } from '@app/shared/components/notify-component/notify.component';
 
 describe('LoginComponent', () => {
     let component: LoginComponent;
@@ -112,7 +113,8 @@ describe('LoginComponent', () => {
         component.sharedDataCurrent = {
             logged: false, userAuth: {
                 alias: 'testAlias',
-                fullName: ''
+                fullName: '',
+                sessionTokenBkd: ''
             }
         };
         expect(mockStore.dispatch).toHaveBeenCalledWith(jasmine.objectContaining({
@@ -223,5 +225,85 @@ describe('LoginComponent', () => {
         console.log(`password validate :: ${component.loginValid.password.invalid}`);
         expect(component.loginValid.password.invalid).toBeTrue();
         expect(component.loginValid.invalid).toBeTrue();
+    });
+
+    it('should show a message in the snack bar with default duration if duration is zero', () => {
+        const message = 'Test message';
+        const duration = 0;
+        spyOn(component['_snackBar'], 'open');
+        component.message(message, duration);
+        expect(component['_snackBar'].open).toHaveBeenCalledWith(message, '', {
+            horizontalPosition: component['horizontalPosition'],
+            verticalPosition: component['verticalPosition'],
+            duration: 0
+        });
+    });
+
+    it('should show a message in the snack bar with default duration if duration is zero', () => {
+        const message = 'Test message';
+        const duration = 0;
+        spyOn(component['_snackBar'], 'open');
+        component.message(message, duration);
+        expect(component['_snackBar'].open).toHaveBeenCalledWith(message, '', {
+            horizontalPosition: component['horizontalPosition'],
+            verticalPosition: component['verticalPosition'],
+            duration: 0
+        });
+    });
+
+    it('should show a message in the snack bar with negative duration', () => {
+        const message = 'Test message';
+        const duration = -1;
+        spyOn(component['_snackBar'], 'open');
+        component.notification();
+        component.message(message, duration);
+        expect(component['_snackBar'].open).toHaveBeenCalledWith(message, '', {
+            horizontalPosition: component['horizontalPosition'],
+            verticalPosition: component['verticalPosition'],
+            duration: -3000
+        });
+    });
+
+    it('should show an error message in the snack bar when alert type is error', () => {
+        const alert = {type: 'error', text: 'Error message', duration: 5};
+        spyOn(component['_snackBar'], 'open');
+        spyOn(component['alertService'], 'getAlert').and.returnValue(of(alert));
+        component.notification();
+        expect(component['_snackBar'].open).toHaveBeenCalledWith('Error message', '', {
+            horizontalPosition: component['horizontalPosition'],
+            verticalPosition: component['verticalPosition'],
+            duration: 15000
+        });
+    });
+
+    it('should show a warning message in the snack bar when alert type is warning', () => {
+        const alert = {type: 'warning', text: 'Warning message', duration: 4};
+        spyOn(component['_snackBar'], 'open');
+        spyOn(component['alertService'], 'getAlert').and.returnValue(of(alert));
+        component.notification();
+        expect(component['_snackBar'].open).toHaveBeenCalledWith('Warning message', '', {
+            horizontalPosition: component['horizontalPosition'],
+            verticalPosition: component['verticalPosition'],
+            duration: 12000
+        });
+    });
+
+    it('should show an info message in the snack bar when alert type is info', () => {
+        const alert = {type: 'info', text: 'Info message', duration: 2};
+        spyOn(component['_snackBar'], 'open');
+        spyOn(component['alertService'], 'getAlert').and.returnValue(of(alert));
+        component.notification();
+        expect(component['_snackBar'].open).toHaveBeenCalledWith('Info message', '', {
+            horizontalPosition: component['horizontalPosition'],
+            verticalPosition: component['verticalPosition'],
+            duration: 6000
+        });
+    });
+
+    it('should not show any message when alert is null', () => {
+        spyOn(component['_snackBar'], 'open');
+        spyOn(component['alertService'], 'getAlert').and.returnValue(of(null));
+        component.notification();
+        expect(component['_snackBar'].open).not.toHaveBeenCalled();
     });
 });

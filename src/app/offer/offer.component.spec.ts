@@ -12,6 +12,7 @@ import {HttpClient, provideHttpClient, withInterceptorsFromDi} from "@angular/co
 import {UNIT_TEST_MOCK_GET_STATUS_RESPONSE} from "../status/status.model";
 import {UNIT_TEST_MOCK_ALL_DATA, UNIT_TEST_MOCK_GET_OFFER_RESPONSE} from "./offer.model";
 import {DatePipe} from "@angular/common";
+import {Store} from "@ngrx/store";
 
 
 describe('OfferComponent', () => {
@@ -21,8 +22,16 @@ describe('OfferComponent', () => {
     let debugElement: DebugElement;
     let mockActivatedRoute: ActivatedRoute;
     let mockRouter: Router;
+    let mockStore: any;
 
     beforeEach(async () => {
+        mockStore = {
+            select: jasmine.createSpy().and.returnValue(of({
+                logged: false,
+                userAuth: {alias: 'testAlias', fullName: 'Pepe Perez'}
+            })),
+            dispatch: jasmine.createSpy()
+        };
         mockRouter = {
             navigate: jasmine.createSpy('navigate'),
             events: of({}) // Mock the events property
@@ -47,6 +56,7 @@ describe('OfferComponent', () => {
                 {provide: ActivatedRoute, useValue: mockActivatedRoute},
                 {provide: HttpClient, useValue: jasmine.createSpyObj('httpClient', ['get', 'post'])},
                 {provide: DatePipe, useValue: jasmine.createSpyObj('DatePipe', ['transform'])},
+                {provide: Store, useValue: mockStore},
                 provideHttpClient(withInterceptorsFromDi()),
                 provideHttpClientTesting(),
                 {provide: Router, useValue: mockRouter}
