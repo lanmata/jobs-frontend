@@ -1,5 +1,5 @@
 import {HttpTestingController, provideHttpClientTesting} from '@angular/common/http/testing';
-import {BACKBONE_SERVICE_BASE_URL} from '@shared/app.const';
+import {BACKBONE_SERVICE_BASE_URL, JOB_BACKEND_SERVICE_BASE_URL} from '@shared/app.const';
 import {LoginService} from './login.service';
 import {TestBed} from "@angular/core/testing";
 import {provideHttpClient, withInterceptorsFromDi} from "@angular/common/http";
@@ -28,7 +28,7 @@ describe('LoginService', () => {
             expect(response).toEqual(mockResponse);
         });
 
-        const req = httpMock.expectOne(`${BACKBONE_SERVICE_BASE_URL}/session`);
+        const req = httpMock.expectOne(`${JOB_BACKEND_SERVICE_BASE_URL}/auth/token`);
         expect(req.request.method).toBe('POST');
         expect(req.request.body).toEqual({alias: 'testUser', password: 'testPassword'});
         req.flush(mockResponse);
@@ -42,7 +42,7 @@ describe('LoginService', () => {
             }
         );
 
-        const req = httpMock.expectOne(`${BACKBONE_SERVICE_BASE_URL}/session`);
+        const req = httpMock.expectOne(`${JOB_BACKEND_SERVICE_BASE_URL}/auth/token`);
         req.flush('Invalid credentials', {status: 401, statusText: 'Unauthorized'});
     });
 });
