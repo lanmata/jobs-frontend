@@ -15,6 +15,8 @@ import {FormatUtil} from "@shared/util/format.util";
 import {FileSaverService} from "ngx-filesaver";
 import {AppState, SharedData} from "@app/state/app.state";
 import {Store} from "@ngrx/store";
+import {saveAs} from "file-saver";
+import {HttpResponse} from "@angular/common/http";
 
 /**
  * OfferComponent is a component that handles the offers in the application.
@@ -190,25 +192,31 @@ export class OfferComponent extends AbstractComponent {
             this.reportService.getReports(startDate, endDate).pipe(takeUntil(this.subject$))
                 .pipe(
                     map(response => {
-                        if (response) {
-                            const filename = 'job-offers-report.xlsx';
-                            return {
-                                filename: filename,
-                                data: response as Blob
-                            };
+                        if(response && response.body){
+                            saveAs(response.body, this.getFilename(response, {filename: 'job_offers', extension: 'xlsx'}))
                         }
-                        console.log('No response');
-                        return null;
-                    })).subscribe(
-                (response: any) => {
-                    if (response) {
-                        let blob = new Blob([response.data], {type: 'application/octet-stream'});
-                        this.fileSaverService.save(blob, response.filename);
-                        console.log('Exporting to excel');
-                    }
-                }
-            );
+                    })
+                );
         }
+    }
+
+    /**
+     * Downloads a file from a response.
+     * @param response The response containing the file.
+     * @param options Options for downloading the file.
+     */
+    private getFilename(response: HttpResponse<Blob>, options: DownloadOptions): string {
+        let filename = options.filename || 'file';
+        const header = response.headers.get('Content-Disposition');
+        const filenameRegex = /filename[^;=\n]*=(([‘"]).*?\2|[^;\n]*)/;
+        if(header){
+            const matches = filenameRegex.exec(header);
+            if (matches != null && matches[1]) {
+                filename = matches[1].replace(/[‘"]/g, '');
+            }
+        }
+
+        return filename;
     }
 
     /**
@@ -237,4 +245,9 @@ export class OfferComponent extends AbstractComponent {
         console.log('Row selected', row);
         this.rowSelected = row;
     }
+}
+
+interface DownloadOptions {
+    filename?: string;
+    extension?: string;
 }

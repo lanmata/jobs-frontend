@@ -185,6 +185,10 @@ exports.proxyApi = async (req, res, next) => {
         delete request.headers['transfer-encoding'];
         response = request.data;
         res.set(request.headers);
+        // Set headers from the request to the response
+        Object.keys(req.headers).forEach(header => {
+            res.set(header, req.headers[header]);
+        });
     } catch (error) {
         if (error.response != null) {
             response = error.response.data;
@@ -206,13 +210,18 @@ exports.proxyApi = async (req, res, next) => {
  * @param {string} defaultContentType - The default Content-Type header value.
  * @returns {Object} - The constructed headers.
  */
-const getBasicHeader = function (req, jobsToken, backboneSession, defaultAccept, defaultContentType) {
+const   getBasicHeader = function (req, jobsToken, backboneSession, defaultAccept, defaultContentType) {
     let headers = {};
     headers[FID_LOGGER_TRACKING_ID] = req.header(FID_LOGGER_TRACKING_ID) == null ? uuidv4() : req.header(FID_LOGGER_TRACKING_ID);
     headers[FID_USER_ID] = req.header(FID_USER_ID) == null ? "anonymous" : req.header(FID_USER_ID);
     headers[AUTHORIZATION] = BEARER+jobsToken;
     headers[ACCEPT] = req.header(ACCEPT) == null ? defaultAccept : req.header(ACCEPT);
-    headers[CONTENT_TYPE] = req.header(CONTENT_TYPE) == null ? defaultContentType : req.header(CONTENT_TYPE);
+    if(req.url.toString().indexOf('/api/v1/report') !== -1) {
+        headers[CONTENT_TYPE] = 'application/octet-stream';
+    } else {
+        headers[CONTENT_TYPE] = req.header(CONTENT_TYPE) == null ? defaultContentType : req.header(CONTENT_TYPE);
+
+    }
 
     if(req.header(SESSION_TOKEN_BKD) !== null) {
         headers[SESSION_TOKEN_BKD] = req.header(SESSION_TOKEN_BKD);
@@ -242,6 +251,6 @@ let createRequestOption = function (method, url, body, headers) {
         headers: headers,
         httpAgent: keepaliveAgent,
         httpsAgent: keepaliveHttpsAgent,
-        responseType: headers[ACCEPT] === CONTENT_TYPE_DEFAULT ? 'arraybuffer' : 'json'
+        responseType: headers[ACCEPT] === CONTENT_TYPE_DEFAULT ? 'blob' : 'json'
     }
 }
