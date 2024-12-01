@@ -6,7 +6,8 @@ describe('App Actions', () => {
         const data: SharedData = {logged: true, userAuth: {
                 alias: 'testAlias',
                 fullName: '',
-                sessionTokenBkd: ''
+                sessionTokenBkd: '',
+                sessionToken: ''
             }};
         const action = setSharedData({data});
         expect(action.type).toBe('[Shared] Set Data');

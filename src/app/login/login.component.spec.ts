@@ -114,7 +114,8 @@ describe('LoginComponent', () => {
             logged: false, userAuth: {
                 alias: 'testAlias',
                 fullName: '',
-                sessionTokenBkd: ''
+                sessionTokenBkd: '',
+                sessionToken: ''
             }
         };
         expect(mockStore.dispatch).toHaveBeenCalledWith(jasmine.objectContaining({
