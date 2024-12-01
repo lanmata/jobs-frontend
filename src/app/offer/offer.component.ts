@@ -205,7 +205,7 @@ export class OfferComponent extends AbstractComponent {
      * @param response The response containing the file.
      * @param options Options for downloading the file.
      */
-    private getFilename(response: HttpResponse<ArrayBuffer>, options: DownloadOptions): string {
+    private getFilename(response: any, options: DownloadOptions): string {
         let filename = options.filename || 'file';
         const header = response.headers.get('Content-Disposition');
         const filenameRegex = /filename[^;=\n]*=(([‘"]).*?\2|[^;\n]*)/;
