@@ -1,7 +1,7 @@
 import {Component, inject, ViewChild} from '@angular/core';
 import {AbstractComponent} from "@shared/components/abstract-component";
 import {OfferService} from "./offer.service";
-import {map, Observable, takeUntil} from "rxjs";
+import {Observable, takeUntil} from "rxjs";
 import {MaterialModule} from "@shared/material/material.module";
 import {TranslateModule} from "@ngx-translate/core";
 import {LoadingService} from "@shared/services/loading.service";
@@ -12,9 +12,10 @@ import {FormsModule} from "@angular/forms";
 import {RouterLink, RouterLinkActive} from "@angular/router";
 import {ReportService} from "@shared/services/report.service";
 import {FormatUtil} from "@shared/util/format.util";
-import {FileSaverService} from "ngx-filesaver";
 import {AppState, SharedData} from "@app/state/app.state";
 import {Store} from "@ngrx/store";
+import {saveAs} from "file-saver";
+import {HttpResponse} from "@angular/common/http";
 
 /**
  * OfferComponent is a component that handles the offers in the application.
@@ -51,10 +52,6 @@ export class OfferComponent extends AbstractComponent {
      * Service for generating reports.
      */
     private readonly reportService: ReportService = inject(ReportService);
-    /**
-     * Service for saving files.
-     */
-    private readonly fileSaverService: FileSaverService = inject(FileSaverService);
     /**
      * Date pipe for formatting dates.
      */
@@ -188,27 +185,38 @@ export class OfferComponent extends AbstractComponent {
         if (startDate && endDate) {
 
             this.reportService.getReports(startDate, endDate).pipe(takeUntil(this.subject$))
-                .pipe(
-                    map(response => {
-                        if (response) {
-                            const filename = 'job-offers-report.xlsx';
-                            return {
-                                filename: filename,
-                                data: response as Blob
-                            };
+                .subscribe(
+                    (response) => {
+                        if (response && response.body) {
+                                const base64Content = response.body.content;
+                                const decodedContent = atob(base64Content);
+                                const byteArray = new Uint8Array(decodedContent.split('').map(char => char.charCodeAt(0)));
+                                const blob = new Blob([byteArray], { type: 'application/octet-stream' });
+                                const filename = this.getFilename(response, { filename: 'job_offers', extension: 'xlsx' });
+                                saveAs(blob, filename);
                         }
-                        console.log('No response');
-                        return null;
-                    })).subscribe(
-                (response: any) => {
-                    if (response) {
-                        let blob = new Blob([response.data], {type: 'application/octet-stream'});
-                        this.fileSaverService.save(blob, response.filename);
-                        console.log('Exporting to excel');
                     }
-                }
-            );
+                );
         }
+    }
+
+    /**
+     * Downloads a file from a response.
+     * @param response The response containing the file.
+     * @param options Options for downloading the file.
+     */
+    private getFilename(response: any, options: DownloadOptions): string {
+        let filename = options.filename || 'file';
+        const header = response.headers.get('Content-Disposition');
+        const filenameRegex = /filename[^;=\n]*=(([‘"]).*?\2|[^;\n]*)/;
+        if (header) {
+            const matches = filenameRegex.exec(header);
+            if (matches != null && matches[1]) {
+                filename = matches[1].replace(/[‘"]/g, '');
+            }
+        }
+
+        return filename;
     }
 
     /**
@@ -237,4 +245,9 @@ export class OfferComponent extends AbstractComponent {
         console.log('Row selected', row);
         this.rowSelected = row;
     }
+}
+
+interface DownloadOptions {
+    filename?: string;
+    extension?: string;
 }

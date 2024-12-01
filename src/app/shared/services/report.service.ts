@@ -42,7 +42,7 @@ export class ReportService extends ServiceTemplate {
    * @returns An Observable that emits the response from the backend service.
    */
   getReports(startDate: string, endDate: string): Observable<any> {
-    return this.httpClient.get(`${this.CONTEXT_PATH}?startDate=${startDate}&endDate=${endDate}`, {...HTTP_OPTIONS_STANDARD, responseType: 'arraybuffer'})
+    return this.httpClient.get(`${this.CONTEXT_PATH}?startDate=${startDate}&endDate=${endDate}`, {... HTTP_OPTIONS_STANDARD, observe: 'response'})
       .pipe(catchError(this.handlerError));
   }
 }
