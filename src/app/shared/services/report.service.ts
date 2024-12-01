@@ -1,7 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import {ServiceTemplate} from "@shared/services/service-template";
-import {HTTP_OPTIONS_STANDARD, HTTP_OPTIONS_STANDARD_FILE, JOB_BACKEND_SERVICE_BASE_URL} from "@shared/app.const";
+import {HTTP_OPTIONS_STANDARD, JOB_BACKEND_SERVICE_BASE_URL} from "@shared/app.const";
 import {catchError} from "rxjs/operators";
 import {Observable} from "rxjs";
 
@@ -42,7 +42,7 @@ export class ReportService extends ServiceTemplate {
    * @returns An Observable that emits the response from the backend service.
    */
   getReports(startDate: string, endDate: string): Observable<any> {
-    return this.httpClient.get(`${this.CONTEXT_PATH}?startDate=${startDate}&endDate=${endDate}`, {... HTTP_OPTIONS_STANDARD_FILE, observe: 'response', responseType: 'blob'})
+    return this.httpClient.get(`${this.CONTEXT_PATH}?startDate=${startDate}&endDate=${endDate}`, {... HTTP_OPTIONS_STANDARD, observe: 'response'})
       .pipe(catchError(this.handlerError));
   }
 }
