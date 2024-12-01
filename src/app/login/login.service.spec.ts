@@ -23,9 +23,9 @@ describe('LoginService', () => {
     });
 
     it('should retrieve token successfully', () => {
-        const mockResponse = {token: 'mock.jwt.token'};
+        const mockResponse = {body: {token: 'mock.jwt.token'}};
         service.getToken('testUser', 'testPassword').subscribe(response => {
-            expect(response).toEqual(mockResponse);
+            expect(response.body).toEqual(mockResponse);
         });
 
         const req = httpMock.expectOne(`${JOB_BACKEND_SERVICE_BASE_URL}/auth/token`);

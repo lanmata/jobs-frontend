@@ -33,7 +33,8 @@ const BACKBONE_OAUTH_USER_ALIAS = process.env.BACKBONE_AUTH_USER_ALIAS;
 const BACKBONE_OAUTH_USER_PASSWORD = process.env.BACKBONE_AUTH_USER_PASSWORD;
 
 const Agent = require('agentkeepalive');
-const {AUTHORIZATION, BEARER, SESSION_TOKEN_BKD, FID_LOGGER_TRACKING_ID, CONTENT_TYPE, FID_USER_ID,
+const {
+    AUTHORIZATION, BEARER, SESSION_TOKEN_BKD, FID_LOGGER_TRACKING_ID, CONTENT_TYPE, FID_USER_ID,
     CONTENT_TYPE_DEFAULT, ACCEPT
 } = require("../config/constants.util");
 const HttpsAgent = require('agentkeepalive').HttpsAgent;
@@ -51,6 +52,7 @@ const jobsOauthClientConfig = {
     username: OAUTH_USER_ALIAS,
     password: OAUTH_USER_PASSWORD
 };
+
 /**
  * Backbone OAuth client configuration.
  * @type {{password: string, clientId: string, tokenUrl: string, clientSecret: string, authenticationType: string, grantType: string, username: string}}
@@ -135,7 +137,7 @@ let getBackboneClient = function () {
         url: backboneApiURL
     });
     return backboneClient;
-}
+};
 
 /**
  * Retrieves the OAuth client instance, initializing it if necessary.
@@ -146,7 +148,7 @@ let getOauthClient = function (oauthClientConfig) {
     let oauthClient;
     oauthClient = oauthclient.getOAuthClient(oauthClientConfig);
     return oauthClient;
-}
+};
 
 /**
  * Retrieves the session token for the backbone service.
@@ -161,7 +163,7 @@ const backboneSessionToken = async (req) => {
         backboneSession = await getBackboneClient().getToken(req.body.alias, req.body.password, backboneToken);
     }
     return backboneSession?.token;
-}
+};
 
 /**
  * Proxies API requests to the appropriate backend service.
@@ -170,27 +172,33 @@ const backboneSessionToken = async (req) => {
  * @param {Object} res - The response object.
  * @param {Function} next - The next middleware function.
  */
-exports.proxyApi = async (req, res, next) => {
+const proxyApi = async (req, res, next) => {
     let response = null;
     try {
         const apiURL = getApiEndpoint(req.url);
         let jobsToken = await getOauthClient(jobsOauthClientConfig).getBearerToken();
         let backboneSession = await backboneSessionToken(req);
-        let headers = getBasicHeader(req, jobsToken, backboneSession, constants.CONTENT_TYPE_DEFAULT, constants.CONTENT_TYPE_DEFAULT);
+        let headers = getRequestHeader(req, jobsToken, backboneSession, constants.CONTENT_TYPE_DEFAULT, constants.CONTENT_TYPE_DEFAULT);
         // Trace
         logger.info(`[Jobs] Proxying request to ${apiURL}`);
         let httpOptions = createRequestOption(req.method, apiURL, req.body, headers);
-        let request = await axios(httpOptions);
+        let axiosResponse = await axios(httpOptions);
 
-        delete request.headers['transfer-encoding'];
-        response = request.data;
-        res.set(request.headers);
+        delete axiosResponse.headers['transfer-encoding'];
+        response = axiosResponse.data;
+        res.set(axiosResponse.headers);
+
+        // Include the session-token-bkd in the response headers
+        if (backboneSession && req.url === API_SERVICE_JOBS_SESSION_RELATIVE_PATH) {
+            res.set(SESSION_TOKEN_BKD, backboneSession);
+        }
     } catch (error) {
         if (error.response != null) {
             response = error.response.data;
             res.status(error.response.status);
         } else if (error.errors != null) {
             response = error;
+            res.status(500);
         }
     }
     res.send(response);
@@ -206,15 +214,28 @@ exports.proxyApi = async (req, res, next) => {
  * @param {string} defaultContentType - The default Content-Type header value.
  * @returns {Object} - The constructed headers.
  */
-const getBasicHeader = function (req, jobsToken, backboneSession, defaultAccept, defaultContentType) {
+const getRequestHeader = function (req, jobsToken, backboneSession, defaultAccept, defaultContentType) {
+    let headers = getBasicHeader(req, jobsToken, backboneSession, defaultAccept, defaultContentType);
+    headers[CONTENT_TYPE] = req.header(CONTENT_TYPE) == null ? defaultContentType : req.header(CONTENT_TYPE);
+    return headers;
+};
+
+/**
+ * Constructs the basic headers for the proxied request.
+ * @param req - The request object.
+ * @param jobsToken - The token for the jobs service.
+ * @param backboneSession - The session token for the backbone service.
+ * @param defaultAccept - The default Accept header value.
+ * @returns {{}} - The constructed headers.
+ */
+const getBasicHeader = function (req, jobsToken, backboneSession, defaultAccept) {
     let headers = {};
     headers[FID_LOGGER_TRACKING_ID] = req.header(FID_LOGGER_TRACKING_ID) == null ? uuidv4() : req.header(FID_LOGGER_TRACKING_ID);
     headers[FID_USER_ID] = req.header(FID_USER_ID) == null ? "anonymous" : req.header(FID_USER_ID);
-    headers[AUTHORIZATION] = BEARER+jobsToken;
+    headers[AUTHORIZATION] = BEARER + jobsToken;
     headers[ACCEPT] = req.header(ACCEPT) == null ? defaultAccept : req.header(ACCEPT);
-    headers[CONTENT_TYPE] = req.header(CONTENT_TYPE) == null ? defaultContentType : req.header(CONTENT_TYPE);
 
-    if(req.header(SESSION_TOKEN_BKD) !== null) {
+    if (req.header(SESSION_TOKEN_BKD) !== null) {
         headers[SESSION_TOKEN_BKD] = req.header(SESSION_TOKEN_BKD);
     }
 
@@ -223,7 +244,7 @@ const getBasicHeader = function (req, jobsToken, backboneSession, defaultAccept,
     }
 
     return headers;
-}
+};
 
 /**
  * Creates the request options for the proxied request.
@@ -242,6 +263,10 @@ let createRequestOption = function (method, url, body, headers) {
         headers: headers,
         httpAgent: keepaliveAgent,
         httpsAgent: keepaliveHttpsAgent,
-        responseType: headers[ACCEPT] === CONTENT_TYPE_DEFAULT ? 'arraybuffer' : 'json'
+        responseType: headers[ACCEPT] === CONTENT_TYPE_DEFAULT ? 'blob' : 'json'
     }
-}
+};
+
+module.exports = {
+    proxyApi
+};

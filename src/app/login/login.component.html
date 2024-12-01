@@ -1,6 +1,12 @@
 <body>
+    @if (loader.loading$ | async) {
+        <div class="overlay"></div>
+        <mat-progress-spinner [mode]="'indeterminate'"></mat-progress-spinner>
+    }
+
 <form class="form-signin" [formGroup]="loginForm" (ngSubmit)="validateAccess()">
-    <img class="mb-4 center-image" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt=""  width="72" height="72"/>
+    <img class="mb-4 center-image" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt=""
+         width="72" height="72"/>
     <h1 class="title-center h3 mb-3 font-weight-normal">{{ 'title' | translate }}</h1>
     <!-- Usuario -->
     <ng-container>
@@ -8,7 +14,7 @@
             <mat-label class="sr-only">{{ 'frm_login.user.placeholder' | translate }}</mat-label>
             <input matInput formControlName="alias" id="alias"
                    [ngClass]="{ 'is-invalid': submitted && loginValid.invalid}">
-            @if (submitted &&  loginValid.alias.invalid) {
+            @if (submitted && loginValid.alias.invalid) {
                 <div class="invalid-feedback">
                     @if (loginValid.alias.required) {
                         {{ 'frm_login.user.validation_messages.required' | translate }}

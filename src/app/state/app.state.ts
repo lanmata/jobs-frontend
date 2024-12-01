@@ -6,6 +6,7 @@ export const initialState: AppState = {
   sharedData: {logged: false, userAuth: {
           alias: '',
           fullName: "",
+          sessionToken: "",
           sessionTokenBkd: ""
       }}
 };
@@ -18,5 +19,6 @@ export class SharedData {
 export class UserAuth {
   alias!: string;
   fullName!: string;
+  sessionToken!: string;
   sessionTokenBkd!: string;
 }

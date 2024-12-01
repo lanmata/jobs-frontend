@@ -17,6 +17,15 @@ export const HTTP_OPTIONS_STANDARD = {
   })
 };
 
+export const HTTP_OPTIONS_STANDARD_FILE = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/octet-stream',
+    'Access-Control-Allow-Origin': '*',
+    'responseType': 'arraybuffer',
+    'Accept': 'application/octet-stream'
+  })
+};
+
 export const HTTP_OPTIONS_TOKEN = function (token: string) {
   return {
     headers: new HttpHeaders({

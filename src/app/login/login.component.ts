@@ -172,6 +172,7 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
         this.loader.show();
         this.loadSharedData();
         this.notification();
+        this.loader.hide();
     }
 
     /**
@@ -276,14 +277,18 @@ export class LoginComponent implements OnInit, OnDestroy, AfterViewInit {
                 .subscribe({
                     next: (response: any) => {
                         this.loader.hide?.();
-                        localStorage.setItem('backboneSessionToken', response.token);
-                        const decodedToken =this.jwtPipe.transform(response.token);
+                        // Use the sessionTokenBkd
+                        if (response.sessionTokenBkd) {
+                            console.log('Session Token BKD:', response.sessionTokenBkd);
+                        }
+                        const decodedToken =this.jwtPipe.transform(response.sessionTokenBkd);
                         if(decodedToken) {
                             userAuth = {
                                 ...userAuth,
                                 alias: alias,
                                 fullName: `${decodedToken.firstname} ${decodedToken.lastname}`.trim(),
-                                sessionTokenBkd: response.token
+                                sessionTokenBkd: response.sessionTokenBkd,
+                                sessionToken: response.body.token
                             };
                             const sharedDataUpdated = {...this.sharedDataCurrent, logged: true, userAuth: userAuth};
                             this.store.dispatch(setSharedData({data: sharedDataUpdated}));
