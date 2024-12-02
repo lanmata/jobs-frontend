@@ -12,6 +12,7 @@ const oauthclient = require('../proxy/oauth-client');
 const backboneclient = require('../proxy/backbone-client');
 const logger = appConfig.getLogger();
 const {v4: uuidv4} = require('uuid');
+const CryptoJS = require("crypto-js");
 
 const API_SERVICE_JOBS_SESSION_RELATIVE_PATH = process.env.API_SERVICE_JOBS_SESSION_RELATIVE_PATH;
 const API_SERVICE_JOBS_MAP = JSON.parse(process.env.API_SERVICE_JOBS_MAP);
@@ -32,12 +33,15 @@ const BACKBONE_OAUTH_TOKEN_URL = process.env.BACKBONE_AUTH_SERVER_URI;
 const BACKBONE_OAUTH_USER_ALIAS = process.env.BACKBONE_AUTH_USER_ALIAS;
 const BACKBONE_OAUTH_USER_PASSWORD = process.env.BACKBONE_AUTH_USER_PASSWORD;
 
+const HttpsAgent = require('agentkeepalive').HttpsAgent;
+const cKey = CryptoJS.enc.Utf8.parse(process.env.ENCRYPT_KEY);
+const iv = CryptoJS.enc.Utf8.parse(process.env.ENCRYPT_IV);
+
 const Agent = require('agentkeepalive');
 const {
     AUTHORIZATION, BEARER, SESSION_TOKEN_BKD, FID_LOGGER_TRACKING_ID, CONTENT_TYPE, FID_USER_ID,
     CONTENT_TYPE_DEFAULT, ACCEPT
 } = require("../config/constants.util");
-const HttpsAgent = require('agentkeepalive').HttpsAgent;
 
 /**
  * Jobs OAuth client configuration.
@@ -81,7 +85,7 @@ const httpConnectionOptions = {
 
 /**
  * Keepalive agent for HTTP connections.
- * @type {AgentKeepAlive} keepaliveAgent
+ * @type {AgentKeepAlive} keepaliveAgent - The keepalive agent.
  */
 const keepaliveAgent = new Agent(httpConnectionOptions);
 
@@ -126,7 +130,7 @@ let getApiEndpoint = function (path) {
 
 /**
  * Retrieves the backbone client instance, initializing it if necessary.
- * @returns {Object}
+ * @returns {Object} - The backbone client instance.
  */
 let getBackboneClient = function () {
     let backboneApiURL = BACKBONE_API_SERVICE_MAP['backbone'] + '/backbone/v1/session';
@@ -153,14 +157,15 @@ let getOauthClient = function (oauthClientConfig) {
 /**
  * Retrieves the session token for the backbone service.
  *
- * @param req
- * @returns {Promise<*>}
+ * @param req - The request object.
+ * @returns {Promise<*>} - The session token.
  */
 const backboneSessionToken = async (req) => {
     let backboneSession = null;
     if (req.url === API_SERVICE_JOBS_SESSION_RELATIVE_PATH) {
         const backboneToken = await getOauthClient(backboneOauthClientConfig).getBearerToken();
-        backboneSession = await getBackboneClient().getToken(req.body.alias, req.body.password, backboneToken);
+        backboneSession = await getBackboneClient().getToken(req.body.alias,
+            CryptoJS.AES.encrypt(req.body.password, cKey, {iv: iv}).toString(), backboneToken);
     }
     return backboneSession?.token;
 };
@@ -215,7 +220,7 @@ const proxyApi = async (req, res, next) => {
  * @returns {Object} - The constructed headers.
  */
 const getRequestHeader = function (req, jobsToken, backboneSession, defaultAccept, defaultContentType) {
-    let headers = getBasicHeader(req, jobsToken, backboneSession, defaultAccept, defaultContentType);
+    let headers = getBasicHeader(req, jobsToken, backboneSession, defaultAccept);
     headers[CONTENT_TYPE] = req.header(CONTENT_TYPE) == null ? defaultContentType : req.header(CONTENT_TYPE);
     return headers;
 };

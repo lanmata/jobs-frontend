@@ -7,7 +7,7 @@ import {MaterialModule} from "@shared/material/material.module";
 import {AlertService} from '@shared/services/alert.service';
 import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition} from "@angular/material/snack-bar";
 import {NotifyComponent} from "@shared/components/notify-component/notify.component";
-import {AppState, SharedData} from "@app/state/app.state";
+import {AppState, initialState} from "@app/state/app.state";
 import {Store} from "@ngrx/store";
 import {setSharedData} from "@app/state/app.action";
 import {StoreComponent} from "@shared/components/store/store.component";
@@ -15,7 +15,7 @@ import {StoreComponent} from "@shared/components/store/store.component";
 @Component({
     selector: 'app-header',
     standalone: true,
-    imports: [CommonModule, MaterialModule, RouterLink, ReactiveFormsModule, FormsModule, TranslateModule, NotifyComponent],
+    imports: [CommonModule, MaterialModule, RouterLink, ReactiveFormsModule, FormsModule, TranslateModule],
     templateUrl: 'header.component.html',
     styleUrl: 'header.component.css'
 })
@@ -63,7 +63,11 @@ export class HeaderComponent extends StoreComponent implements OnInit, OnDestroy
 
     override ngOnInit(): void {
         super.ngOnInit();
+        this.initSharedData();
         this.notification();
+    }
+
+    private initSharedData(): void {
         if(this?.sharedDataCurrent?.userAuth?.alias) {
             this.alias = this.sharedDataCurrent.userAuth.alias;
         }
@@ -73,7 +77,7 @@ export class HeaderComponent extends StoreComponent implements OnInit, OnDestroy
     }
 
     logout() {
-        this.store.dispatch(setSharedData({data: new SharedData()}));
+        this.store.dispatch(setSharedData({data: initialState.sharedData}));
         this.router.navigate([this.appConst.JOBS_NAVIGATOR.LOGIN_PATH]);
     }
 

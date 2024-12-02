@@ -1,9 +1,4 @@
 <body>
-    @if (loader.loading$ | async) {
-        <div class="overlay"></div>
-        <mat-progress-spinner [mode]="'indeterminate'"></mat-progress-spinner>
-    }
-
 <form class="form-signin" [formGroup]="loginForm" (ngSubmit)="validateAccess()">
     <img class="mb-4 center-image" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt=""
          width="72" height="72"/>
@@ -68,4 +63,8 @@
         </button>
     </ng-container>
 </form>
+    @if (loader.loading$ | async) {
+        <div class="overlay"></div>
+        <mat-progress-spinner [mode]="'indeterminate'"></mat-progress-spinner>
+    }
 </body>
