@@ -14,7 +14,8 @@
           "builder": "@angular-devkit/build-angular:application",
           "options": {
             "allowedCommonJsDependencies": [
-              "file-saver"
+              "file-saver",
+              "crypto-js"
             ],
             "outputPath": "dist/jobs-frontend",
             "index": "src/index.html",

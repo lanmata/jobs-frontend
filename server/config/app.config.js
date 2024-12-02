@@ -112,15 +112,6 @@ module.exports.createJobsProxyConfig = function () {
 module.exports.getJobsProxyConfig = function () {
     return jobsProxyConfig;
 };
-//
-// /**
-//  * Retrieves the jobs proxy configuration.
-//  *
-//  * @returns {Object} - The jobs proxy configuration.
-//  */
-// module.exports.getBackboneProxyConfig = function () {
-//     return backboneProxyConfig;
-// };
 
 let printVaultValues = function (vaultValues) {
     logger.info("<><><><><><><><><><><><><><> Vault values <><><><><><><><><><><><><><>");
